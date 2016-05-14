@@ -443,7 +443,7 @@ function diasemana(id){
   if(id==6){var dias="SABADO";}
   if(id==7){var dias="DOMINGO";}
    $("#mostrar-ejercicios").show();
-              var diasemana='<h1>'+dias+'</h1>';
+              var diasemana='<h2>'+dias+'</h2>';
               $("#nombreDia").html(diasemana);
               $("#modal-ET").html('Galeria de Ejercicios '+'"'+dias+'"');
               $("#modal-EF").html('Galeria de Ejercicios '+dias);
@@ -1587,967 +1587,897 @@ function buscar_teclado(){
   ?>
 
 
-<!--  llamada a menu de opciones futbol -->
-    <?php 
-        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+<!--  llamada a menu de opciones futbol vertical -->
+      <?php 
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
     ?>
-
-    <!-- PAGINA DE DOSIFICACION.  -->
-    
-    <div class="col-xs-8 col-sm-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Programacion de microciclos</h3>
-            </div>
-            <div class="panel-body">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#creacion" role="tab" data-toggle="tab">Creacion</a></li>
-                    <li><a href="#ver" role="tab" data-toggle="tab" >Ver</a></li>
-                </ul>
-        <!-- Contenido pestana Programacion de microciclos -->
-                <div class="tab-content">
-                    <!-- Contenido Pestaña creacion -->
-                    <div class="tab-pane fade in active" id="creacion">
-                        <div align="center"><h3>Creacion Semana</h3></div> 
-                        <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
-                        <div class="row">
-                          <label class="col-sm-1 control-label">Equipo:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="equipo-cre" name="creacion-equi" required>
-                                 <?php echo $equipo; 
-                                 ?>                  
-                            </select>
-                          </div>
-                          <label class=" col-sm-2 control-label">Nombre Planificacion:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="plan-cre" name="creacion-tipo" required>
-                            </select>
-                          </div>
-                        </div>
-                        <br> 
-                        <div class="row">
-
-                          <label class=" col-sm-1 control-label">Etapas:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="etapas-cre" name="creacion-meso" required>
-                                 <?php echo $etapas; ?>                  
-                            </select>
-                          </div>
-                          <label class=" col-sm-2 control-label">Mesociclos:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="meso-cre" required>
-                            </select>
-                          </div>
-                           <label class="col-sm-2 control-label">Microciclos:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="micro-cre" required>
-
-                            </select>
-                          </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-offset-1 col-sm-2">
-                                <label>Dias: </label>
-                            </div>                    
-                        </div>
-                      
-                        <div class="row">
-                            <div class="col-sm-offset-1 col-sm-10">
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkLu" value="1">Lunes</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMa" value="2">Martes</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMi" value="3">Miercoles</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkJu" value="4">Jueves</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkVi" value="5">Viernes</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkSa" value="6">Sabado</label>
-                                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkDo" value="7">Domingo</label> 
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-offset-9 col-sm-2">
-                                <button type="button" class="btn btn-primary" id="btnCargar" disabled>Cargar Tabla</button>
-                            </div>
-                        </div>
-                        <div id="resultado2"></div>
-                        <div id="mostrar-tabla" style="display: none;">
-                  <div class="col-sm-12 table-responsive">
-                        <table class="table table-hover">
-                        <thead id="cabeceraTablaDias">
-                        
-                        </thead>
-
-                        <tbody id="cuerpoTablaDias">
-                        
-                        </tbody>
-                    </table>
-                    </form>
-                    </div>
-                <div id="mostrar-ejercicios" style="display:none;">
-                <div class="col-sm-12" align="center" id="nombreDia"></div>
-              <input type="hidden" value="" id="dosi-dia" name="dosifi">
-                  <div class="col-sm-12">
-                      <div class="col-sm-4">
-                          <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tecnico">
-                            <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tecnico.png" alt=""></span>
-                          <span class="hidden-xs">
-                              Ejercicios Tecnicos
-                          </span>
-                          </button>
-                      </div>
-                      <div class="col-sm-4">
-                          <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tec_fis">
-                            <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/Prefisica.png" alt=""></span>
-                          <span class="hidden-xs">
-                              Preparacion Fisica
-                          </span>
-                          </button>
-                      </div>
-                      <div class="col-sm-4">
-                          <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tec_tac">
-                            <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tactico.png" alt=""></span>
-                          <span class="hidden-xs">
-                              Sistema de Juego
-                          </span>
-                          </button>
-                      </div>
-                      </div>
-                      <div class="col-sm-12">
-                      <br>
-                      <div class="col-sm-offset-2 col-sm-4">
-                          <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_psi">
-                            <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pensar.png" alt=""></span>
-                          <span class="hidden-xs">
-                              Acciones Psicologicas
-                          </span>
-                          </button>
-                      </div>
-                      <div class="col-sm-4">
-                          <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_comp">
-                            <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/competencia.png" alt=""></span>
-                          <span class="hidden-xs">
-                              Competencia
-                          </span>
-                          </button>
-                      </div>
-                      </div>
-                <div class="col-sm-offset-8 col-sm-2">
-                                          <br>
-
-                    <button type="button" id="mandar" class="btn btn-primary" >Guardar</button>
-                
-
-                        </div>
-                    </form>
-                    <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" id="formPdf">
-                        <div class=" col-sm-2">
-                                                  <br>
-                            <input type="hidden" value="" id="dosifi" name="dosifi">
-                            <button type="submit" class="btn btn-success" id="mostrar_pdf">Exportar</button>
-                        </div>
-                    </form>
-                  </div>
-                  </div>
-                    </div><!-- fin mostrar-tabla -->
-
-
-<!-- Contenido Pestaña VER -->
-                    <div class="tab-pane fade" id="ver">
-                    <br>
-                            <div class="row">
-                          <label class="col-sm-2 control-label">Equipo:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="equipo-ver" name="creacion-equi" required>
-                                 <?php echo $equipo; 
-                                 ?>                  
-                            </select>
-                          </div>
-                          <label class=" col-sm-2 control-label">Nombre Planificacion:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="plan-ver" name="creacion-tipo" required>
-                            </select>
-                          </div>
-                            <label class=" col-sm-2 control-label">Etapas:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="etapas-ver" name="creacion-meso" required>
-                                 <?php echo $etapas; ?>                  
-                            </select>
-                          </div>
-                        </div>
-                        <br> 
-                        <div class="row">
-
-                         
-                          <label class=" col-sm-2 control-label">Mesociclos:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="meso-ver" required>
-                            </select>
-                          </div>
-                           <label class="col-sm-2 control-label">Microciclos:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="micro-ver" required>
-
-                            </select>
-                          </div>
-                          <label class=" col-sm-2 control-label">Dias:</label>
-                          <div class="col-sm-2">
-                              <select class="form-control" id="dias-ver" name="creacion-meso" required>
-
-                            </select>
-                          </div>
-                          
-                        </div>
-                        <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" >
-                        <div class=" col-sm-2">
-                            <input type="hidden" value="" id="idpro" name="idpro">
-                            <button type="submit" class="btn btn-success" id="mostrar_pdf">Exportar</button>
-                        </div>
-                    </form>
-                    </div>
-            <!-- Contenido Pestaña ver -->
-                </div>
-            </div>
-        </div>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
+<!-- PAGINA DE DOSIFICACION.  -->
+<div class="col-xs-12 col-sm-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Programacion de microciclos</h3>
     </div>
+    <div class="panel-body">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#creacion" role="tab" data-toggle="tab">Creacion</a></li>
+        <li><a href="#ver" role="tab" data-toggle="tab" >Ver</a></li>
+      </ul>
+     <!-- Contenido pestana Programacion de microciclos -->
+     <div class="tab-content">
+        <!-- Contenido Pestaña creacion -->
+        <div class="tab-pane fade in active" id="creacion">
+          <div align="center"><h3>Creacion Semana</h3></div> 
+            <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
+              <div class="row">
+                <label class="col-sm-1 control-label">Equipo:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="equipo-cre" name="creacion-equi" required>
+                    <?php echo $equipo;?>                  
+                  </select>
+                </div>
+                <label class=" col-sm-2 control-label">Nombre Planificacion:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="plan-cre" name="creacion-tipo" required>
+                  
+                  </select>
+                </div>
+              </div>
+              <br> 
+              <div class="row">
+                <label class=" col-sm-1 control-label">Etapas:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="etapas-cre" name="creacion-meso" required>
+                    <?php echo $etapas; ?>                  
+                  </select>
+                </div>
+                <label class=" col-sm-2 control-label">Mesociclos:</label>
+                <div class="col-sm-2">
+                <select class="form-control" id="meso-cre" required>
         
+                </select>
+              </div>
+              <label class="col-sm-2 control-label">Microciclos:</label>
+              <div class="col-sm-2">
+                <select class="form-control" id="micro-cre" required>
 
+                </select>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-sm-offset-1 col-sm-2">
+                <label>Dias: </label>
+              </div>                    
+            </div>
+            <div class="row">
+              <div class="col-sm-offset-1 col-sm-10">
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkLu" value="1">Lunes</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMa" value="2">Martes</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMi" value="3">Miercoles</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkJu" value="4">Jueves</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkVi" value="5">Viernes</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkSa" value="6">Sabado</label>
+                <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkDo" value="7">Domingo</label> 
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-offset-9 col-sm-2">
+                <button type="button" class="btn btn-primary" id="btnCargar" disabled>Cargar Tabla</button>
+              </div>
+            </div>
+            <div id="resultado2"></div>
+              <div id="mostrar-tabla" style="display: none;">
+                <div class="col-sm-12 table-responsive">
+                  <table class="table table-hover">
+                    <thead id="cabeceraTablaDias">
+        
+                    </thead>
+                    <tbody id="cuerpoTablaDias">
+    
+                    </tbody>
+                  </table>
+                </form>
+              </div>
+              <div id="mostrar-ejercicios" style="display:none;">
+                <div class="col-xs-12" align="center" id="nombreDia"></div>
+                  <input type="hidden" value="" id="dosi-dia" name="dosifi">
+                  <div class="col-xs-12">
+                    <div class="col-sm-4 col-xs-6">
+                      <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tecnico">
+                        <span aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tecnico.png" alt=""></span>
+                        <span class="hidden-xs">
+                          Ejercicios Tecnicos
+                        </span>
+                      </button>
+                    </div>
+                    <div class="col-sm-4 col-xs-6">
+                      <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tec_fis">
+                        <span aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/Prefisica.png" alt=""></span>
+                        <span class="hidden-xs">
+                          Preparacion Fisica
+                        </span>
+                      </button>
+                    </div>
+                    <div class="col-sm-4 col-xs-6 ">
+                      <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_tec_tac">
+                        <span aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tactico.png" alt=""></span>
+                        <span class="hidden-xs">
+                          Sistema de Juego
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                  <br>
+                    <div class="col-sm-offset-2 col-sm-4 col-xs-6">
+                      <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_psi">
+                        <span aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pensar.png" alt=""></span>
+                        <span class="hidden-xs">
+                          Acciones Psicologicas
+                        </span>
+                      </button>
+                    </div>
+                    <div class="col-sm-4 col-xs-6">
+                      <button type="button" class="btn btn-default col-sm-12" data-toggle="modal" data-target="#Ejercicio_comp">
+                        <span  aria-hidden="true"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/competencia.png" alt=""></span>
+                        <span class="hidden-xs">
+                          Competencia
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-sm-offset-8 col-sm-2 col-xs-6">
+                  <br>              
+                    <button type="button" id="mandar" class="btn btn-primary" >Guardar</button>
+                  </div>
+                </form>
+                <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" id="formPdf">
+                  <div class=" col-sm-2 col-xs-6">
+                  <br>
+                    <input type="hidden" value="" id="dosifi" name="dosifi">
+                    <button type="submit" class="btn btn-success" id="mostrar_pdf">Exportar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div><!-- fin mostrar-tabla -->
+          <!-- Contenido Pestaña VER -->
+          <div class="tab-pane fade" id="ver">
+          <br>
+            <div class="row">
+              <label class="col-sm-2 col-xs-12 control-label">Equipo:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="equipo-ver" name="creacion-equi" required>
+                  <?php echo $equipo;?>                  
+                </select>
+              </div>
+              <label class=" col-sm-2 col-xs-12 control-label">Nombre Planificacion:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="plan-ver" name="creacion-tipo" required>
+              
+                </select>
+              </div>
+              <label class=" col-sm-2 col-xs-12 control-label">Etapas:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="etapas-ver" name="creacion-meso" required>
+                  <?php echo $etapas; ?>                  
+                </select>
+              </div>
+            </div>
+            <br> 
+            <div class="row">
+              <label class=" col-sm-2 col-xs-12 control-label">Mesociclos:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="meso-ver" required>
+  
+                </select>
+              </div>
+              <label class="col-sm-2 col-xs-12 control-label">Microciclos:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="micro-ver" required>
+
+                </select>
+              </div>
+              <label class=" col-sm-2 col-xs-12 control-label">Dias:</label>
+              <div class="col-sm-2 col-xs-12">
+                <select class="form-control" id="dias-ver" name="creacion-meso" required>
+
+                </select>
+              </div>
+            </div>
+            <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" >
+              <div class=" col-sm-2 col-xs-12">
+              <br>
+                <input type="hidden" value="" id="idpro" name="idpro">
+                <button type="submit" class="btn btn-success" id="mostrar_pdf">
+                  <span class="glyphicon glyphicon-export"></span>
+                  <span class="hidden-xs">
+                    Exportar
+                  </span> 
+                </button>
+              </div>
+            </form>
+          </div>
+          <!-- Contenido Pestaña ver -->
+        </div>
+      </div>
+    </div>
+  </div>
 <!--  llamada al pie de pagina -->
-    <?php 
-        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
-    ?>
-
-
+<?php 
+  require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
+?>
 </body>
 </html>
 <!--  MODAL EJERCICIO TECNICO -->
 <div class="modal fade" id="Ejercicio_tecnico" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-ET"></div></h4></div>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-ET"></div></h4></div>
+  
+        </div>
+        <div class="modal-body">
+        <!-- Galeria de Ejercicios -->
+          <form class="form-horizontal">
+            <div class="row">
+              <label class="col-sm-2 control-label">Preparacion:</label>
+              <div class="col-sm-3">
+                <input type="hidden" id="idPreparacion" value="1"></input>
+                <input type="text" class="form-control" id="tecnico"  readonly placeholder="Ejercicio Tecnico">
               </div>
-                  <div class="modal-body">
-                    <!-- Galeria de Ejercicios -->
-
-                            <form class="form-horizontal">
-
-                            <div class="row">
-                                                
-                                                <label class="col-sm-2 control-label">Preparacion:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="hidden" id="idPreparacion" value="1"></input>
-                                                    <input type="text" class="form-control" id="tecnico"  readonly placeholder="Ejercicio Tecnico">
-                                                </div>
-                                                
-
-                                                
-                                                  <label class="col-sm-2 control-label">Sub Ejercicio:</label>
-                                                  <div class="col-sm-3">
-                                                        <select class="form-control" id="tec-subele-tecnico" required>
-                                                      <?php echo $subelemento; ?>                   
-                                                        </select>              
-                                                  </div>
-                                                
-                                            </div>    
-                                            <br>
-
-                                            <div class="row">
-                                                <label class="col-sm-2 control-label">Elemento Tecnico:</label>
-                                                  <div class="col-sm-3">
-                                                        <select class="form-control" id="tec-ele-tecnico" name="ele-reg" required>
-                                                            <option></option>
-                                                        </select>                                                 
-                                                  </div>
-
-                                                
-                                                
-                                            </div>
-                            
-                                            <br>
-                                            <div class="row">
-                                            <div class="col-sm-6">
-                                            <br>        
-                                                <div class="row">
-                                                    <div class="col-sm-offset-1 col-sm-10">
-                                                        <div  id="modal-tecnico-ima" name="mostrar-ima-mod">
-                                                     </div> 
-                                                    </div>
-                                                </div>
-                                                <br><br>
-                                                <div class="row">            
-                                                        <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-nom" readonly >
-                                                    </div>
-                                                    </div>
-                                                    <br>
-                                                <div class="row">
-                                                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-cate" readonly="">
-                                                    </div>
-                                                </div>
-                                                    <br>
-                                                <div class="row">
-                                                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
-                                                    <div class="col-sm-8">
-                                                        <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-tecnico-desc" placeholder="Descripcion del Ejercicio" readonly=""></textarea>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div align="center">
-                                                        <button type="button" id="modal-tecnico-selec-ejer"class="btn btn-primary">Seleccionar</button>
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                            <br>
-                                            <div class="col-sm-6">
-                                            <div class="row">
-                                                <div class=" col-sm-11">                
-                                                    <!--tabla resultante-->
-                                                  <div class="form-group" id="resultado-modal-1">
-                                                    
-                                                  </div>
-                                                </div>
-                                                
-                                                </div>
-                                                <div class="row">
-                                                    <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
-                                                </div>
-                                                <br>
-                                                <div class="list-group">
-                                                <div class="list-group-item list-group-item-info">
-                                                <div class="row ">
-                                                <input type="text" class="form-control" id="modal-tecnico-id1" value="0" style="visibility: hidden;">
-                                                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-nom1" readonly>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-desc1" readonly="">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div align="right">
-                                                <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar1" >Limpiar</button>
-                                                </div>
-                                                </div>
-                                                </div>
-                                                
-                                                <div class="list-group">
-                                                <div class="list-group-item list-group-item-info">
-                                                <div class="row">
-                                                        <input type="text" class="form-control" id="modal-tecnico-id2" value="0" style="visibility: hidden;" >
-                                                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-nom2" readonly="">
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                <div class="row">
-                                                    <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" class="form-control" id="modal-tecnico-desc2" readonly="">
-                                                    </div>
-                                                </div>
-                                                <br>   
-                                                <div align="right">
-                                                <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar2" >Limpiar</button>
-                                                </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                       </div>
-                          </div>
-                          <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+              <label class="col-sm-2 control-label">Sub Ejercicio:</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="tec-subele-tecnico" required>
+                  <?php echo $subelemento; ?>                   
+                </select>              
               </div>
-                    </form>
+            </div>    
+            <br>
+            <div class="row">
+              <label class="col-sm-2 control-label">Elemento Tecnico:</label>
+              <div class="col-sm-3">
+                <select class="form-control" id="tec-ele-tecnico" name="ele-reg" required>
+                  <option></option>
+                </select>                                                 
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-sm-6">
+              <br>        
+                <div class="row">
+                  <div class="col-sm-offset-1 col-sm-10">
+                    <div  id="modal-tecnico-ima" name="mostrar-ima-mod">
+    
+                    </div> 
+                  </div>
                 </div>
-              
+                <br><br>
+                <div class="row">            
+                  <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="modal-tecnico-nom" readonly >
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="modal-tecnico-cate" readonly="">
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
+                  <div class="col-sm-8">
+                    <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-tecnico-desc" placeholder="Descripcion del Ejercicio" readonly=""></textarea>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div align="center">
+                    <button type="button" id="modal-tecnico-selec-ejer"class="btn btn-primary">Seleccionar</button>
+                  </div>
+                </div>
+              </div> 
+              <br>
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class=" col-sm-11">                
+                    <!--tabla resultante-->
+                    <div class="form-group" id="resultado-modal-1">
+        
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
+                </div>
+                <br>
+                <div class="list-group">
+                  <div class="list-group-item list-group-item-info">
+                    <div class="row ">
+                      <input type="text" class="form-control" id="modal-tecnico-id1" value="0" style="visibility: hidden;">
+                      <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="modal-tecnico-nom1" readonly>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="modal-tecnico-desc1" readonly="">
+                      </div>
+                    </div>
+                    <br>
+                    <div align="right">
+                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar1" >Limpiar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="list-group">
+                  <div class="list-group-item list-group-item-info">
+                    <div class="row">
+                      <input type="text" class="form-control" id="modal-tecnico-id2" value="0" style="visibility: hidden;" >
+                      <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="modal-tecnico-nom2" readonly="">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="modal-tecnico-desc2" readonly="">
+                      </div>
+                    </div>
+                    <br>   
+                    <div align="right">
+                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar2" >Limpiar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 <!--  MODAL EJERCICIO TECNICO FISICO -->
 
-
-
 <div class="modal fade" id="Ejercicio_tec_fis" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-EF"></div></h4></div>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-EF"></div></h4></div>
+
+        </div>
+        <div class="modal-body">
+          <!-- Galeria de Ejercicios -->
+          <form class="form-horizontal">
+            <div class="row">
+              <label class="col-sm-2 control-label">Preparacion:</label>
+                <div class="col-sm-3">
+                  <input type="hidden" id="idPreparacion-fi" value="3"></input>
+                  <input type="text" class="form-control" id="" readonly="" value="Preparacion Fisica">
+                </div>
+                <label class="col-sm-2 control-label">Elemento Tec.:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="tec-ele-fisico" required>
+                    <?php echo $elemento_tecnico_fis; ?>                  
+                  </select>              
+                </div>
+              </div>    
+              <br>
+              <br>
+              <div class="row">
+                <div class="col-sm-6">        
+                  <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <div  id="modal-fisico-ima" >
+    
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="row">            
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-fisico-nom" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-fisico-cate" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-fisico-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div align="center">
+                      <button type="button" class="btn btn-primary" id="modal-fisico-selec-ejer">Seleccionar</button>
+                    </div>
+                  </div>
+                </div> 
+                <br>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class=" col-sm-11">                
+                      <div class="form-group" id="resultado-modal-3">
+    
                       </div>
-      <div class="modal-body">
-        <!-- Galeria de Ejercicios -->
-
-        <form class="form-horizontal">
-
-        <div class="row">
-            
-            <label class="col-sm-2 control-label">Preparacion:</label>
-            <div class="col-sm-3">
-            <input type="hidden" id="idPreparacion-fi" value="3"></input>
-                <input type="text" class="form-control" id="" readonly="" value="Preparacion Fisica">
-            </div>
-            
-
-            
-              <label class="col-sm-2 control-label">Elemento Tec.:</label>
-              <div class="col-sm-3">
-                    <select class="form-control" id="tec-ele-fisico" required>
-                                <?php echo $elemento_tecnico_fis; ?>                  
-                    </select>              
-              </div>
-            
-        </div>    
-        <br>
-
-                            
-                            <br>
-                            <div class="row">
-                            <div class="col-sm-6">        
-                                <div class="row">
-                                    <div class="col-sm-offset-1 col-sm-10">
-                                        <div  id="modal-fisico-ima" >
-                                     </div> 
-                                    </div>
-                                </div>
-                                <div class="row">            
-                                        <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-nom" readonly="">
-                                    </div>
-                                    </div>
-                                    <br>
-                                <div class="row">
-                                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-cate" readonly="">
-                                    </div>
-                                </div>
-                                    <br>
-                                <div class="row">
-                                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-fisico-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div align="center">
-                                        <button type="button" class="btn btn-primary" id="modal-fisico-selec-ejer">Seleccionar</button>
-                                    </div>
-                                </div>
-                            </div> 
-                            <br>
-                            <div class="col-sm-6">
-                            <div class="row">
-                                <div class=" col-sm-11">                
-                                   <div class="form-group" id="resultado-modal-3">
-                                </div>
-                                
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
-                                </div>
-                                <br>
-                                <div class="list-group">
-                                <div class="list-group-item list-group-item-info">
-                                <div class="row ">
-
-                                      <input type="text" class="form-control" id="modal-fisico-id1" value="0" style="visibility:hidden">
-                                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-nom1" readonly="">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-desc1" readonly="">
-                                    </div>
-                                </div>
-                                <br>
-                                <div align="right">
-                                <button type="button" class="btn btn-normal" id="modal-fisico-limpiar1">Limpiar</button>
-                                </div>
-                                </div>
-                                </div>
-                                
-                                <div class="list-group">
-                                <div class="list-group-item list-group-item-info">
-                                <div class="row">
-
-                                    <input type="text" class="form-control" id="modal-fisico-id2" value="0" style="visibility:hidden">
-                                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-nom2" readonly="">
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="modal-fisico-desc2" readonly="">
-                                    </div>
-                                </div>
-                                <br>   
-                                <div align="right">
-                                <button type="button" class="btn btn-normal" id="modal-fisico-limpiar2">Limpiar</button>
-                                                  </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                       </div>
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
+                    </div>
+                    <br>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row ">
+                          <input type="text" class="form-control" id="modal-fisico-id1" value="0" style="visibility:hidden">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-fisico-nom1" readonly="">
                           </div>
-                           <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
-              </div>
-                    </form>
-                </div>
-    </div>
-  </div>
-</div>
-<!--  MODAL EJERCICIO TECNICO TACTICO -->
-
-
-
-<div class="modal fade" id="Ejercicio_tec_tac" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-TA"></div></h4></div>
-      </div>
-      <div class="modal-body">
-        <!-- Galeria de Ejercicios -->
-
-        <form class="form-horizontal">
-
-        <div class="row">
-            
-            <label class="col-sm-2 control-label">Preparacion:</label>
-            <div class="col-sm-3">
-            <input type="hidden" id="idPreparacion-fi" value="3"></input>
-                <input type="text" class="form-control" id="" readonly="" value="Sistema de Juego">
-            </div>
-            
-
-            
-              <label class="col-sm-2 control-label">Elemento Tec.:</label>
-              <div class="col-sm-3">
-                    <select class="form-control" id="tec-ele-tactico" required>
-                                <?php echo $elemento_tecnico_tac; ?>                  
-                    </select>              
-              </div>
-            
-        </div>    
-        <br>
-
-                
-        <br>
-        <div class="row">
-        <div class="col-sm-6">        
-            <div class="row">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <div  id="modal-tactico-ima" >
-                 </div> 
-                </div>
-            </div>
-            <div class="row">            
-                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-nom" readonly="">
-                </div>
-                </div>
-                <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-cate" readonly="">
-                </div>
-            </div>
-                <br>
-            <div class="row">
-                <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-tactico-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div align="center">
-                    <button type="button" class="btn btn-primary" id="modal-tactico-selec-ejer">Seleccionar</button>
-                </div>
-            </div>
-        </div> 
-        <br>
-        <div class="col-sm-6">
-        <div class="row">
-            <div class=" col-sm-11">                
-               <div class="form-group" id="resultado-modal-2">
-            </div>
-            
-            </div>
-            <div class="row">
-                <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
-            </div>
-            <br>
-            <div class="list-group">
-            <div class="list-group-item list-group-item-info">
-            <div class="row ">
-
-            <input type="text" class="form-control" id="modal-tactico-id1" value="0" style="visibility:hidden">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-nom1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-desc1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-tactico-limpiar1">Limpiar</button>
-            </div>
-            </div>
-            </div>
-            
-            <div class="list-group">
-
-            <input type="text" class="form-control" id="modal-tactico-id2" value="0" style="visibility:hidden">
-            <div class="list-group-item list-group-item-info">
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-nom2" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-tactico-desc2" readonly="">
-                </div>
-            </div>
-            <br>   
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-tactico-limpiar2">Limpiar</button>
-                              </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                       </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-fisico-desc1" readonly="">
                           </div>
-                    </form>
+                        </div>
+                        <br>
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar1">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row">
+                          <input type="text" class="form-control" id="modal-fisico-id2" value="0" style="visibility:hidden">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-fisico-nom2" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-fisico-desc2" readonly="">
+                          </div>
+                        </div>
+                        <br>   
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar2">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
               </div>
-    </div>
-  </div>
-</div>
-<!--  MODAL EJERCICIO ACCIONES-PSICOLOGICAS -->
-
-
-
-<div class="modal fade" id="Ejercicio_psi" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-PS"></div></h4></div>
+            </form>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <!-- Galeria de Ejercicios -->
-
-        <form class="form-horizontal">
-
-        <div class="row">
-            
-            <label class="col-sm-2 control-label">Preparacion:</label>
-            <div class="col-sm-3">
-            <input type="hidden" id="idPreparacion-psi" value="4"></input>
-                <input type="text" class="form-control" id="" readonly="" value="Ejercicio Acciones Psicologicas">
-            </div>
-            
-
-            
-              <label class="col-sm-2 control-label">Elemento Tec.:</label>
-              <div class="col-sm-3">
-                    <select class="form-control" id="tec-ele-psi" required>
-                                <?php echo $elemento_accpsi; ?>                  
-                    </select>              
-              </div>
-            
-        </div>    
-        <br>
-
-        
-        <br>
-        <div class="row">
-        <div class="col-sm-6">        
-            <div class="row">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <div  id="modal-psi-ima" >
-                 </div> 
-                </div>
-            </div>
-            <div class="row">            
-                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-nom" readonly="">
-                </div>
-                </div>
-                <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-cate" readonly="">
-                </div>
-            </div>
-                <br>
-            <div class="row">
-                <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-psi-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div align="center">
-                    <button type="button" class="btn btn-primary" id="modal-psi-selec-ejer">Seleccionar</button>
-                </div>
-            </div>
-        </div> 
-        <br>
-        <div class="col-sm-6">
-        <div class="row">
-            <div class=" col-sm-11">                
-               <div class="form-group" id="resultado-modal-4">
-            </div>
-            
-            </div>
-            <div class="row">
-                <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
-            </div>
-            <br>
-            <div class="list-group">
-            <div class="list-group-item list-group-item-info">
-            <div class="row ">
-            <input type="text" class="form-control" id="modal-psi-id1" value="0" style="visibility:hidden">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-nom1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-desc1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-psi-limpiar1">Limpiar</button>
-            </div>
-            </div>
-            </div>
-            
-            <div class="list-group">
-            <div class="list-group-item list-group-item-info">
-            <div class="row">
-               <input type="text" class="form-control" id="modal-psi-id2" value="0" style="visibility:hidden">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-nom2" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-psi-desc2" readonly="">
-                </div>
-            </div>
-            <br>   
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-psi-limpiar2">Limpiar</button>
-                              </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                       </div>
-                          </div>
-                    </form>
-                </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
-              </div>
     </div>
-  </div>
-</div>
-<!--  MODAL EJERCICIO COMP-->
+    <!--  MODAL EJERCICIO TECNICO TACTICO -->
+    <div class="modal fade" id="Ejercicio_tec_tac" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-TA"></div></h4>
 
-
-
-<div class="modal fade" id="Ejercicio_comp" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-CM"></div></h4></div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <!-- Galeria de Ejercicios -->
+            <form class="form-horizontal">
+              <div class="row">
+                <label class="col-sm-2 control-label">Preparacion:</label>
+                <div class="col-sm-3">
+                  <input type="hidden" id="idPreparacion-fi" value="3"></input>
+                  <input type="text" class="form-control" id="" readonly="" value="Sistema de Juego">
+                </div>                        
+                <label class="col-sm-2 control-label">Elemento Tec.:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="tec-ele-tactico" required>
+                    <?php echo $elemento_tecnico_tac; ?>                  
+                  </select>              
+                </div>            
+              </div>    
+              <br>                
+              <br>
+              <div class="row">
+                <div class="col-sm-6">        
+                  <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <div  id="modal-tactico-ima" >
+                      
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="row">            
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-tactico-nom" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-tactico-cate" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-tactico-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div align="center">
+                      <button type="button" class="btn btn-primary" id="modal-tactico-selec-ejer">Seleccionar</button>
+                    </div>
+                  </div>
+                </div> 
+                <br>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class=" col-sm-11">                
+                      <div class="form-group" id="resultado-modal-2">
+                      
+                      </div>            
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
+                    </div>
+                    <br>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row ">                          
+                          <input type="text" class="form-control" id="modal-tactico-id1" value="0" style="visibility:hidden">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-tactico-nom1" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-tactico-desc1" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar1">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>            
+                    <div class="list-group">                          
+                      <input type="text" class="form-control" id="modal-tactico-id2" value="0" style="visibility:hidden">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-tactico-nom2" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-tactico-desc2" readonly="">
+                          </div>
+                        </div>
+                        <br>   
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar2">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <!-- Galeria de Ejercicios -->
-
-        <form class="form-horizontal">
-
-        <div class="row">
-            
-            <label class="col-sm-2 control-label">Preparacion:</label>
-            <div class="col-sm-3">
-            <input type="hidden" id="idPreparacion-comp" value="5"></input>
-                <input type="text" class="form-control" id="" readonly="" value="Competencia">
-            </div>
-            
-
-            
-              <label class="col-sm-2 control-label">Elemento Tec.:</label>
-              <div class="col-sm-3">
-                    <select class="form-control" id="tec-ele-comp" required>
-                                <?php echo $elemento_comp; ?>                  
-                    </select>              
-              </div>
-            
-        </div>    
-        <br>
-        
-        <br>
-        <div class="row">
-        <div class="col-sm-6">        
-            <div class="row">
-                <div class="col-sm-offset-1 col-sm-10">
-                    <div  id="modal-comp-ima" >
-                 </div> 
-                </div>
-            </div>
-            <div class="row">            
+    </div>
+    <!--  MODAL EJERCICIO ACCIONES-PSICOLOGICAS -->
+    <div class="modal fade" id="Ejercicio_psi" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-PS"></div></h4></div>
+          </div>
+          <div class="modal-body">
+            <!-- Galeria de Ejercicios -->
+            <form class="form-horizontal">            
+              <div class="row">            
+                <label class="col-sm-2 control-label">Preparacion:</label>
+                <div class="col-sm-3">
+                  <input type="hidden" id="idPreparacion-psi" value="4"></input>
+                  <input type="text" class="form-control" id="" readonly="" value="Ejercicio Acciones Psicologicas">
+                </div>            
+                <label class="col-sm-2 control-label">Elemento Tec.:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="tec-ele-psi" required>
+                    <?php echo $elemento_accpsi; ?>                  
+                  </select>              
+                </div>          
+              </div>    
+              <br>                      
+              <br>
+              <div class="row">
+                <div class="col-sm-6">        
+                  <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <div  id="modal-psi-ima" >
+                      
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="row">            
                     <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-nom" readonly="">
-                </div>
-                </div>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-psi-nom" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-psi-cate" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-psi-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div align="center">
+                      <button type="button" class="btn btn-primary" id="modal-psi-selec-ejer">Seleccionar</button>
+                    </div>
+                  </div>
+                </div> 
                 <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-cate" readonly="">
-                </div>
-            </div>
-                <br>
-            <div class="row">
-                <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-comp-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div align="center">
-                    <button type="button" class="btn btn-primary" id="modal-comp-selec-ejer">Seleccionar</button>
-                </div>
-            </div>
-        </div> 
-        <br>
-        <div class="col-sm-6">
-        <div class="row">
-            <div class=" col-sm-11">                
-               <div class="form-group" id="resultado-modal-5">
-            </div>
-            
-            </div>
-            <div class="row">
-                <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
-            </div>
-            <br>
-            <div class="list-group">
-            <div class="list-group-item list-group-item-info">
-            <div class="row ">
-                        <input type="text" class="form-control" id="modal-comp-id1" value="0" style="visibility:hidden">
-
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-nom1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-desc1" readonly="">
-                </div>
-            </div>
-            <br>
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-comp-limpiar1">Limpiar</button>
-            </div>
-            </div>
-            </div>
-            
-            <div class="list-group">
-            <div class="list-group-item list-group-item-info">
-            <div class="row">
-                        <input type="text" class="form-control" id="modal-comp-id2" value="0" style="visibility:hidden">
-
-                <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-nom2" readonly="">
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="modal-comp-desc2" readonly="">
-                </div>
-            </div>
-            <br>   
-            <div align="right">
-            <button type="button" class="btn btn-normal" id="modal-comp-limpiar2">Limpiar</button>
-                              </div>
-                                                </div>
-                                                </div>
-                                            </div>
-                                       </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class=" col-sm-11">                
+                      <div class="form-group" id="resultado-modal-4">
+                      
+                      </div>            
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
+                    </div>
+                    <br>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row ">
+                          <input type="text" class="form-control" id="modal-psi-id1" value="0" style="visibility:hidden">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-psi-nom1" readonly="">
                           </div>
-                    </form>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-psi-desc1" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar1">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row">
+                          <input type="text" class="form-control" id="modal-psi-id2" value="0" style="visibility:hidden">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-psi-nom2" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-psi-desc2" readonly="">
+                          </div>
+                        </div>
+                        <br>   
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar2">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
               </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  MODAL EJERCICIO COMP-->
+    <div class="modal fade" id="Ejercicio_comp" tabindex="-1" role="dialog" aria-labelledby="galeriaejercicios">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-title" id="myModalLabel" align="center"><h4><div id="modal-CM"></div></h4>
+
+            </div>
+          </div>
+          <div class="modal-body">
+            <!-- Galeria de Ejercicios -->            
+            <form class="form-horizontal">              
+              <div class="row">            
+                <label class="col-sm-2 control-label">Preparacion:</label>
+                <div class="col-sm-3">
+                  <input type="hidden" id="idPreparacion-comp" value="5"></input>
+                  <input type="text" class="form-control" id="" readonly="" value="Competencia">
+                </div>                            
+                <label class="col-sm-2 control-label">Elemento Tec.:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="tec-ele-comp" required>
+                    <?php echo $elemento_comp; ?>                  
+                  </select>              
+                </div>            
+              </div>    
+              <br>        
+              <br>
+              <div class="row">
+                <div class="col-sm-6">        
+                  <div class="row">
+                    <div class="col-sm-offset-1 col-sm-10">
+                      <div  id="modal-comp-ima" >
+                      
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="row">            
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-comp-nom" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="modal-comp-cate" readonly="">
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <label class=" col-sm-offset-1 col-sm-3 control-label">Descripci&oacuten:</label>
+                    <div class="col-sm-8">
+                      <textarea class="form-control" rows="4" type="text" class="form-control" id="modal-comp-desc" placeholder="Descripcion del Ejercicio" onkeypress="return justNumbers(event);" readonly=""></textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div align="center">
+                      <button type="button" class="btn btn-primary" id="modal-comp-selec-ejer">Seleccionar</button>
+                    </div>
+                  </div>
+                </div> 
+                <br>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class=" col-sm-11">                
+                      <div class="form-group" id="resultado-modal-5">
+                      
+                      </div>            
+                    </div>
+                    <div class="row">
+                      <label class="col-sm-6 control-label">Ejercicios seleccionados:</label>
+                    </div>  
+                    <br>
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row ">
+                          <input type="text" class="form-control" id="modal-comp-id1" value="0" style="visibility:hidden">                
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-comp-nom1" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-comp-desc1" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar1">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>            
+                    <div class="list-group">
+                      <div class="list-group-item list-group-item-info">
+                        <div class="row">
+                          <input type="text" class="form-control" id="modal-comp-id2" value="0" style="visibility:hidden">                    
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-comp-nom2" readonly="">
+                          </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                          <label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+                          <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modal-comp-desc2" readonly="">
+                          </div>
+                        </div>
+                        <br>   
+                        <div align="right">
+                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar2">Limpiar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-<script type="text/javascript" src="/Desarrollo_SSPED/Futbol/Dosificacion/dosificacionFutbolCrearTablaPequena.js"></script>
-
-
-
-
-
+  <script type="text/javascript" src="/Desarrollo_SSPED/Futbol/Dosificacion/dosificacionFutbolCrearTablaPequena.js"></script>

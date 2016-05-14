@@ -275,15 +275,20 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
 
-<!--  llamada a menu de opciones futbol -->
-	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
- 	?>
+<!--  llamada a menu de opciones futbol vertical -->
+      <?php 
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+    ?>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
 
 
 <!-- PAGINA DE TEORIA -->
 
-<div class="col-xs-8 col-sm-7">	
+<div class="col-xs-12 col-sm-8">	
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -302,7 +307,7 @@
 		    		<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 		      			<div class="panel-body">
 
-				    		<div class="col-sm-11">
+				    		<div class="col-sm-11 col-xs-12">
 				    			<ol>
 				    			<li> <h4>Libro uno </h4> <a>Ver libro </a>
 				    				<ul>

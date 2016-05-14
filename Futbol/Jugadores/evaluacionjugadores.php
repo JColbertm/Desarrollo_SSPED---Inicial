@@ -701,12 +701,18 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
 
-<!--  llamada a menu de opciones futbol -->
-    <?php 
-        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+      <!--  llamada a menu de opciones futbol vertical -->
+      <?php 
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
     ?>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
+
     
-    <div class="col-xs-8 col-sm-7">
+    <div class="col-xs-12 col-sm-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Evaluacion</h3>
@@ -748,7 +754,7 @@
             </div>
             <br>
             <div class="row">
-              <div class="col-xs-offset-9 col-xs-3">
+              <div class="col-sm-offset-9 col-sm-3 col-xs-6">
                 <button type="button" class="btn btn-primary" id="generar" disabled>
                   Generar
                 </button>
@@ -801,12 +807,12 @@
               
               </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-sm-3 col-xs-6">
               <div id="nombre" class="table table-responsive">
 
               </div>              
             </div> 
-            <div class="col-xs-9">
+            <div class="col-sm-9 col-xs-6">
               <div id="tabla" class="table-editable table-responsive">
 
               </div>
@@ -814,20 +820,20 @@
           </div>         
           <br>
           <div>
-            <div class="col-sm-offset-7 col-sm-2">
+            <div class="col-sm-offset-7 col-sm-2 col-xs-6">
             <br>
               <button  type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                <span class="hidden-sm">
+                <span class="hidden-xs">
                   Guardar
                 </span>
               </button>
             </div>
-            <div class="col-sm-2">
+            <div class="col-sm-2 col-xs-6">
             <br>
               <button  type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal">
                 <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
-                <span class="hidden-sm">
+                <span class="hidden-xs">
                   Exportar
                 </span>
               </button>

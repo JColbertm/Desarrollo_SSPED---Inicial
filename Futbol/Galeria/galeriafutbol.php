@@ -114,114 +114,104 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
 
-<!--  llamada a menu de opciones futbol -->
-	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
- 	?>
+<!--  llamada a menu de opciones futbol vertical -->
+  		<?php 
+			require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+		?>
+ 
+ 	<!--  llamada a menu de opciones futbol horizontal -->
+		<?php
+			require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+	 	?>
 
-<div class="col-xs-8 col-sm-7">
-<div class="col">
-	<div class="panel panel-default">
-    	<div class="panel-heading">Galeria</div>
-  		<div class="panel-body">
-
-	        <!--  Formulario de Busqueda -->
-	      <form action="" class="form-horizontal" name="form-ver" id="form-ver" method="POST">
-	        <div class="container-fluid">
-	        	<div class="row">
-	        	<div class="col-sm-7">
-				             <div class="form-group" id="resultado2"></div>
-				  
-	        	</div>
-				  
-				<div class="col-sm-5">
-
-
-				    <div id="MainMenu">
-						  <div class="list-group panel">
-						    <a href="#tecnico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico</a>
-						    <div class="collapse" id="tecnico">
-								<?php echo $ejercicio_tecnico; ?>
-						    </div>
-						    <a href="#tactico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico Tactico</a>
-						    <div class="collapse" id="tactico">
-						      	<?php echo $Ejercicio_Tecnico_tactico; ?>
-						    </div>
-						    <a href="#fisico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tactico fisico</a>
-						    <div class="collapse" id="fisico">
-						      	<?php echo $Ejercicio_Tactico_fisico; ?>
-						    </div>
-						    <a href="#acciones" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Acciones Psicologicas</a>
-						    <div class="collapse" id="acciones">
-						      	<?php echo $Acciones_Psicologicas; ?>    	
-						    </div>
-						    <a href="#competencia" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Competencia</a>
-						    <div class="collapse" id="competencia">
-						      	<?php echo $Competencia; ?>    	
-						    </div>
-						  </div>
-						 <div class="form-group">
-				 	<label class="control-label col-sm-4">Categoria:</label>
-					 	<div class="col-sm-7">
-				 		<select class="form-control" name="categoria" id="categoria" required>
-						<?php echo $categoria; ?>    							
-
-                        </select>
-				 	</div>	
-				</div> 
-						</div>
-						<div class="col-sm-offset-2 col-sm-2">
-      								<button type="submit" class="btn btn-success" >Registrar</button>
-    							</div>
-						</div>
-						
-				<div class="col-sm-7">
-				<div class="form-group">
-				  		<div class="col-md-12" align="center">
-                <div  id="mostrar-ima" name="mostrar-ima"></div>
-						</div>
+<div class="col-xs-12 col-sm-8">
+	<div class="col">
+		<div class="panel panel-default">
+    		<div class="panel-heading">Galeria</div>
+  				<div class="panel-body">
+	        		<!--  Formulario de Busqueda -->
+	      			<form action="" class="form-horizontal" name="form-ver" id="form-ver" method="POST">
+	        			<div class="container-fluid">
+	        				<div class="row">
+	        					<div class="col-sm-7">
+				             		<div class="form-group" id="resultado2"></div>
+					  
+	        						</div>
+				  					<div class="col-sm-5">
+				    					<div id="MainMenu">
+						  					<div class="list-group panel">
+						    					<a href="#tecnico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico</a>
+						    					<div class="collapse" id="tecnico">
+													<?php echo $ejercicio_tecnico; ?>
+						    					</div>
+						    					<a href="#tactico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico Tactico</a>
+						    					<div class="collapse" id="tactico">
+						      						<?php echo $Ejercicio_Tecnico_tactico; ?>
+						    					</div>
+						    					<a href="#fisico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tactico fisico</a>
+						    					<div class="collapse" id="fisico">
+						      						<?php echo $Ejercicio_Tactico_fisico; ?>
+						    					</div>
+						    					<a href="#acciones" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Acciones Psicologicas</a>
+						    					<div class="collapse" id="acciones">
+						      						<?php echo $Acciones_Psicologicas; ?>    	
+						    					</div>
+						    					<a href="#competencia" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Competencia</a>
+						    					<div class="collapse" id="competencia">
+						      						<?php echo $Competencia; ?>    	
+						    					</div>
+						  					</div>
+						 					<div class="form-group">
+				 								<label class="control-label col-sm-4">Categoria:</label>
+					 							<div class="col-sm-7">
+				 									<select class="form-control" name="categoria" id="categoria" required>
+														<?php echo $categoria; ?>    																						
+                        							</select>
+				 								</div>	
+											</div> 
+										</div>
+										<div class="col-sm-offset-2 col-sm-2">
+      										<button type="submit" class="btn btn-success" >Buscar</button>
+    									</div>
+									</div>						
+									<div class="col-sm-7">
+										<div class="form-group">
+				  							<div class="col-md-12" align="center">
+                								<div  id="mostrar-ima" name="mostrar-ima"></div>
+											</div>
+										</div>
+				 						<div class="form-group">
+				 							<label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
+				 							<div class="col-sm-7">
+				 								<input type="text" class="form-control" id="nombre" placeholder="Nombre del ejercicio" readonly="">
+				 							</div>	
+				 						</div>
+										<div class="form-group">
+				 							<label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
+				 							<div class="col-sm-4">
+				 								<input type="text" class="form-control" id="categorias" placeholder="Categoria" readonly="">
+				 							</div>	
+				 						</div>
+										<div class="form-group">
+											<label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
+											<div class="col-sm-7">
+												<textarea class="form-control" rows="4" type="text" class="form-control" id="descripcion" placeholder="Descripcion del ejercicio" readonly=""></textarea>
+											</div>				
+										</div>				
+				 					</div>		
+								</div>
+							</form>
+						</div>						
 					</div>
-
-				 <div class="form-group">
-				 	<label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-				 	<div class="col-sm-7">
-				 	<input type="text" class="form-control" id="nombre" placeholder="Nombre del ejercicio" readonly="">
-				 	</div>	
-				 </div>
-				<div class="form-group">
-				 	<label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-				 	<div class="col-sm-4">
-				 	<input type="text" class="form-control" id="categorias" placeholder="Categoria" readonly="">
-				 	</div>	
-				 </div>
-				<div class="form-group">
-					<label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-					<div class="col-sm-7">
-						<textarea class="form-control" rows="4" type="text" class="form-control" id="descripcion" placeholder="Descripcion del ejercicio" readonly=""></textarea>
-					</div>				
-				</div>
-
-				
-				 </div>
-			</div>
-					</form>
-				</div>
-
-
-			</div>
-
-          <br>
-			</div>	  
+          			<br>
+				</div>	  
+  			</div>
   		</div>
   	</div>
-  	</div>
 </div>
-
-
 <!--  llamada al pie de pagina -->
  	<?php 
 		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
  	?>
-
 </body>
 </html>

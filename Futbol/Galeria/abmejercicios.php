@@ -508,427 +508,360 @@ function verdatos(){
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
   
-
-  <!--  llamada a menu de opciones futbol -->
-    <?php 
+<!--  llamada a menu de opciones futbol vertical -->
+      <?php 
       require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
     ?>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
 
-
-  <!-- Contenedor Pestaña ABM Ejercicios -->
-  <div class="col-xs-8 col-sm-7">
-    <div class="panel panel-default">
-        <div class="panel-heading">Administracion de Ejercicios</div>
-          <div class="panel-body">
-
-          <!-- Pestaña ABM Ejercicios -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li class="active"><a href="javascript:;" role="tab" data-toggle="tab" data-target="#altaejercicio">Ingresar</a></li>
-            <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#modejercicio">Modificar</a></li>
-            <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#bajaejercicio">Eliminar</a></li>
-          </ul>
-          
-          <!-- Contenido Pestaña ABM Ejercicios -->
-          <div class="tab-content">
-
-            <!-- Contenido Pestaña registrar ejercicio -->
-            <div class="active tab-pane fade in" id="altaejercicio">
-  
-              <!-- FORM CREAR Ejercicios -->
-              <h4>Ingresar nuevo ejercicio</h4>
-
-              <form class="form-horizontal" id="formRegistro" method="POST" enctype="multipart/form-data">
+<!-- Contenedor Pestaña ABM Ejercicios -->
+<div class="col-xs-12 col-sm-8">
+  <div class="panel panel-default">
+    <div class="panel-heading">Administracion de Ejercicios</div>
+      <div class="panel-body">
+        <!-- Pestaña ABM Ejercicios -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active"><a href="javascript:;" role="tab" data-toggle="tab" data-target="#altaejercicio">Ingresar</a></li>
+          <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#modejercicio">Modificar</a></li>
+          <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#bajaejercicio">Eliminar</a></li>
+        </ul>
+        <!-- Contenido Pestaña ABM Ejercicios -->
+        <div class="tab-content">
+          <!-- Contenido Pestaña registrar ejercicio -->
+          <div class="active tab-pane fade in" id="altaejercicio">
+            <!-- FORM CREAR Ejercicios -->
+            <h4>Ingresar nuevo ejercicio</h4>
+            <form class="form-horizontal" id="formRegistro" method="POST" enctype="multipart/form-data">
+              <br>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control soloL" id="nombre-reg" name="nombre-reg" placeholder="Nombre del ejercicio" required >
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="cate-reg" name="cate-reg" required>
+                    <?php echo $categoria; ?>                  
+                  </select>
+                </div>
+                <label class=" col-sm-2 control-label">Preparaciones:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="prepa-reg" name="prepa-reg" required>
+                    <?php echo $preparaciones; ?>                   
+                  </select>
+                </div>
+              </div>
+              <div class="row">
                 <br>
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
-                  <div class="col-sm-7">
-                      <input type="text" class="form-control soloL" id="nombre-reg" name="nombre-reg" placeholder="Nombre del ejercicio" required >
-                  </div>
+                <label class="col-sm-offset-1 col-sm-2 control-label">Sub Ejercicio:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="ejersub-reg" name="ejersub-reg" >
+                    <option></option>
+                  </select>
                 </div>
-
-                <div class="row">
-
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
-                  <div class="col-sm-2">
-                      <select class="form-control" id="cate-reg" name="cate-reg" required>
-                         <?php echo $categoria; ?>                  
-
-                    </select>
-                  </div>
-                
-
-                
-                  <label class=" col-sm-2 control-label">Preparaciones:</label>
-                  <div class="col-sm-2">
-                      <select class="form-control" id="prepa-reg" name="prepa-reg" required>
-                          <?php echo $preparaciones; ?>                   
-                    </select>
-                  </div>
+                <label class=" col-sm-2 control-label">Elemento Tecnico:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="ele-reg" name="ele-reg" required>
+                    <option></option>
+                  </select>
                 </div>
-
-                <div class="row">
-                  <br>
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Sub Ejercicio:</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" id="ejersub-reg" name="ejersub-reg" >
-                        <option></option>
-                      </select>
-                    </div>
-
-                  <label class=" col-sm-2 control-label">Elemento Tecnico:</label>
-                  <div class="col-sm-2">
-                      <select class="form-control" id="ele-reg" name="ele-reg" required>
-                        <option></option>
-                    </select>
-                  </div>
-             
+              </div>
+              <div class="row">
+                <br>
+                <label class="col-sm-offset-1 col-sm-2 control-label">Metodo:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="met-reg" name="met-reg">
+                    <option></option>
+                    <option value="Analitico">Analitico</option>
+                    <option value="Global">Global</option>
+                  </select>
                 </div>
-
-               <div class="row">
-<br>
-                     <label class="col-sm-offset-1 col-sm-2 control-label">Metodo:</label>
-                  <div class="col-sm-2">
-                      <select class="form-control" id="met-reg" name="met-reg">
-                        <option></option>
-                        <option value="Analitico">Analitico</option>
-                        <option value="Global">Global</option>
-                    </select>
-                  </div>
-                  <label class=" col-sm-2 control-label">Tarea:</label>
-                  <div class="col-sm-2">
-                      <select class="form-control" id="tarea-reg" name="tarea-reg">
-                        <option></option>
-                        <option value="ataquevs def">Ataque vs Defensa</option>
-                        <option value="Situacion de juego">Situacion de juego</option>
-                        <option value="Posicion de balon">Posicion de balon</option>
-                        <option value="Posecion de balon">Posecion de balon</option>
-                        <option value="Rondo">Rondo</option>
-                        <option value="Juegos de Aplicacion">Juegos de Aplicacion</option>
-                    </select>
-                  </div>
-
+                <label class=" col-sm-2 control-label">Tarea:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="tarea-reg" name="tarea-reg">
+                    <option></option>
+                    <option value="ataquevs def">Ataque vs Defensa</option>
+                    <option value="Situacion de juego">Situacion de juego</option>
+                    <option value="Posicion de balon">Posicion de balon</option>
+                    <option value="Posecion de balon">Posecion de balon</option>
+                    <option value="Rondo">Rondo</option>
+                    <option value="Juegos de Aplicacion">Juegos de Aplicacion</option>
+                  </select>
+                </div>
               </div>
               <br>
-
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Descripci&oacuten:</label>
-                  <div class="col-sm-7">
-                      <textarea class="form-control" rows="4" type="text" class="form-control"  placeholder="Descripcion del Ejercicio" id="des-reg" name="des-reg" ></textarea>
-                  </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Descripci&oacuten:</label>
+                <div class="col-sm-7">
+                  <textarea class="form-control" rows="4" type="text" class="form-control"  placeholder="Descripcion del Ejercicio" id="des-reg" name="des-reg" ></textarea>
                 </div>
-
-                <div class="form-group">
+              </div>
+              <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
                 <div class="col-sm-3" >
-                <div  id="mostrar-ima" name="mostrar-ima" class="img-rounded"></div>
-                 </div>
-              </div>
-
-      
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
-                 
-                    <label class=" control-label"></label>
-                        <div class="col-sm-3" >
-                      <input type="file" id="abrir-ima" class="form-control-file " name="abrir-ima" value="ser">
-                  </div>
-                  </div>
-                     <script src="acciones_abm_ejer/mostrar_ima.js"></script>
-
-  
-                    
-  
-                <div class="form-group">
-                  <div class="col-sm-offset-3 col-sm-2">
-                      <button type="submit" class="btn btn-primary" onclick="javascript:Limpiar()">Limpiar</button>
-                  </div>
-                  <div class="col-sm-offset-2 col-sm-2">
-                      <button type="submit" class="btn btn-success" >Registrar</button>
-                  </div>
+                  <div  id="mostrar-ima" name="mostrar-ima" class="img-rounded"></div>
                 </div>
-
-                 <div class="form-group" id="resultado"></div>
-                
-                </form>
-              
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
+                <label class=" control-label"></label>
+                <div class="col-sm-3" >
+                  <input type="file" id="abrir-ima" class="form-control-file col-xs-12" name="abrir-ima" value="ser">
+                </div>
+              </div>
+              <script src="acciones_abm_ejer/mostrar_ima.js"></script>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-2 col-xs-6">
+                  <button type="submit" class="btn btn-primary" onclick="javascript:Limpiar()">Limpiar</button>
+                </div>
+                <div class="col-sm-offset-2 col-sm-2 col-xs-6">
+                  <button type="submit" class="btn btn-success" >Registrar</button>
+                </div>
+              </div>
+              <div class="form-group" id="resultado"></div>
+            </form>
             <!-- FIN FORM CREAR ejercicios -->
           </div>
           <!-- Fin Contenido Pestaña registrar ejercicios -->
-
-
           <!--  Contenido Pestaña modificar grupo -->
           <div class="tab-pane fade" id="modejercicio">
-
             <!-- FORM MODIFICAR Ejericios -->
             <h4>Modificar ejercicio</h4>
-
             <form class="form-horizontal" name="formModificar" id="formModificar" enctype="multipart/form-data" method="POST">
+              <br>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label" >Nombre:</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="modNombre" placeholder="Nombre de ejercicio" >
+                </div>
+                <div class="col-sm-2">
+                <br>
+                  <button type="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-search " aria-hidden="true"></span>
+                    Buscar
+                  </button>
+                </div>
+              </div>
+              <!--tabla resultante-->
+              <div class="form-group" id="resultado2">
+      
+              </div>
+              <div>
+                <center><h4>Datos del Ejercicio</h4></center>
+              </div>
+              <br>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="nombre-mod" name="nombre-mod" placeholder="Nombre Ejercicio" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="cate-mod" name="cate-mod" required>
+                    <?php echo $categoria; ?>                   
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Preparaciones:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="prepa-mod" name="prepa-mod" required>
+                    <?php echo $preparaciones; ?>                   
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Sub Ejercicio:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="ejersub-mod">
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Elemento Tecnico:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="ele-mod" name="ele-mod" required>
+                    <option></option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Metodo:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="met-mod" name="met-mod">
+                    <option></option>
+                    <option value="Analitico">Analitico</option>
+                    <option value="Global">Global</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Tarea:</label>
+                <div class="col-sm-3">
+                  <select class="form-control" id="tarea-mod" name="tarea-mod">
+                    <option></option>
+                    <option value="ataquevs def">Ataque vs Defensa</option>
+                    <option value="Situacion de juego">Situacion de juego</option>
+                    <option value="Posicion de balon">Posicion de balon</option>
+                    <option value="Posecion de balon">Posecion de balon</option>
+                    <option value="Rondo">Rondo</option>
+                    <option value="Juegos de Aplicacion">Juegos de Aplicacion</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label ">Descripci&oacuten:</label>
+                <div class="col-sm-7">
+                  <textarea class="form-control" rows="4" type="text" class="form-control" name="des-mod" id="des-mod" placeholder="Descripcion del Ejercicio" ></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
+                <div class="col-sm-3" >
+                  <div  id="mostrar-ima-mod" name="mostrar-ima-mod"></div>
+        
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
+                  <div class="col-sm-3">
+                    <input type="file" id="abrir-ima-mod" class="form-control-file col-xs-12" name="abrir-ima-mod">
+                  </div>
+                </div>
+                <script src="acciones_abm_ejer/mostrar_ima_mod.js"></script>
+                <div class="form-group">
+                  <div class="col-sm-offset-3 col-sm-2 col-xs-6">
+                    <button type="submit" class="btn btn-primary" onclick="javascript:Limpiar()">Limpiar</button>
+                  </div>
+                  <div class="col-sm-offset-2 col-sm-2 col-xs-6">
+                    <button type="submit" class="btn btn-success" >Modificar</button>
+                  </div>
+                </div>
+                <div class="form-group" id="resultado-mod"></div>
+              </form>
+              <!-- FIN FORM MODIFICAR Ejericicios -->
+            </div>
+            <!--  Fin Contenido Pestaña modificar ejercicios -->
+            <div class="tab-pane fade" id="bajaejercicio">
+              <!-- FORM ELIMINAR Ejercicios -->
+              <h4>Eliminar ejercicio</h4>
+              <form class="form-horizontal" name="formEliminar" id="formEliminar">
               <br>
                 <div class="form-group">
                   <label class="col-sm-offset-1 col-sm-2 control-label" >Nombre:</label>
                   <div class="col-sm-5">
-                      <input type="text" class="form-control" id="modNombre" placeholder="Nombre de ejercicio" >
+                    <input type="text" class="form-control" name="eliNombre" id="eliNombre" placeholder="Nombre de ejercicio"  >
                   </div>
-                
-                <div class="col-sm-2">
-                      <button type="button" class="btn btn-default ">
-                        <span class="glyphicon glyphicon-search " aria-hidden="true"></span>
-                          Buscar
-                      </button>
-                    </div>
+                  <div class="col-sm-2">
+                  <br>
+                    <button type="button" class="btn btn-default ">
+                      <span class="glyphicon glyphicon-search " aria-hidden="true"></span>
+                        Buscar
+                    </button>
+                  </div>
                 </div>
- 
-              
-
-                <!--tabla resultante-->
-              <div class="form-group" id="resultado2">
-                
-              </div>
-
+                <div class="form-group" id="resultado-eli" name="resultado-eli">
+          
+                </div>
                 <div>
                   <center><h4>Datos del Ejercicio</h4></center>
                 </div>
                 <br>
-                
                 <div class="form-group">
-                    <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
-                    <div class="col-sm-7">
-                      <input type="text" class="form-control" id="nombre-mod" name="nombre-mod" placeholder="Nombre Ejercicio" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="cate-mod" name="cate-mod" required>
-                          <?php echo $categoria; ?>                   
-
-                    </select>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Preparaciones:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="prepa-mod" name="prepa-mod" required>
-                          <?php echo $preparaciones; ?>                   
-                    </select>
+                  <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
+                  <div class="col-sm-3" >
+                    <div  id="mostrar-ima-eli" name="mostrar-ima-eli"></div>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Sub Ejercicio:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="ejersub-mod">
-
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Elemento Tecnico:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="ele-mod" name="ele-mod" required>
-                        <option></option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Metodo:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="met-mod" name="met-mod">
-                        <option></option>
-                        <option value="Analitico">Analitico</option>
-                        <option value="Global">Global</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label">Tarea:</label>
-                  <div class="col-sm-3">
-                      <select class="form-control" id="tarea-mod" name="tarea-mod">
-                        <option></option>
-                        <option value="ataquevs def">Ataque vs Defensa</option>
-                        <option value="Situacion de juego">Situacion de juego</option>
-                        <option value="Posicion de balon">Posicion de balon</option>
-                        <option value="Posecion de balon">Posecion de balon</option>
-                        <option value="Rondo">Rondo</option>
-                        <option value="Juegos de Aplicacion">Juegos de Aplicacion</option>
-                    </select>
-                  </div>
-                </div>
-
-              <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label ">Descripci&oacuten:</label>
+                  <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
                   <div class="col-sm-7">
-                      <textarea class="form-control" rows="4" type="text" class="form-control" name="des-mod" id="des-mod" placeholder="Descripcion del Ejercicio" ></textarea>
-                  </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
-                <div class="col-sm-3" >
-                <div  id="mostrar-ima-mod" name="mostrar-ima-mod"></div>
-                 </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
-                  <div class="col-sm-3">
-                      <input type="file" id="abrir-ima-mod" class="form-control-file " name="abrir-ima-mod">
-                  </div>
-              </div>
-                     <script src="acciones_abm_ejer/mostrar_ima_mod.js"></script>
-
-              <div class="form-group">
-                  <div class="col-sm-offset-3 col-sm-2">
-                      <button type="submit" class="btn btn-primary" onclick="javascript:Limpiar()">Limpiar</button>
-                    </div>
-                    <div class="col-sm-offset-2 col-sm-2">
-                    <button type="submit" class="btn btn-success" >Modificar</button>
+                    <input type="text" class="form-control" id="Nombre-eli" name="Nombre-eli" placeholder="Nombre " readonly="">
                   </div>
                 </div>
-                                 <div class="form-group" id="resultado-mod"></div>
-
-              </form>
-          <!-- FIN FORM MODIFICAR Ejericicios -->
-          </div>
-          <!--  Fin Contenido Pestaña modificar ejercicios -->
-
-          
-          <div class="tab-pane fade" id="bajaejercicio">
-
-              <!-- FORM ELIMINAR Ejercicios -->
-            <h4>Eliminar ejercicio</h4>
-            <form class="form-horizontal" name="formEliminar" id="formEliminar">
-            <br>
                 <div class="form-group">
-                  <label class="col-sm-offset-1 col-sm-2 control-label" >Nombre:</label>
-                  <div class="col-sm-5">
-                      <input type="text" class="form-control" name="eliNombre" id="eliNombre" placeholder="Nombre de ejercicio"  >
+                  <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
+                  <div class="col-sm-7">
+                    <input type="text" class="form-control" id="Categoria-eli" name="Categoria-eli" placeholder="Categoria" readonly="">
                   </div>
-                  <div class="col-sm-2">
-                      <button type="button" class="btn btn-default ">
-                        <span class="glyphicon glyphicon-search " aria-hidden="true"></span>
-                          Buscar
-                      </button>
-                    </div>
                 </div>
-                  
-                  <div class="form-group" id="resultado-eli" name="resultado-eli">
-                
-                        
-                </div>
-            
-
-              <div>
-                  <center><h4>Datos del Ejercicio</h4></center>
-                </div>
-
-              <br>
-
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Imagen Ejercicio:</label>
-                <div class="col-sm-3" >
-                <div  id="mostrar-ima-eli" name="mostrar-ima-eli"></div>
-                 </div>
-              </div>
-              
                 <div class="form-group">
-                    <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+                  <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Preparaciones:</label>
                   <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Nombre-eli" name="Nombre-eli" placeholder="Nombre " readonly="">
-                    </div>
-                    
+                    <input type="text" class="form-control" id="Preparaciones-eli" name="Preparaciones-eli" placeholder="Preparacion" readonly="">
+                  </div>
                 </div>
-
                 <div class="form-group">
-                      <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Categor&iacutea:</label>
+                  <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Elementos Tec.:</label>
                   <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Categoria-eli" name="Categoria-eli" placeholder="Categoria" readonly="">
+                    <input type="text" class="form-control" id="Elemento-eli" name="Elemento-eli" placeholder="Elemento Tec." readonly="">
                   </div>
-              </div>
-
-              <div class="form-group">
-                      <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Preparaciones:</label>
-                  <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Preparaciones-eli" name="Preparaciones-eli" placeholder="Preparacion" readonly="">
-                  </div>
-              </div>
-
-              <div class="form-group">
-                      <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label">Elementos Tec.:</label>
-                  <div class="col-sm-7">
-                      <input type="text" class="form-control" id="Elemento-eli" name="Elemento-eli" placeholder="Elemento Tec." readonly="">
-                  </div>
-              </div>
-
-
-              <div class="form-group">
+                </div>
+                <div class="form-group">
                   <label for="inputDescripcion" class="col-sm-offset-1 col-sm-2 control-label ">Descripci&oacuten:</label>
                   <div class="col-sm-7">
                     <textarea class="form-control" rows="4" type="text" class="form-control" id="Des-eli" placeholder="Descripcion del Ejercicio"  readonly=""></textarea>
                   </div>
-                </div>
-
-                 
-              <!-- Boton Limpiar -->
-
-              <div class="form-group">
-                  <div class="col-sm-offset-3 col-sm-2">
+                </div>                 
+                <!-- Boton Limpiar -->
+                <div class="form-group">
+                  <div class="col-sm-offset-3 col-sm-2 col-xs-6">
                     <button type="button" class="btn btn-primary" onclick="javascript:Limpiar()" >Limpiar</button>
                   </div>
-                                <!-- Boton eliminar -->
-
-                  <div class="col-sm-offset-2 col-sm-2">
+                  <!-- Boton eliminar -->
+                  <div class="col-sm-offset-2 col-sm-2 col-xs-6">
                     <button type="button" class="eliminar btn btn-danger " data-toggle="modal" data-target="#myModalEliminarEjercicio">
                       Eliminar
                     </button>
                   </div>
-            </div>
-                                       <div class="form-group" id="resultado-men-eli"></div>
-            </form>
-
-            <!-- modal confirmar eliminacion de ejercicio -->
-
-            <div class="modal fade" id="myModalEliminarEjercicio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-              <div class="modal-dialog modal-sm" role="document">
+                </div>
+                <div class="form-group" id="resultado-men-eli"></div>
+              </form>
+              <!-- modal confirmar eliminacion de ejercicio -->
+              <div class="modal fade" id="myModalEliminarEjercicio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
                   <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                              <h4 class="modal-title" id="myModalLabel">Eliminar</h4>
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Eliminar</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form class="form-horizontal" method="post" action='' name="login_form">
+                        <div class="form-group">
+                        <br>
+                          <label for="inputCI" class="col-sm-11">Seguro de eliminar este ejercicio?</label>
                         </div>
-           
-                        <div class="modal-body">
-                          <form class="form-horizontal" method="post" action='' name="login_form">
-                              <div class="form-group">
-                              <br>
-                                <label for="inputCI" class="col-sm-11">Seguro de eliminar este ejercicio?</label>
-                              </div>
-
-      
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-7">
-                                  <button type="submit" onclick="javascript:eliminarDatos()" class="btn btn-success btn-sm" data-dismiss="modal">Eliminar</button>
-                                  <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
-                                </div>
-
-                            </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-3 col-sm-7">
+                            <button type="submit" onclick="javascript:eliminarDatos()" class="btn btn-success btn-sm" data-dismiss="modal">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
+                          </div>
+                        </div>
                       </form>
-                          </div>
-
-                          <div class="modal-footer" >
-                            
-                          </div>
-                      </div>
+                    </div>
+                    <div class="modal-footer" >
+    
+                    </div>
                   </div>
                 </div>
-            <!-- FIN FORM ELIMINAR GRUPOS -->
+              </div>
+              <!-- FIN FORM ELIMINAR GRUPOS -->
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
-  <!--  llamada al pie de pagina -->
-  <?php 
+    <!--  llamada al pie de pagina -->
+    <?php 
       require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
     ?>
 </body>

@@ -192,7 +192,6 @@
               $('#plani').html('<div class="col-sm-2">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'">'+
                     ' <button type="button" class="form-control">'+
-                      ' <span class="hidden-xs">'+
                       '   Anual'+
                      '  </span>'+
                     ' </button>'+
@@ -202,7 +201,6 @@
                    '<div class="col-sm-3">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'">'+
                     ' <button type="button" class="form-control">'+
-                      ' <span class="hidden-xs">'+
                       '   Trimestral'+
                      '  </span>'+
                     ' </button>'+
@@ -213,7 +211,6 @@
               '<div class="col-sm-3">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'">'+
                     ' <button type="button" class="form-control">'+
-                      ' <span class="hidden-xs">'+
                       '   Semestral'+
                      '  </span>'+
                     ' </button>'+
@@ -223,7 +220,6 @@
                    '<div class="col-sm-4">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'">'+
                     ' <button type="button" class="form-control">'+
-                      ' <span class="hidden-xs">'+
                       '   Competencia'+
                      '  </span>'+
                     ' </button>'+
@@ -385,172 +381,148 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
 
-<!--  llamada al menu de opciones futbol -->
-	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
- 	?>
+<!--  llamada a menu de opciones futbol vertical -->
+      <?php 
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+    ?>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
 
 <!--  Contenedor de planificacion -->
-<div class="col-xs-8 col-sm-7">
+<div class="col-xs-12 col-sm-8  ">
   <div class="panel panel-default">
-		 <div class="panel-heading">Planificacion</div>
+		<div class="panel-heading">Planificacion</div>
 			<div class="panel-body">
-
-
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#primera" aria-controls="" role="tab" data-toggle="tab">Crear Planificacion</a></li>
-            <li role="presentation"><a href="#segunda" aria-controls="s" role="tab" data-toggle="tab" >Planificaciones pasadas</a></li>
-          </ul>
-
-<div class="tab-content">
-      <!-- Primer Panel -->
-    <div role="tabpanel" class="tab-pane active" id="primera">
-        <div>
-          <h4>Planificacion de Entrenamiento</h4>
-        </div>
-        <!--  Formulario de Busqueda -->
-        <br>
-			  <form class="form-horizontal">
-          <div class="form-group">
-            <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label" id="buscarMod1" >Equipo:</label>
-            <div class="col-sm-6">
-              <input type="text" class="form-control" id="BuscaEquipo" placeholder="Nombre de equipo" >
+          <li role="presentation" class="active"><a href="#primera" aria-controls="" role="tab" data-toggle="tab">
+            Crear Planificacion</a>
+          </li>
+          <li role="presentation"><a href="#segunda" aria-controls="s" role="tab" data-toggle="tab" >
+            Planificaciones pasadas</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <!-- Primer Panel -->
+          <div role="tabpanel" class="tab-pane active" id="primera">
+            <div>
+              <h4>Planificacion de Entrenamiento</h4>
             </div>
-            <div class="col-sm-3">
-              <button  type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                <span class="hidden-xs">
-                  Buscar
-                </span>
-              </button>
-            </div>
-          </div>
-        
-          <div>
-            <center><h4>Datos del Equipo</h4></center>
-          </div>
-
-          <!--  Tabla de resultado de busqueda -->
-          <div class="col-sm-7 col-xs-12 form-group table-responsive" id="ResBusqueda">
-          <br>
-
-         </div>
-
-        <!--  formulario de muestra de informacion -->
-        <br>
-        <div class="col-sm-5">
-          <form class="form-horizontal">
-            <div class="form-group">              
-              <label>Equipo:</label>  
-                <input type="text" class="form-control" id="ReadEquipo" placeholder="equipo" readonly="">              
-            </div> 
-            <div class="form-group">              
-              <label>Categoria:</label>   
-                <input type="text" class="form-control" id="ReadCategoria" placeholder="Categoria" readonly="">              
-            </div>                 
-          </form>
-        </div> 
-
-        <!-- Tipo de Planificacion -->
-        <div class="col-sm-12" id="plani">
-          <h4>Planificacion</h4>
-          <div id="mensaje">
-            <div  class="alert alert-info" role="alert">Para iniciar la planificacion, primero seleccione un grupo.</div>
-          </div>
-
-          <br>
-        </div>
-      </form>
-
-  </div>
-
-  <div role="tabpanel" class="tab-pane " id="segunda">
-
-            <!-- FORM MODIFICAR planificacion -->
-          <h4>Buscar Planificacion</h4>
-          <form class="form-horizontal" id="formModificar" method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/pdf_plan.php" target="_blank">
+              <!--  Formulario de Busqueda -->
             <br>
-            <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label" id="buscaNo">Nombre:</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" id="buscaNomP" name="buscaNomP" placeholder="Nombre de planificacion" >
-              </div>
-              <div class="col-xs-6 col-sm-3 hidden-xs">
-                  <label class="col-sm-offset-1  control-label">
-                       Buscar
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="inputNombreMo" class="col-sm-offset-1 col-sm-2 control-label" id="buscarMod1" >Equipo:</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="BuscaEquipo" placeholder="Nombre de equipo" >
+                </div>
+                <div class="col-sm-3">
+                  <button  type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                  </label>
-                 
+                    <span class="hidden-xs">
+                      Buscar
+                    </span>
+                  </button>
+                </div>
+              </div>        
+              <div>
+                <center><h4>Datos del Equipo</h4></center>
               </div>
-            </div>
-        
+              <!--  Tabla de resultado de busqueda -->
+              <div class="col-sm-7 col-xs-12 form-group table-responsive" id="ResBusqueda">
+              <br>            
+              
+              </div>
+              <!--  formulario de muestra de informacion -->
+              <br>
+              <div class="col-sm-5">
+                <form class="form-horizontal">
+                  <div class="form-group">              
+                    <label>Equipo:</label>  
+                    <input type="text" class="form-control" id="ReadEquipo" placeholder="equipo" readonly="">              
+                  </div> 
+                  <div class="form-group">              
+                    <label>Categoria:</label>   
+                    <input type="text" class="form-control" id="ReadCategoria" placeholder="Categoria" readonly="">              
+                  </div>                 
+                </form>
+              </div> 
+              <!-- Tipo de Planificacion -->
+              <div class="col-sm-12" id="plani">
+                <h4>Planificacion</h4>
+                <div id="mensaje">
+                  <div  class="alert alert-info" role="alert">
+                    Para iniciar la planificacion, primero seleccione un grupo.
+                  </div>
+                </div>
+                <br>
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" class="tab-pane " id="segunda">
+            <!-- FORM MODIFICAR planificacion -->
+            <h4>Buscar Planificacion</h4>
+            <form class="form-horizontal" id="formModificar" method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/pdf_plan.php" target="_blank">
+            <br>
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label" id="buscaNo">Nombre:</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="buscaNomP" name="buscaNomP" placeholder="Nombre de planificacion" >
+                </div>
+                <div class="col-xs-6 col-sm-3 hidden-xs">
+                  <label class="col-sm-offset-1  control-label">
+                    Buscar
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </label>                 
+                </div>
+              </div>        
               <!--tabla resultante-->
               <div class="form-group" id="planificaciones">    
+              
               </div>        
-
-            <div>
-              <center><h4>Datos de la planificacion</h4></center>
-            </div>
-            
-            <br>
-
-            <div class="form-group">
-              <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Nombre:</label>
+              <div>
+                <center><h4>Datos de la planificacion</h4></center>
+              </div>            
+              <br>
+              <div class="form-group">
+                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Nombre:</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" id="nombreP" name="nombreP" placeholder="Nombre del plan" readonly="">
                 </div>
-            </div>
-
-            <div class="form-group">
-              <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Grupo:</label>
+              </div>
+              <div class="form-group">
+                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Grupo:</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" id="grupoP" name="grupoP" placeholder="Nombre del grupo" readonly="">
                 </div>
-            </div>
-
-            <div class="form-group">
-              <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Tipo plan:</label>
+              </div>
+              <div class="form-group">
+                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Tipo plan:</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" id="planP" name="planP" placeholder="Tipo de plan" readonly="">
                 </div>
-            </div>
-
-            <input type="hidden" class="form-control" id="idP" name="idP" placeholder="Tipo de plan" readonly="">
-
-                   
-
-           
-            
-            <div id="alerta"></div>
-            <div class="form-group">
-              <div class="col-sm-offset-8 col-sm-4 col-xs-3">
-                <button type="submit" class="btn btn-success">Ver</button>
-                <button type="submit" id="eliminaPlani" class="btn btn-danger">Eliminar</button>
               </div>
-            </div>
-
+              <input type="hidden" class="form-control" id="idP" name="idP" placeholder="Tipo de plan" readonly="">                  
             
-
-          </form>
-          <!-- FIN FORM  -->
-        
-        </div>
-
-
-
+              <div id="alerta"></div>
+              <div class="form-group">
+                <div class="col-sm-offset-8 col-sm-4 col-xs-3">
+                  <button type="submit" class="btn btn-success">Ver</button>
+                  <button type="submit" id="eliminaPlani" class="btn btn-danger">Eliminar</button>
+                </div>
+              </div>          
+            </form>
+            <!-- FIN FORM  -->        
+          </div>
+        </div>      
       </div>
-
-
-
     </div>
-
   </div>
-</div>
-
-<!--  llamada al pie de pagina -->
+  <!--  llamada al pie de pagina -->
  	<?php 
 		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
  	?>
-
 </body>
 </html> 

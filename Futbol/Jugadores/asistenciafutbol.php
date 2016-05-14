@@ -19,7 +19,6 @@
         $('#plan-cre').prop('disabled',true);
         $('#etapas-cre').prop('disabled',true);
         $('#meso-cre').prop('disabled',true);
-        $('#micro-cre').prop('disabled',true);
 
         var plan=$("#plan-cre").val();
         var idequipo = $('#equipo-cre').val();
@@ -99,26 +98,8 @@
         });
 //Llenar microciclos
        $("#meso-cre").change(function(){
-        $('#formCreacion :checked').removeAttr('checked');
-            var plan=$("#plan-cre").val();
-            var meso=$('#meso-cre').val();
-            var o = "meso="+ encodeURIComponent(meso)+"&plan="+ encodeURIComponent(plan);
-            console.log(o);
-          $.ajax({
-            url:"llenado_selects.php",
-            type: "POST",
-            data:o,
-            success: function(micro){
-              console.log(micro);
-              $("#micro-cre").html(micro);
-              document.formCreacion.generar.disabled=true;
-            }
-          })
-        });
-
-        $("#micro-cre").change(function(){
           document.formCreacion.generar.disabled=false;
-        });       
+        });
 
 
     $(".botonExcel").on('click', function(){
@@ -216,6 +197,7 @@
 
         $('#nombre').html(nombre);
         $('#tabla').html(tabla);
+        document.formCreacion.generar.disabled=true;
         })
         .fail(function() 
         {
@@ -294,14 +276,19 @@
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
+<!--  llamada a menu de opciones futbol vertical -->
+      <?php 
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+    ?>
+ 
+  <!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
 
- <!--  llamada a menu de opciones futbol -->
-  <?php 
-    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
-  ?>
   <!--  llamada a las funciones del llenado de selects -->
 
-<div class="col-xs-8 col-sm-7">
+<div class="col-xs-12 col-sm-8">
   <div class="panel panel-default">
     <div class="panel-heading">
       Asistencia
@@ -334,7 +321,7 @@
                 </div>
                 <br> 
                 <div class="row">
-                  <label class=" col-sm-1 control-label">Etapas:</label>
+                  <label class=" col-sm-offset-2 col-sm-1 control-label">Etapas:</label>
                   <div class="col-sm-2">
                     <select class="form-control" id="etapas-cre" name="creacion-meso" required>
                       <?php echo $etapas; ?>                  
@@ -346,17 +333,10 @@
             
                     </select>
                   </div>
-                  <label class="col-sm-2 control-label">Microciclos:</label>
-                  <div class="col-sm-2">
-                    <select class="form-control" id="micro-cre" required>
-  
-                    </select>
-                  </div>
                 </div>
                 <br>
-                <br>
                 <div row>
-                  <div class="col-xs-offset-9 col-xs-3">
+                  <div class="col-sm-offset-9 col-sm-3 col-xs-6">
                     <button type="button" class="btn btn-primary" id="generar" disabled>
                       Generar
                     </button>
@@ -366,13 +346,13 @@
               <br>         
               <br>
               <!-- Table -->
-              <div class=" col-xs-12" id="Exportar_a_Excel">
-                <div class="col-xs-3">
+              <div class=" col-sm-12" id="Exportar_a_Excel">
+                <div class="col-sm-3 col-xs-6">
                   <div id="nombre" class="table-editable table-responsive">
 
                   </div>
                 </div> 
-                <div class="col-xs-9">
+                <div class="col-sm-9 col-xs-6">
                   <div id="tabla" class="table-editable  table-responsive">
 
                   </div>
@@ -381,10 +361,15 @@
                   
               <div align="right">
                 <form id="form" name="gua">
-                  <button type="button" class="btn btn-primary" >Guardar</button>
+                  <button type="button" class="btn btn-primary" >
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    <span class="hidden-xs">
+                      Guardar
+                    </span>
+                  </button>
                   <button type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
-                    <span class="hidden-sm">
+                    <span class="hidden-xs">
                       Exportar
                     </span>
                   </button>
@@ -419,8 +404,14 @@
           </select>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true"><strong>Cerrar</strong></button>
-          <button type="submit" class="btn btn-success botonExcel"><i class="icon-print"></i> <strong>Imprimir Reporte</strong></button>
+          <div class="col-xs-6 col-sm-9">
+            <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cerrar</button>  
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <button type="submit" class="btn btn-success botonExcel"><i class="icon-print"></i>Imprimir</button>  
+          </div>
+          
+          
           <input type="hidden" id="datos_a_enviar" name="datos_a_enviar" />
         </div>
       </form>

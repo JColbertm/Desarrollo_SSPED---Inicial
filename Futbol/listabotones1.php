@@ -1,3 +1,4 @@
+<div class="hidden-xs">
 <!--  lista de botones del menu de futbol -->
 <div class=" col-sx-offset-1 col-xs-3 col-sm-offset-1 col-sm-2">    
 <br><br><br><br>
@@ -154,4 +155,5 @@
       </div>
     </div>
 
+</div>
 </div>
