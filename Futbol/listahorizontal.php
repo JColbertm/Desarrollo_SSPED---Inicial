@@ -4,6 +4,7 @@
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+      </button> 
       <ul class="dropdown-menu">
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Programacion/gruposfutbol.php">
@@ -32,6 +33,7 @@
       </button>
       <ul class="dropdown-menu">
         <li>
+          <a href="/Desarrollo_SSPED/Futbol/Jugadores/jugadoresfutbol.php">
             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
           </a>
         </li>
