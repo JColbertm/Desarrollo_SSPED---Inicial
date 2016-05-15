@@ -11,6 +11,8 @@ html {
 }
 body {
   margin: 0;
+  background-image: url("/Desarrollo_SSPED/Imagenes/fondo.jpg") ;
+  background-attachment: fixed;
 }
 article,
 aside,

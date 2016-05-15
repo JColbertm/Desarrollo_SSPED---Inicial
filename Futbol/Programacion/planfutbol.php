@@ -454,7 +454,7 @@
                 <h4>Planificacion</h4>
                 <div id="mensaje">
                   <div  class="alert alert-info" role="alert">
-                    Para iniciar la planificacion, primero seleccione un grupo.
+                    Para iniciar la planificacion, primero seleccione un equipo.
                   </div>
                 </div>
                 <br>
