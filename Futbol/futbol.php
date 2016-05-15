@@ -36,7 +36,7 @@
 	 	?>
 
 <!--  bienvenida al usuario nueva entrada -->
-	<div class="col-sm-7 col-xs-12">
+	<div class="col-sm-8 col-xs-12">
  		<div class="jumbotron">
 			<h2>Bienvenido</h2>
 			<p><h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem fugit, saepe, impedit exercitationem ipsum aliquid est numquam, fuga illum quia ipsa! Molestiae officiis dolore aspernatur laborum. Repellendus sit, magnam beatae?
