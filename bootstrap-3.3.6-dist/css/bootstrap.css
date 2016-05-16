@@ -13,6 +13,7 @@ body {
   margin: 0;
   background-image: url("/Desarrollo_SSPED/Imagenes/fondo.jpg") ;
   background-attachment: fixed;
+  background-size: 100% 100%;
 }
 article,
 aside,

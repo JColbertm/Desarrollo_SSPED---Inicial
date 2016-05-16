@@ -39,7 +39,7 @@
     <style type="text/css"> 
 		#componentes { 
 		overflow-y: scroll;
-		height: 600px } 
+		height: 600px }
 	</style> 
 </head>
 <body>
