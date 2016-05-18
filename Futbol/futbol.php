@@ -1,3 +1,16 @@
+<?php
+@session_start();
+	if (isset($_SESSION['id_en']))
+ 	{
+	
+	}
+	else
+	{
+		header('Location: /Desarrollo_SSPED/index.php');	
+	}
+?>
+
+
 <!DOCTYPE html>
 <html> 
 <head>

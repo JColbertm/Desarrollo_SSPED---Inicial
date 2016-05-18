@@ -202,23 +202,23 @@
                             '<td><input id="sa3'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2"/></td>'+
                             '<td><input id="sa4'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2" /></td>'+
                             //Resultado Analitico
-                            '<td contenteditable="false"><input onclick="sumar_analitico('+i+')" type="text" class="form-control" maxlength="2" id="totana'+i+'" readonly=""/></td>'+
+                            '<td contenteditable="false"><input onfocus="sumar_analitico('+i+')" type="text" class="form-control" maxlength="2" id="totana'+i+'" readonly=""/></td>'+
                             //inputs evaluacion global
                             '<td><input id="sg1'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2" /></td>'+
                             '<td><input id="sg2'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2" /></td>'+
                             //Resultado Global
-                            '<td contenteditable="false"><input onclick="sumar_global('+i+')" type="text" class="form-control" maxlength="2" id="totglob'+i+'" readonly=""/></td>'+
+                            '<td contenteditable="false"><input onfocus="sumar_global('+i+')" type="text" class="form-control" maxlength="2" id="totglob'+i+'" readonly=""/></td>'+
                             // inputs evaluacion fisica
                             '<td><input id="sf1'+i+'" type="text" onkeypress="return soloLetras(event)" value=0 class="form-control" maxlength="2"/></td>'+
                             '<td><input id="sf2'+i+'" type="text" onkeypress="return soloLetras(event)" value=0 class="form-control" maxlength="2"/></td>'+
                             //Resultado Fisica
-                            '<td contenteditable="false"><input onclick="sumar_fisica('+i+')" type="text" class="form-control" maxlength="2" id="totfis'+i+'" readonly=""/></td>'+
+                            '<td contenteditable="false"><input onfocus="sumar_fisica('+i+')" type="text" class="form-control" maxlength="2" id="totfis'+i+'" readonly=""/></td>'+
                             //Nota Evaluacion
                             '<td contenteditable="false"><input type="text" class="form-control" maxlength="2" id="totasi'+i+'"   readonly=""/></td>'+
                             //Nota Total numerica
-                            '<td><input onclick="sumar_total('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total'+i+'" readonly></td>'+
+                            '<td><input onfocus="sumar_total('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total'+i+'" readonly></td>'+
 
-                            '<td><input onclick="total_literal('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total_lit'+i+'" readonly></td>'+
+                            '<td><input onfocus="total_literal('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total_lit'+i+'" readonly></td>'+
                             '</tr>';                                
             }
         }

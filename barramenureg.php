@@ -51,7 +51,7 @@
           <div class="form-group">
             <div class="col-xs-offset-2 col-xs-7">
               <a href="/Desarrollo_SSPED/index.php">
-                <button type="button" class="btn btn-success btn-sm">Aceptar</button>
+                <button id="cierre_sesion" type="button" class="btn btn-success btn-sm">Aceptar</button>
               </a>
             </div>
           </div>

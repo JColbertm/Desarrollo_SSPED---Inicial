@@ -1,10 +1,5 @@
 <?php
   session_start();
-
-  if(!empty($SESSION['session']))
-  {
-    header("Location:index.php");
-  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,6 +22,9 @@
       $('#carruseltria').carousel({
         interval: 3500
       });
+      $('#cierre_sesion').on('click', function(){
+        
+      })
     }) 
     function limpiar_datos()
     {
@@ -105,7 +103,7 @@
             console.log(resp);
             if (resp.res == 1)
             {
-              var mostrar = '<div  class="alert alert-success ocultar" role="alert"> Bienvenido!</div>'; 
+              var mostrar = '<div  class="alert alert-success ocultar col-xs-offset-2 col-xs-8" role="alert"> Bienvenido!</div>'; 
               setTimeout("$('#modalingreso').modal('hide');", 2000);
             }
             else

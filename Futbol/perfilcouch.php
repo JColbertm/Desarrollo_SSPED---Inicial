@@ -1,3 +1,15 @@
+<?php
+@session_start();
+  if (isset($_SESSION['id_en']))
+  {
+  
+  }
+  else
+  {
+    header('Location: /Desarrollo_SSPED/index.php');  
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +18,45 @@
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
     <script type="text/javascript">
-     
+      
+      $(document).ready(function(){
+        var idcouch= <?php echo $_SESSION['id_en'];?>;
+        llenar_datos(idcouch);
+      });
+
+      function llenar_datos(idcouch){
+        var id = "ide=" +encodeURIComponent(idcouch) ;
+            id += "&opcion=" + encodeURIComponent('incluye');
+          $.ajax({
+            url: 'perfil.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            console.log(resp);
+            if(resp.res == 1)
+            {
+              $('#nombrecoach').val(resp.nom);
+              $('#apellidopcoach').val(resp.app);
+              $('#apellidomcoach').val(resp.apm);
+              $('#fechanacimiento').val(resp.fecha);
+              $('#carnet').val(resp.ci);
+              $('#telefono').val(resp.fono);
+              $('#mailcoach').val(resp.mail);
+            }
+            else
+            {
+
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+      }
+
     </script>
 </head>
 <body>
@@ -36,7 +86,7 @@
           <div class="form-group">
             <label class="col-xs-offset-1 col-sm-2 control-label">Nombre:</label>
             <div class="col-sm-7">
-              <input type="text" class="form-control" id="nombrecoach" placeholder="Juan" readonly="">
+              <input type="text" class="form-control" id="nombrecoach" readonly="">
             </div>
           </div>
         
@@ -79,20 +129,6 @@
             <label class="col-xs-offset-1 col-sm-2 control-label">Correo:</label>
             <div class="col-sm-7">
               <input type="email" class="form-control" id="mailcoach" placeholder="juan.perez@ejemplo.com" readonly="">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-xs-offset-1 col-sm-2 control-label">Password:</label>
-            <div class="col-sm-7">
-              <input type="password" class="form-control" id="passwordcoach" placeholder="**********" readonly="">
-            </div>
-          </div>
-         
-          <div class="form-group">
-            <label class="col-xs-offset-1 col-sm-2 control-label">Confirmar Password:</label>
-            <div class="col-sm-7">
-              <input type="password" class="form-control" id="password2coach" placeholder="**********" readonly="">
             </div>
           </div>
         
