@@ -20,6 +20,7 @@
         $('#buscarMod1').on('keyup', buscar_tecladoJ)
         $('#eliminacion').on('click', eliminar_jugadores)
         $('#EliJugador').on('keyup', buscar_tecladoJ2)
+        $('#select1').on('change',llena_selectC)
         listarJ();
         listarJ2();
         limpiarRJ();
@@ -39,6 +40,7 @@
           setTimeout("$('.ocultar').hide();", 5000);
           var formData = new FormData($('#formRegistroJ')[0]); 
           formData.append( 'opcion','registrar');
+          console.log(formData);
           console.log(formData.toString());
           $.ajax({
             url: 'jugadores.php',
@@ -184,14 +186,20 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>NomGrupo</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>Grupo</th><th>Categoria</th></tr></thead><tbody>';
         
                   for(i in resp){ 
                     if(resp[i].res==1)
                     {
-                        html+='<tr onclick="mostrar_datosJ(this)"><td style="display:none">'+resp[i].idJugador+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none"></td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_grupo+'</td><td style="display:none">'+resp[i].imagen_ju+'</td></tr>';
+                        html+='<tr onclick="mostrar_datosJ(this)"><td style="display:none">'+resp[i].idCategoria_grupo+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].imagen_ju+'</td></tr>';
                     }
                   }
+
+
+
+                  //$resultados[$c]=array('idCategoria_grupo'=> $data[0],'idJugador'=> $data[1],'nombre_ju'=> $data[2],'apellidop_ju'=> $data[3], 'apellidom_ju' => $data[4],'fechana_ju' => $data[5],'nombre_gru' => $data[6], 'idGrupo' => $data[7],'categoria_sub' => $data[8], 'idCategoria' => $data[9],'imagen_ju' => $data[10], 'res'=> 1);
+
+
                   html+= '</tbody></table></div>';
 
                   $('#resultado2').html(html);
@@ -313,14 +321,44 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<select class="form-control" id="modGrupoJ" name="regGrupo" required><option></option>';
+                var html = '<select class="form-control" id="modGrupoJ" name="modGrupoJ" required><option></option>  ';
+               
                   for(i in resp){ 
                     html+='<option value="'+resp[i].idGrupo+'">'+resp[i].nombre_gru+'</option> ';
+                  
                   }
                   html+= '</select>';
 
                   $('#select1').html(html);
+
+              })
+              .fail(function() {
+                console.log("error");
+              })
+             
+          }
+
+           function llena_selectC(){
+            console.log( $('#modGrupoJ').val() );
+              $.ajax({
+                url: 'jugadores.php',
+                type: 'POST',
+                data: {opcion: 'c_buscar', idgrupo: $('#modGrupoJ').val()}
+              })
+              .done(function(data2) {
+                var resp = $.parseJSON(data2);//json a objeto
+                console.log(data2);
+                console.log(resp);
+
+                var html = '<select class="form-control" id="modCatJ" name="modCatJ" required>';
+               
+                  for(i in resp){ 
+                    html+='<option value="'+resp[i].idCategoria+'">'+resp[i].categoria_sub+'</option> ';
                   
+                  }
+                  html+= '</select>';
+               
+                  $('#selectCat').html(html);
 
               })
               .fail(function() {
@@ -340,7 +378,7 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<select class="form-control" id="modGrupoJ2" name="modGrupoJ2" name="regGrupo" required>';
+                var html = '<select class="form-control" id="modGrupoJ2" name="modGrupoJ2"  required>';
                   for(i in resp){ 
                     html+='<option value="'+resp[i].idGrupo+'">'+resp[i].nombre_gru+'</option> ';
                   }
@@ -355,6 +393,8 @@
               })
              
           }
+
+          
           var idj;
           var url;
           function mostrar_datosJ(f)
@@ -366,9 +406,11 @@
               row4 = $(f).find('td:eq(4)').text();
               row5 = $(f).find('td:eq(5)').text();
               row6 = $(f).find('td:eq(6)').text();
-              row7 = $(f).find('td:eq(8)').text();
+
+              row7 = $(f).find('td:eq(9)').text();
               idj=row0;
               url=row2;
+              $('#modCatJ').val(row2);
               $('#modNombreJ').val(row3);
               $('#modApellido1J').val(row4);
               $('#modApellido2J').val(row5);
@@ -471,286 +513,392 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
   ?>
 
- 
-  <!--  llamada a menu de opciones futbol vertical -->
-      <?php 
-      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
-    ?>
- 
-  <!--  llamada a menu de opciones futbol horizontal -->
-    <?php
-      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
-    ?>
+ <!--  llamada a menu de opciones futbol -->
+  <?php 
+    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
+  ?>
 
 
 <!-- Contenedor Pestaña ABM Equipo -->
-<div class="col-xs-12 col-sm-8">
-  <div class="panel panel-default">
-    <div class="panel-heading">Administrar Jugadores</div>
-      <div class="panel-body">
-        <!-- Pestaña ABM Equipo -->
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active"><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-first">Registrar</a></li>
-          <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-second">Modificar</a></li>
-          <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-third">Eliminar</a></li>
-        </ul>
-        <!-- Contenido Pestaña ABM Equipo -->
-        <div class="tab-content">
+  <div class="col-xs-8 col-sm-7">
+   <div class="panel panel-default">
+     <div class="panel-heading">Administrar Jugadores</div>
+        <div class="panel-body">
+
+
+          <!-- Pestaña ABM Equipo -->
+
+          <ul class="nav nav-tabs" role="tablist">
+           <li class="active"><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-first">Registrar</a></li>
+            <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-second">Modificar</a></li>
+            <li><a href="javascript:;" role="tab" data-toggle="tab" data-target="#tabs-third">Eliminar</a></li>
+          </ul>
+          <!-- Contenido Pestaña ABM Equipo -->
+          <div class="tab-content">
+
           <!-- Contenido Pestaña registrar Equipo-->
-          <div class="active tab-pane fade in" id="tabs-first">
-            <!-- FORM CREAR Equipo -->
-            <h4>Registrar nuevo jugador</h4>
-            <form class="form-horizontal" method="post" id="formRegistroJ" enctype="multipart/form-data">            
-              <br>
+
+           <div class="active tab-pane fade in" id="tabs-first">
+            
+          <!-- FORM CREAR Equipo -->
+          <h4>Registrar nuevo jugador</h4>
+          <form class="form-horizontal" method="post" id="formRegistroJ" enctype="multipart/form-data">
+            
+            <br>
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
                 <div class="col-sm-7">
                   <input required type="text" class="form-control" id="regNombre" name="regNombre" placeholder="Nombre " onkeypress="return soloLetras(event);" >
                 </div> 
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Apellido paterno:</label>
                 <div class="col-sm-7">
                   <input required type="text" class="form-control" id="regAp1" name="regAp1" placeholder="Apellido paterno" onkeypress="return soloLetras(event);">
                 </div>
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Apellido materno:</label>
                 <div class="col-sm-7">
                   <input required type="text" class="form-control" id="regAp2" name="regAp2" placeholder="Apellido materno" onkeypress="return soloLetras(event);">
                 </div>
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Fecha de nacimiento:</label>
                 <div class="col-sm-7">
                   <input type="date" id="regFechana" name="regFechana" step="1" min="01-01-1900" max="31-12-2100" value="<?php echo date("d-m-Y");?>">
                 </div>
-              </div>            
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
-                <div class="col-sm-3" id="select1">              
-                
-                </div>
-              </div>            
+              </div>
+            
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
+              <div class="col-sm-3" id="select1">
+              
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label">Categoria</label>
+              <div class="col-sm-3" id="selectCat">
+                <div class="alert alert-danger ocultar" role="alert" center >Seleccione un grupo!</div>
+              </div>
+            </div>
+            
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia:</label>
                 <div class="col-sm-3" >
-                  <output  id="mostrar-ima" name="mostrar-ima" > 
-                
+                <output  id="mostrar-ima" name="mostrar-ima" > 
                  </output></div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">                  
-                  Subir imagen:
-                </label>        
-                              
-                <input type="file" id="abrir-ima" class="form-control-file col-sm-7 col-xs-12" name="abrir-ima">
 
+                <div class="form-group">
+                  <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
+                 
+                    <label class=" control-label"></label>
+                    
+                      <input type="file" id="abrir-ima" class="form-control-file " name="abrir-ima">
+                  </div>
+                     <script src="mostrar_ima.js"></script>
+
+
+            
+            
+
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-2">
+                <button type="button" class="btn btn-primary">Limpiar</button>
               </div>
-              <script src="mostrar_ima.js"></script>                        
-              <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-2 col-xs-6">
-                  <button type="button" class="btn btn-primary">Limpiar</button>
-                </div>
-                <div class="col-sm-offset-2 col-sm-2 col-xs-6">
-                  <button type="submit" class="btn btn-success">Registrar</button>
-                </div>
+              <div class="col-sm-offset-2 col-sm-2">
+                <button type="submit" class="btn btn-success">Registrar</button>
               </div>
-              <div id="resultado"></div>
-            </form>
-            <!-- FIN FORM CREAR Equipo -->
+            </div>
+
+                    <div id="resultado"></div>
+             
+          </form>
+           <!-- FIN FORM CREAR Equipo -->
+
            </div>
+
           <!-- Fin Contenido Pestaña registrar Equipo-->
+
           <!--  Contenido Pestaña modificar Equipo-->
-          <div class="tab-pane fade" id="tabs-second">
+
+           <div class="tab-pane fade" id="tabs-second">
+
+
             <!-- FORM MODIFICAR Equipo -->
-            <h4>Modificar informacion jugador</h4>
-            <form class="form-horizontal"  id="formModificarJ" method="POST" enctype="multipart/form-data">
-              <br>
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label"  >Nombre:</label>
-                <div class="col-sm-5">
+          <h4>Modificar informacion jugador</h4>
+          <form class="form-horizontal"  id="formModificarJ" method="POST" enctype="multipart/form-data">
+            <br>
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label"  >Nombre:</label>
+              <div class="col-sm-5">
                 <input type="text" class="form-control" id="buscarMod1" placeholder="Nombre de jugador"  onkeypress="return soloLetras(event);">
               </div>
               <div class="col-xs-6 col-sm-3 hidden-xs">
-                <label class="col-sm-offset-1  control-label">
-                  Buscar
-                  <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </label>                
+                  <label class="col-sm-offset-1  control-label">
+                       Buscar
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </label>
+                 
               </div>
             </div>
-            <div id="resultado2" class="form-group">          
-            
+
+
+
+            <div id="resultado2" class="form-group">
+              
             </div>
+
             <div>
               <center><h4>Datos del Jugador</h4></center>
             </div>
-            <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="modNombreJ" name="modNombreJ" placeholder="Nombre " onkeypress="return soloLetras(event);" required >
-              </div>            
-            </div>
-            <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label">Apellido paterno:</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="modApellido1J" name="modApellido1J" placeholder="Apellido paterno" onkeypress="return soloLetras(event);" required>
+           
+            
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="modNombreJ" name="modNombreJ" placeholder="Nombre " onkeypress="return soloLetras(event);" required >
+                </div>
+                
               </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label">Apellido materno:</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" id="modApellido2J" name="modApellido2J" placeholder="Apellido materno" onkeypress="return soloLetras(event);" required>
+
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Apellido paterno:</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="modApellido1J" name="modApellido1J" placeholder="Apellido paterno" onkeypress="return soloLetras(event);" required>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label">Fecha de nacimiento:</label>
-              <div class="col-sm-7">
-                <input type="date" id="modFechaJ" name="modFechaJ" step="1" min="01-01-1900" max="31-12-2100" value="<?php echo date("d-m-Y");?>">
+
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Apellido materno:</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="modApellido2J" name="modApellido2J" placeholder="Apellido materno" onkeypress="return soloLetras(event);" required>
+                </div>
               </div>
-            </div>
+
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Fecha de nacimiento:</label>
+                <div class="col-sm-7">
+                  <input type="date" id="modFechaJ" name="modFechaJ" step="1" min="01-01-1900" max="31-12-2100" value="<?php echo date("d-m-Y");?>">
+                </div>
+              </div>
+
             <div class="form-group">
               <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
-              <div class="col-sm-3" id="select2">
+                <div class="col-sm-3" id="select2">
               
               </div>
             </div>
+
             <div class="form-group">
-              <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia del jugador:</label>
-              <div class="col-sm-3" >
+              <label class="col-sm-offset-1 col-sm-2 control-label">Categoria</label>
+              <div class="col-sm-3" id="selectCat2">
+              <select class="form-control" id="modCatJ" name="modCatJ">
+                   
+                    <option value="1">Sub 5</option>
+                    <option value="2">Sub 7</option>
+                    <option value="3">Sub 9</option>
+                    <option value="4">Sub 11</option>
+                    <option value="5">Sub 13</option>
+                    <option value="6">Sub 15</option>
+                    <option value="7">Preprofesional</option>
+                  </select>
+
+             
+              </div>
+            </div>
+
+              <div class="form-group">
+                <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia del jugador:</label>
+                <div class="col-sm-3" >
                 <output  id="mostrar-ima-mod" name="mostrar-ima-mod" > 
-                
-                </output></div>
+                 </output></div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>                
-                <label class=" control-label"></label>                  
-                <input type="file" id="abrir-ima-mod" class="form-control-file col-sm-7 col-xs-12 " name="abrir-ima-mod">
+
+             <div class="form-group">
+                  <label class="col-sm-offset-1 col-sm-2 control-label">Subir imagen:</label>
+                 
+                    <label class=" control-label"></label>
+                    
+                      <input type="file" id="abrir-ima-mod" class="form-control-file " name="abrir-ima-mod">
+                  </div>
+                     <script src="mostrar_ima_mod.js"></script>
+
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-2">
+                <button type="button" class="btn btn-primary">Limpiar</button>
               </div>
-              <script src="mostrar_ima_mod.js"></script>
-              <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-2 col-xs-6">
-                  <button type="button" class="btn btn-primary">Limpiar</button>
-                </div>
-                <div class="col-sm-offset-2 col-sm-2 col-xs-6">
-                  <button type="submit" class="btn btn-success">Modificar</button>
-                </div>
-              </div>            
-              <div class="form-group">              
+              <div class="col-sm-offset-2 col-sm-2">
+                <button type="submit" class="btn btn-success">Modificar</button>
+              </div>
+            </div>
+
+            
+
+            <div class="form-group">
               
-              </div>
-              <div id="resultado3">              
+            </div>
+
+            <div id="resultado3">
               
-              </div>                          
-            </form>
-            <!-- FIN FORM MODIFICAR Equipo -->
-          </div>
+            </div>
+            
+              
+          </form>
+          <!-- FIN FORM MODIFICAR Equipo -->
+           </div>
           <!--  Fin Contenido Pestaña modificar Equipo-->
-          <div class="tab-pane fade" id="tabs-third">            
+
+
+           <div class="tab-pane fade" id="tabs-third">
+
+
             <!-- FORM ELIMINAR Equipo -->
-            <h4>Eliminar jugador</h4>
-            <form class="form-horizontal"  id="formEliminarJ" method="POST">
-              <br>
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label"  >Nombre:</label>
-                <div class="col-sm-5">
-                  <input type="text" class="form-control" id="EliJugador" placeholder="Nombre de jugador"  onkeypress="return soloLetras(event);">
-                </div>
-                <div class="col-xs-6 col-sm-3 hidden-xs">
+
+
+          <h4>Eliminar jugador</h4>
+
+          <form class="form-horizontal"  id="formEliminarJ" method="POST">
+            <br>
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label"  >Nombre:</label>
+              <div class="col-sm-5">
+                <input type="text" class="form-control" id="EliJugador" placeholder="Nombre de jugador"  onkeypress="return soloLetras(event);">
+              </div>
+              <div class="col-xs-6 col-sm-3 hidden-xs">
                   <label class="col-sm-offset-1  control-label">
-                    Buscar
+                       Buscar
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                  </label>                 
-                </div>
+                  </label>
+                 
               </div>
-              <div class="form-group" id="resultado4">              
+            </div>
+
+
+
+            <div class="form-group" id="resultado4">
               
-              </div>
-              <div>
-                <center><h4>Datos del Jugador</h4></center>
-              </div>
+            </div>
+
+            <div>
+              <center><h4>Datos del Jugador</h4></center>
+            </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Fotografia del Jugador:</label>
                 <div class="col-sm-7">
-                  <div  id="mostrar-ima-eli" name="mostrar-ima-eli">
-                    
-                  </div>                  
+                <div  id="mostrar-ima-eli" name="mostrar-ima-eli"></div>
                 </div>
-              </div>            
+              </div>
+            
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Nombre:</label>
                 <div class="col-sm-7">
                   <input type="text" class="form-control" id="elNombreJ" placeholder="Nombre " onkeypress="return soloLetras(event);" readonly="">
-                </div>                
+                </div>
+                
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Apellido paterno:</label>
                 <div class="col-sm-7">
                   <input type="text" class="form-control" id="elApellido1J" placeholder="Apellido paterno" onkeypress="return soloLetras(event);" readonly="">
                 </div>
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Apellido materno:</label>
                 <div class="col-sm-7">
                   <input type="text" class="form-control" id="elApellido2J" placeholder="Apellido materno" onkeypress="return soloLetras(event);" readonly="">
                 </div>
               </div>
+
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label">Fecha de nacimiento:</label>
                 <div class="col-sm-7">
                   <input type="text" class="form-control" id="elFechaJ" placeholder="Fecha de nacimiento" readonly="">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
-                <div class="col-sm-3">
-                  <input type="text" class="form-control" id="elGrupoJ2" placeholder="Equipo" readonly="">
-                </div>
-              </div>          
-              <!-- Boton eliminar -->
-              <div class="form-group">
-                <div class="col-sm-offset-7 col-sm-2">
-                  <button type="button" class="eliminar btn btn-danger " data-toggle="modal" data-target="#myModalEliminarJugador">
-                    Eliminar
-                  </button>
-                </div>
+
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="elGrupoJ2" placeholder="Equipo" readonly="">
               </div>
-              <!-- Formulario modal2n -->
-              <div class="modal fade" id="myModalEliminarJugador" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-xs" role="document">
-                  <div class="modal-content">
+            </div>
+
+          
+          <!-- Boton eliminar -->
+
+          <div class="form-group">
+              <div class="col-sm-offset-7 col-sm-2">
+            <button type="button" class="eliminar btn btn-danger " data-toggle="modal" data-target="#myModalEliminarJugador">
+            Eliminar
+            </button>
+            </div>
+          </div>
+          <!-- Formulario modal2n -->
+
+           <div class="modal fade" id="myModalEliminarJugador" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-xs" role="document">
+              <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                       <h4 class="modal-title" id="myModalLabel">Eliminar</h4>
-                    </div>                     
+                     </div>
+                     
                     <div class="modal-body">
                       <form class="form-horizontal" method="post" action='' name="login_form">
                         <div class="form-group">
                           <br>
                           <label for="inputCI" class=" col-xs-offset-1 col-xs-11">Seguro de eliminar este Jugador?</label>
-                        </div>                
-                        <div class="form-group">
-                          <div class="col-xs-offset-1 col-xs-7">
-                            <button type="button" id="eliminacion" class="btn btn-success" data-dismiss="modal">Eliminar</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                          </div>
                         </div>
-                        <div id="resultado6"></div>
-                      </form>
-                    </div>                    
+
+                
+                      <div class="form-group">
+                        <div class="col-xs-offset-1 col-xs-7">
+                          <button type="button" id="eliminacion" class="btn btn-success" data-dismiss="modal">Eliminar</button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                     </div>
+                     <div id="resultado6"></div>
+
+
+                    </form>
+                    </div>
+
+                    
                   </div>
-                </div>
               </div>
-            </form>
-            <!-- FIN FORM ELIMINAR Equipo -->
-          </div>        
-        </div>  
-      </div>
+            </div>
+
+
+
+
+          </form>
+
+
+<!-- FIN FORM ELIMINAR Equipo -->
+ </div>
+
+
+</div>
+  
+
+
+     </div>
     </div>
-  </div>  
+    </div>
+  
 <!--  llamada al pie de pagina -->
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
   ?>
+
 </body>
 </html>

@@ -10,16 +10,21 @@
 			$d = $_POST['regFechana'];
 				//filter_var($_POST['id_categoria'],FILTER_SANITIZE_NUMBER_INT);
 			
-			$e = filter_var($_POST['regGrupo'],FILTER_SANITIZE_NUMBER_INT);
+			$e = filter_var($_POST['modGrupoJ'],FILTER_SANITIZE_NUMBER_INT);
+			$eCat = filter_var($_POST['modCatJ'],FILTER_SANITIZE_NUMBER_INT);
+
+			$personal = RecuperarIdItemA("categoria_grupo", array("idGrupo","idCategoria"), array($e,$eCat));
+			$idGrup = $personal['idCategoria_grupo'];
+
 			$foto=$_FILES["abrir-ima"]["name"];
 
 			if($foto==null)
 				    {
 				    	$destino="fotos/EjercicioFutbol.png";
 				    	//insertamos nuevo registro en tabla grupo
-			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupo');
-			$valores = array($a,$b,$c,$d,$destino,"1",$e);
-			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2,2) , $valores);
+			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat');
+			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup);
+			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2) , $valores);
 			if ($result){		
 				
 								$resultados=array('resp'=> 1);
@@ -40,8 +45,8 @@
 								    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
 								    copy($ruta,$destino);
 								    //insertamos nuevo registro en tabla grupo
-			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupo');
-			$valores = array($a,$b,$c,$d,$destino,"1",$e);
+			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat');
+			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup);
 			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2,2) , $valores);
 						if ($result){		
 				
@@ -63,13 +68,34 @@
 			flush();
 		break;
 		case "s_buscar":
-			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru from grupo where grupo.estado_gru = 1");
+			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru from grupo");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
 				while($data = mysqli_fetch_array($result))
 			{
 					$resultados[$c]=array('idGrupo'=> $data[0],'nombre_gru'=> $data[1]);
+					$c++;
+				}	
+			}
+			else {
+				$resultados=array(0);
+			}
+			echo json_encode($resultados);
+			flush();
+
+
+			
+		break;
+
+		case "c_buscar":
+			$result= execSqlA("select categoria_grupo.idCategoria_grupo, grupo.idGrupo, grupo.nombre_gru, categoria.idCategoria, categoria_sub from grupo,categoria,categoria_grupo where grupo.estado_gru = 1 and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and categoria_grupo.idGrupo=".$_POST['idgrupo']."");
+			$resultados=array();
+			if (mysqli_num_rows($result)  > 0) {
+				$c=0;
+				while($data = mysqli_fetch_array($result))
+			{
+					$resultados[$c]=array('idCatGrup'=> $data[0],'idGrupo'=> $data[1],'nombre_gru'=> $data[2],'idCategoria'=> $data[3],'categoria_sub'=> $data[4]);
 					$c++;
 				}	
 			}
@@ -126,13 +152,13 @@
 			
 		break;
 		case "listar":
-			$result= execSqlA("select jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, grupo.idGrupo, jugador.imagen_ju from grupo,jugador where grupo.idGrupo=jugador.idGrupo and jugador.estado_ju=1");
+			$result= execSqlA("select categoria_grupo.idCategoria_grupo, jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, categoria_grupo.idGrupo,categoria.categoria_sub, categoria_grupo.idCategoria, jugador.imagen_ju from grupo,jugador,categoria,categoria_grupo where categoria_grupo.idCategoria_grupo=jugador.idGrupCat and jugador.estado_ju=1 and categoria_grupo.idGrupo =grupo.idGrupo and categoria_grupo.idCategoria = categoria.idCategoria"); /////////////////DESDE ACA ARREGLAR//////////////////////////////
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
 				while($data = mysqli_fetch_array($result))
 			{
-					$resultados[$c]=array('idJugador'=> $data[0],'nombre_ju'=> $data[1],'apellidop_ju'=> $data[2],'apellidom_ju'=> $data[3], 'fechana_ju' => $data[4],'nombre_grupo' => $data[5],'idGrupo' => $data[6], 'imagen_ju' => $data[7], 'res'=> 1);
+					$resultados[$c]=array('idCategoria_grupo'=> $data[0],'idJugador'=> $data[1],'nombre_ju'=> $data[2],'apellidop_ju'=> $data[3], 'apellidom_ju' => $data[4],'fechana_ju' => $data[5],'nombre_gru' => $data[6], 'idGrupo' => $data[7],'categoria_sub' => $data[8], 'idCategoria' => $data[9],'imagen_ju' => $data[10], 'res'=> 1);
 					$c++;
 				}	
 			}
