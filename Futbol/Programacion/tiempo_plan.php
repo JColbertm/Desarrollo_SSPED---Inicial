@@ -583,7 +583,7 @@
     ?>
 
 <!--  Contenedor de planificacion -->
-	<div class="col-xs-12 col-sm-8">
+	<div class="col-xs-12 col-sm-8 ">
 		<div class="panel panel-default">
       <div class="panel-heading">
         Planificacion
@@ -611,7 +611,7 @@
                 <div class="col-sm-3 col-xs-12">
                   <label><?php echo $plan?> </label>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-xs-12">
                 <br>
                 <form class="form-inline" name="calculoplan" id="calculoplan" method="POST">
                   <?php $s=0; $m=0;
@@ -622,6 +622,7 @@
                   <input type='hidden' id='mes' value='".$m."'>
                   <input type='hidden' id='tipo_plan' name='tipo_plan' value='".$_GET['plan']."'>
                   <input type='hidden' id='id_grupo' name='id_grupo' value='".$_GET['id']."'>
+
                   ";
                   ?>
                   <div class="">
@@ -629,10 +630,10 @@
                       <label><strong>Nombre:</strong></label>
                     </div>  
                     <div class="col-sm-10 col-xs-12">
-                      <input type="text" value="" placeholder="Planificacion" class="form-control" name="nombrePlanificacion" style="" required="">
+                      <input type="text" value="" placeholder="Planificacion" class="form-control" name="nombrePlanificacion" style="" required=""><br>
                     </div>
                   </div>
-                  <br><br><br><br>
+                  <br><br><br>
                   <div class="form-group col-xs-12 col-sm-offset-2 col-sm-9">
                     <div class="col-sm-4 col-xs-12">
                       <label>Fecha de inicio de preparacion:</label>
@@ -724,42 +725,42 @@
                   </div>
                   <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">
                   <br>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <label>Cantidad de Semanas:</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <input type="text" class="form-control" id="cantisemanas" name="cantisemanas" placeholder="Cantidad de Semanas" readonly="">
                     </div>
                   </div>
-                  <div class="form-group col-sm-7 col-sm-offset-5">
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">
                   <br>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <label>Calentamiento:</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <input type="text" class="form-control" id="calentamiento" name="calentamiento" placeholder="Tiempo de calentamiento" readonly="">
                     </div>
                   </div>
-                  <div class="form-group col-sm-7 col-sm-offset-5">  
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">  
                   <br>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <label>Cantidad de Dias:</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <input type="text" class="form-control" id="cantidias" name="cantidias" placeholder="Cantidad de Dias" readonly="">
                     </div>
                   </div>
-                  <div class="form-group col-sm-7 col-sm-offset-5">            
-                    <div class="col-sm-4">
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">            
+                    <div class="col-sm-4 col-xs-12">
                       <label>Tiempo Total:</label>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 col-xs-12">
                       <input type="text" class="form-control" id="tiempototal" name="tiempototal" placeholder="Tiempo Total" readonly="">
                     </div>
                   </div>
                   <?php if($_GET['plan']!='Competencia'){ ?>
-                  <div class="form-group col-sm-7 col-sm-offset-5">            
-                    <div class="col-sm-4">
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">            
+                    <div class="col-sm-4 col-xs-12">
                       <label>Fecha Final:</label>
                     </div>
                     <div class="col-sm-4">
@@ -767,7 +768,7 @@
                     </div>
                   </div>
                   <?php }?>
-                  <div class="col-sm-offset-9 col-sm-3">
+                  <div class="col-sm-offset-9 col-sm-3 col-xs-12">
                   <br>
                     <button type="button" class="form-control btn btn-success" id="plansiguiente">
                       <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
@@ -834,7 +835,7 @@
                       <input type="text" class="col-xs-10 mesoo" id="meso2" name="meso2" onkeypress="return justNumbers(event);">
                     </div>
                   </div>      
-                  <div class="col-xs-12 col-sm-6" >
+                  <div class="col-xs-12 col-sm-6 col-xs-12" >
                   <br>
                     <div class="col-xs-12" id="inline_content2">
                     <center>
@@ -848,7 +849,7 @@
                       <label id="tiempo2"> 30 </label> Semanas.
                     </center>
                     </div>         
-                    <div class="col-xs-12 col-sm-6" id="precomp1">
+                    <div class="col-xs-6 col-sm-6 " id="precomp1">
                     <center>
                       <u>Pre Competitivo</u>
                       <br><br>
@@ -860,7 +861,7 @@
                       <label id="tiempo5"> 30 </label> Semanas.
                     </center>
                     </div>
-                    <div class="col-xs-12 col-sm-6" id="comp1">
+                    <div class="col-xs-6 col-sm-6 " id="comp1">
                     <center>
                       <u>Competitivo</u>
                       <br><br>
@@ -1083,6 +1084,16 @@
                   <input type="button" class="col-xs-6 btn btn-success"  value="Guardar" id="Guardar" method="post" disabled="">
                 </div>
                 <input type="hidden" value="" id="planifi" name="planifi">
+
+
+                 <?php 
+                 echo "
+                  <input type='hidden' id='id_categ' name='id_categ' value='".$_GET['idc']."'>
+                  
+
+                  ";
+                  ?>
+               
                 <div id="boton_proyecto">
                   <button type="submit" class="col-xs-6 btn btn-primary"  value="Proyecto" id="" disabled="">Proyecto</button>
                 </div>

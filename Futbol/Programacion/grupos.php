@@ -58,13 +58,13 @@
 		break;
 		case "buscar2":
 			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru,  categoria.categoria_sub from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1 and grupo.idEntrenador=".$_SESSION['id_en']."");
+			$result= execSqlA("select grupo.idGrupo, categoria.idCategoria, grupo.nombre_gru,  categoria.categoria_sub from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1 and grupo.idEntrenador=".$_SESSION['id_en']."");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
 				while($data = mysqli_fetch_array($result))
 			{
-					$resultados[$c]=array('idGrupo'=> $data[0],'nombre_gru'=> $data[1],'categoria_sub'=> $data[2],'res'=> 1);
+					$resultados[$c]=array('idGrupo'=> $data[0],'idCat'=> $data[1],'nombre_gru'=> $data[2],'categoria_sub'=> $data[3],'res'=> 1);
 					$c++;
 				}	
 			}

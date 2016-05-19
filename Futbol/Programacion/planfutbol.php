@@ -104,6 +104,7 @@
               $('#grupoP').val(row3);
               $('#planP').val(row4);
               $('#idP').val(row);
+              $('#planifi').val(row);
               console.log(row);
              
               
@@ -123,14 +124,14 @@
               })
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
-                var html = '<div class="table-responsive  col-sm-11" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;" width=1>id</th><th>Equipo</th><th>Categoria</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive  col-sm-11 col-xs-11" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="display:none;">id</th><th style="display:none;">idc</th><th>Equipo</th><th>Categoria</th></tr></thead><tbody>';
         
 
 
                   for(i in resp){ 
                     if(resp[i].res==1)
                     {
-                    html+='<tr onclick="click_datos(this)"><td style="visibility:hidden;" width=1>'+resp[i].idGrupo+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td></tr>';}
+                    html+='<tr onclick="click_datos(this)"><td style="display:none;">'+resp[i].idGrupo+'</td><td style="display:none;">'+resp[i].idCat+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td></tr>';}
                   }
                   html+= '</tbody></table></div>';
 
@@ -180,17 +181,20 @@
           //Mostrar datos al hacer click
           function click_datos(f)
           {
+
+          //  html+='<tr onclick="click_datos(this)"><td style="display:none;">'+resp[i].idGrupo+'</td><td style="display:none;">'+resp[i].idCat+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td></tr>';}
               
               row= $(f).find('td:eq(0)').text();
-              row2 = $(f).find('td:eq(1)').text();
-              row3 = $(f).find('td:eq(2)').text();
+              row4= $(f).find('td:eq(1)').text();
+              row2 = $(f).find('td:eq(2)').text();
+              row3 = $(f).find('td:eq(3)').text();
               $('#ReadEquipo').val(row2);
               $('#ReadCategoria').val(row3);
               idg2 = row;
               console.log(idg2);
               $('#mensaje').html('');
               $('#plani').html('<div class="col-sm-2">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'&idc='+row4+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Anual'+
                      '  </span>'+
@@ -199,7 +203,7 @@
                    '</div> '+
 
                    '<div class="col-sm-3">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'&idc='+row4+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Trimestral'+
                      '  </span>'+
@@ -209,7 +213,7 @@
 
 
               '<div class="col-sm-3">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'&idc='+row4+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Semestral'+
                      '  </span>'+
@@ -218,7 +222,7 @@
                    '</div> '+
 
                    '<div class="col-sm-4">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'&idc='+row4+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Competencia'+
                      '  </span>'+
@@ -432,12 +436,12 @@
               </div>
               <!--  Tabla de resultado de busqueda -->
               <div class="col-sm-7 col-xs-12 form-group table-responsive" id="ResBusqueda">
-              <br>            
+                        
               
               </div>
               <!--  formulario de muestra de informacion -->
               <br>
-              <div class="col-sm-5">
+              <div class="col-sm-5 col-xs-12">
                 <form class="form-horizontal">
                   <div class="form-group">              
                     <label>Equipo:</label>  
@@ -450,7 +454,7 @@
                 </form>
               </div> 
               <!-- Tipo de Planificacion -->
-              <div class="col-sm-12" id="plani">
+              <div class="col-sm-12 col-xs-12" id="plani">
                 <h4>Planificacion</h4>
                 <div id="mensaje">
                   <div  class="alert alert-info" role="alert">
@@ -464,7 +468,8 @@
           <div role="tabpanel" class="tab-pane " id="segunda">
             <!-- FORM MODIFICAR planificacion -->
             <h4>Buscar Planificacion</h4>
-            <form class="form-horizontal" id="formModificar" method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/pdf_plan.php" target="_blank">
+            <form class="form-horizontal" id="formModificar" method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/tablas_pdf.php" target="_blank">
+             <input type="hidden" value="" id="planifi" name="planifi">
             <br>
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label" id="buscaNo">Nombre:</label>

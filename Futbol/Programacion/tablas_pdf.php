@@ -53,7 +53,7 @@ $pdf->setPrintHeader(false); //no imprime la cabecera ni la linea
 $pdf->setPrintFooter(true); // imprime el pie ni la linea 
 $pdf->Cell(0, 0, 'A4 LANDSCAPE', 1, 1, 'C');
 
-$pdf->AddPage();
+
 
 //*************
   ob_end_clean();//rompimiento de pagina
@@ -62,6 +62,16 @@ $pdf->AddPage();
 
 include("databaseA.php");
 
+
+$nombre = RecuperarIdItemA('planificacion', array('idPlanificacion'), array($_POST['planifi']));
+
+$gru = RecuperarIdItemA('grupo', array('idGrupo'), array($nombre['idGrupo']));
+
+//$categor = RecuperarIdItemA('categoria', array('idCategoria'), array($_POST['id_categ']));
+
+
+$html = '<b>Nombre planificacion:</b> '.$nombre['nombre'].'<br>';
+$html = $html.'<b>Grupo:</b> '.$gru['nombre_gru'];
 
 $mesos = execSqlA('SELECT idMesociclo from direccion where idPlanificacion = '.$_POST['planifi'].'');
 $mes=array();
@@ -75,6 +85,7 @@ if (mysqli_num_rows($mesos)>0){
 
 $count=1;
 $meso_final=array();
+$color_final=array();
 for($g=0; $g< count($mes); $g++){
     if($g<count($mes)-1)
     {
@@ -90,28 +101,29 @@ for($g=0; $g< count($mes); $g++){
     else{
         $count=$count;
     }
-        if($count==1){$mesoo='I';}
-        if($count==2){$mesoo='II';}
-        if($count==3){$mesoo='III';}
-        if($count==4){$mesoo='IV';}
-        if($count==5){$mesoo='V';}
-        if($count==6){$mesoo='VI';}
-        if($count==7){$mesoo='VII';}
-        if($count==8){$mesoo='VIII';}
-        if($count==9){$mesoo='IX';}
-        if($count==10){$mesoo='X';}
-        if($count==11){$mesoo='XI';}
-        if($count==12){$mesoo='XII';}
-        if($count==13){$mesoo='XIII';}
-        if($count==14){$mesoo='XIV';}
-        if($count==15){$mesoo='XV';}
-        if($count==16){$mesoo='XVI';}
-        if($count==17){$mesoo='XVII';}
-        if($count==18){$mesoo='XVIII';}
-        if($count==19){$mesoo='XIX';}
-        if($count==20){$mesoo='XX';}
+        if($count==1){$mesoo='I';$color='#FFE4E1';}
+        if($count==2){$mesoo='II';$color='#778899';}
+        if($count==3){$mesoo='III';$color='#87CEEB';}
+        if($count==4){$mesoo='IV';$color='#ADD8E6';}
+        if($count==5){$mesoo='V';$color='#E0FFFF';}
+        if($count==6){$mesoo='VI';$color='#00FA9A';}
+        if($count==7){$mesoo='VII';$color='#7FFFD4';}
+        if($count==8){$mesoo='VIII';$color='#FF4500';}
+        if($count==9){$mesoo='IX';$color='#E9967A';}
+        if($count==10){$mesoo='X';$color='#CD853F';}
+        if($count==11){$mesoo='XI';$color='#FF7F50';}
+        if($count==12){$mesoo='XII';$color='#F5F5DC';}
+        if($count==13){$mesoo='XIII';$color='#F5DEB3';}
+        if($count==14){$mesoo='XIV';$color='#8FBC8F';}
+        if($count==15){$mesoo='XV';$color='#FFE4E1';}
+        if($count==16){$mesoo='XVI';$color='#778899';}
+        if($count==17){$mesoo='XVII';$color='#E0FFFF';}
+        if($count==18){$mesoo='XVIII';$color='#F5F5DC';}
+        if($count==19){$mesoo='XIX';$color='#00FA9A';}
+        if($count==20){$mesoo='XX';$color='#F5DEB3';}
 
         array_push($meso_final,$mesoo);
+        array_push($color_final,$color);
     }
 
 
@@ -121,7 +133,7 @@ for($g=0; $g< count($mes); $g++){
 $result = execSqlA('SELECT semana, sistema_juego, preparation_fisica, tecnico_tactico, competencia, accion_psi FROM direccion where idPlanificacion = '.$_POST['planifi'].'');
 $i=0;$r=0;
 if (mysqli_num_rows($result)>0){       
-        $html = '<div align="center">
+        $html = $html. '<div align="center">
             <h1>Macrociclo.</h1>
             <br /><br /> </div>           
             <table  width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -161,15 +173,17 @@ if (mysqli_num_rows($result)>0){
 
         $size_columna=count($columna);
         $a='';
-        if($size_columna>24)
+        if($size_columna > 24)
         {
-            for ($m=0; $m<24; $m++){    
+            $pdf->Cell(0, 0, 'A4 LANDSCAPE', 1, 1, 'C');
+                            $pdf->AddPage();
+            for ($m=0; $m<=23; $m++){    
            $html = $html.'
                        <td WIDTH="38" >
                             <table WIDTH="38" style="border-collapse: collapse;"  >  
                                 <tr><td style=" border: 1px solid black;"> </td></tr>
                                 <tr><td style="  border: 1px solid black;"> </td></tr>
-                                <tr><td style="  border: 1px solid black;">'.$meso_final[$m].'</td></tr>
+                                <tr><td style="background-color:'.$color_final[$m].';  border: 1px solid black;">'.$meso_final[$m].'</td></tr>
                                 <tr><td style="  border: 1px solid black;">'.$columna[$m][0].'</td></tr>
                                 <tr><td style="  border: 1px solid black;">'.$columna[$m][1].'</td></tr>
                                 <tr><td style="  border: 1px solid black;">'.$columna[$m][2].'</td></tr>
@@ -187,11 +201,19 @@ if (mysqli_num_rows($result)>0){
                        
         } 
                            // $pdf->Cell(0, 0, 'A4 LANDSCAPE', 1, 1, 'C');
-$html = $html.'</tr></table>';
+        $html = $html.'</tr></table>';
         $a='mitad';
-        }
-        else{
 
+        }
+        
+        else{
+            if($size_columna<=24)
+                        {
+                            $pdf->Cell(0, 0, 'A4 LANDSCAPE', 1, 1, 'C');
+                            $pdf->AddPage();
+                        }
+            $a='';
+        $cp=0;
         foreach ($columna as $c) {
 
            $html = $html.'
@@ -199,7 +221,7 @@ $html = $html.'</tr></table>';
                             <table WIDTH="38"  style="border-collapse: collapse;">  
                             <tr><td style=" border: 1px solid black;"> </td></tr>
                                 <tr><td style=" border: 1px solid black;"> </td></tr>
-                                <tr><td style=" border: 1px solid black;"> </td></tr>
+                                <tr><td style="background-color:'.$color_final[$cp].';  border: 1px solid black;">'.$meso_final[$cp].'</td></tr>
                                 <tr><td style=" border: 1px solid black;">'.$c[0].'</td></tr>
                                 <tr><td style="  border: 1px solid black;">'.$c[1].'</td></tr>
                                 <tr><td style="  border: 1px solid black;">'.$c[2].'</td></tr>
@@ -211,13 +233,9 @@ $html = $html.'</tr></table>';
                                 $html = $html.' <tr><td style="  border: 1px solid black;">'.$r.'</td></tr>
                             </table>
                         </td>
-                        ';$r=0;
+                        ';$r=0;$cp++;
        // }
-                        if($size_columna>20)
-                        {
-                            $pdf->Cell(0, 0, 'A4 LANDSCAPE', 1, 1, 'C');
-                            $pdf->AddPage();
-                        }
+                        
         }       
        $html = $html.'</tr></table>';
     }
@@ -230,6 +248,7 @@ $pdf->writeHTML($html, true, false, true, false, '');//$pdf->writeHTML($html, tr
 
 if($a=='mitad')
 {
+    $pdf->AddPage();
     $html = '<div align="center">
             <h1>Macrociclo.</h1>
             <br /><br /> </div>           
@@ -250,7 +269,7 @@ if($a=='mitad')
                             </table>
                     </td>
                 ';
-$pdf->AddPage();
+
 $tamcol= $size_columna-25;
  for ($p=24; $p<$size_columna; $p++){
            $html = $html.'
@@ -259,7 +278,7 @@ $tamcol= $size_columna-25;
                             
                                 <tr><td style="  border: 1px solid black; "> </td></tr>
                                 <tr><td style="  border: 1px solid black; "> </td></tr>
-                                <tr><td style=" border: 1px solid black;">'.$meso_final[$p].'</td></tr>
+                                <tr><td style="background-color:'.$color_final[$p].'; border: 1px solid black;">'.$meso_final[$p].'</td></tr>
                                 <tr><td style="  border: 1px solid black; ">'.$columna[$p][0].'</td></tr>
                                 <tr><td style="  border: 1px solid black; ">'.$columna[$p][1].'</td></tr>
                                 <tr><td style="  border: 1px solid black; ">'.$columna[$p][2].'</td></tr>
