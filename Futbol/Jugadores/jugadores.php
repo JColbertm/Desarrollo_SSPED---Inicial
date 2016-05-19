@@ -1,4 +1,5 @@
 <?php
+@session_start();
 		$opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		include("databaseA.php");
 	switch ($opcion) {
@@ -22,9 +23,9 @@
 				    {
 				    	$destino="fotos/EjercicioFutbol.png";
 				    	//insertamos nuevo registro en tabla grupo
-			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat');
-			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup);
-			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2) , $valores);
+			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat', 'idEntrenador');
+			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup,$_SESSION['id_en']);
+			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2,2) , $valores);
 			if ($result){		
 				
 								$resultados=array('resp'=> 1);
@@ -45,8 +46,8 @@
 								    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
 								    copy($ruta,$destino);
 								    //insertamos nuevo registro en tabla grupo
-			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat');
-			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup);
+			$campos = array('nombre_ju','apellidop_ju', 'apellidom_ju', 'fechana_ju', 'imagen_ju', 'estado_ju', 'idGrupCat', 'idEntrenador');
+			$valores = array($a,$b,$c,$d,$destino,"1",$idGrup,$_SESSION['id_en']);
 			$result= insertA('jugador', $campos, array(2,2,2,2,2,2,2,2) , $valores);
 						if ($result){		
 				
@@ -111,13 +112,13 @@
 
 		case "buscar":
 			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("select jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, grupo.idGrupo, jugador.imagen_ju from grupo,jugador where jugador.nombre_ju LIKE '%$a%' and grupo.idGrupo=jugador.idGrupo and jugador.estado_ju=1");
+			$result= execSqlA("select categoria_grupo.idCategoria_grupo, jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, categoria_grupo.idGrupo,categoria.categoria_sub, categoria_grupo.idCategoria, jugador.imagen_ju from grupo,jugador,categoria,categoria_grupo where categoria_grupo.idCategoria_grupo=jugador.idGrupCat and jugador.estado_ju=1 and categoria_grupo.idGrupo =grupo.idGrupo and categoria_grupo.idCategoria = categoria.idCategoria and jugador.nombre_ju LIKE '%$a%' and jugador.idEntrenador= ".$_SESSION['id_en']."");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
 				while($data = mysqli_fetch_array($result))
 			{
-					$resultados[$c]=array('idJugador'=> $data[0],'nombre_ju'=> $data[1],'apellidop_ju'=> $data[2],'apellidom_ju'=> $data[3], 'fechana_ju' => $data[4],'nombre_grupo' => $data[5],'idGrupo' => $data[6], 'imagen_ju' => $data[7],'res'=> 1);
+					$resultados[$c]=array('idCategoria_grupo'=> $data[0],'idJugador'=> $data[1],'nombre_ju'=> $data[2],'apellidop_ju'=> $data[3], 'apellidom_ju' => $data[4],'fechana_ju' => $data[5],'nombre_gru' => $data[6], 'idGrupo' => $data[7],'categoria_sub' => $data[8], 'idCategoria' => $data[9],'imagen_ju' => $data[10], 'res'=> 1);
 					$c++;
 				}	
 			}
@@ -130,29 +131,9 @@
 
 			
 		break;
-		case "buscar2":
-			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru,  categoria.categoria_sub from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1");
-			$resultados=array();
-			if (mysqli_num_rows($result)  > 0) {
-				$c=0;
-				while($data = mysqli_fetch_array($result))
-			{
-					$resultados[$c]=array('idGrupo'=> $data[0],'nombre_gru'=> $data[1],'categoria_sub'=> $data[2]);
-					$c++;
-				}	
-			}
-			else {
-				$resultados=array(0);
-			}
-			echo json_encode($resultados);
-			flush();
-
-
-			
-		break;
+		
 		case "listar":
-			$result= execSqlA("select categoria_grupo.idCategoria_grupo, jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, categoria_grupo.idGrupo,categoria.categoria_sub, categoria_grupo.idCategoria, jugador.imagen_ju from grupo,jugador,categoria,categoria_grupo where categoria_grupo.idCategoria_grupo=jugador.idGrupCat and jugador.estado_ju=1 and categoria_grupo.idGrupo =grupo.idGrupo and categoria_grupo.idCategoria = categoria.idCategoria"); /////////////////DESDE ACA ARREGLAR//////////////////////////////
+			$result= execSqlA("select categoria_grupo.idCategoria_grupo, jugador.idJugador, jugador.nombre_ju, jugador.apellidop_ju, jugador.apellidom_ju, jugador.fechana_ju, grupo.nombre_gru, categoria_grupo.idGrupo,categoria.categoria_sub, categoria_grupo.idCategoria, jugador.imagen_ju from grupo,jugador,categoria,categoria_grupo where categoria_grupo.idCategoria_grupo=jugador.idGrupCat and jugador.estado_ju=1 and categoria_grupo.idGrupo =grupo.idGrupo and categoria_grupo.idCategoria = categoria.idCategoria and jugador.idEntrenador= ".$_SESSION['id_en'].""); /////////////////DESDE ACA ARREGLAR//////////////////////////////
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
@@ -176,16 +157,19 @@
 			$ap2 = filter_var($_POST['modApellido2J'],FILTER_SANITIZE_STRING);
 			$fecha = $_POST['modFechaJ'];
 			$grupo_id = filter_var($_POST['modGrupoJ2'],FILTER_SANITIZE_NUMBER_INT);
+			$cat_id = filter_var($_POST['modCatJ2'],FILTER_SANITIZE_NUMBER_INT);
+			$cat_grup = filter_var($_POST['idGrupoCategoria'],FILTER_SANITIZE_NUMBER_INT);
 			$foto=$_FILES["abrir-ima-mod"]["name"];
 
 			if($foto==null){
 				    	if($foto_mod==="fotos/imagenfutbol.png"){
 				    	$destino="fotos/imagenfutbol.png";
-				    	$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju','idGrupo');
-			$valores = array($nom,$ap1,$ap2,$fecha,$destino,$grupo_id);
+				    	$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju');
+			$valores = array($nom,$ap1,$ap2,$fecha,$destino);
 			//actualiza nombre de equipo en la tabla grupo
-			$result= updateA('jugador', $campos, array(2,2,2,2,2,2) , $valores, 'idJugador', $idjugador);
-			if ($result){		
+			$result= updateA('jugador', $campos, array(2,2,2,2,2) , $valores, 'idJugador', $idjugador);
+			$result2= updateA('categoria_grupo', array('idGrupo','idCategoria'), array(2,2) , array($grupo_id,$cat_id ), 'idCategoria_grupo', $cat_grup);
+			if ($result && $result2){		
 								
 										$resultados=array('resp'=> 1);
 									}
@@ -195,11 +179,12 @@
 									}
 				    	}else{
 				    	$destino=$foto_mod;
-				    	$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju','idGrupo');
-			$valores = array($nom,$ap1,$ap2,$fecha,$destino,$grupo_id);
+				    	$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju');
+			$valores = array($nom,$ap1,$ap2,$fecha,$destino);
 			//actualiza nombre de equipo en la tabla grupo
-			$result= updateA('jugador', $campos, array(2,2,2,2,2,2) , $valores, 'idJugador', $idjugador);
-			if ($result){		
+			$result= updateA('jugador', $campos, array(2,2,2,2,2) , $valores, 'idJugador', $idjugador);
+			$result2= updateA('categoria_grupo', array('idGrupo','idCategoria'), array(2,2) , array($grupo_id,$cat_id ), 'idCategoria_grupo', $cat_grup);
+			if ($result && $result2){		
 								
 										$resultados=array('resp'=> 1);
 									}
@@ -219,10 +204,12 @@
 									$ruta=$_FILES["abrir-ima-mod"]["tmp_name"];
 								    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
 								    copy($ruta,$destino);
-$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju','idGrupo');
-			$valores = array($nom,$ap1,$ap2,$fecha,$destino,$grupo_id);
+$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju');
+			$valores = array($nom,$ap1,$ap2,$fecha,$destino);
 			//actualiza nombre de equipo en la tabla grupo
-			$result= updateA('jugador', $campos, array(2,2,2,2,2,2) , $valores, 'idJugador', $idjugador);	if ($result){		
+			$result= updateA('jugador', $campos, array(2,2,2,2,2) , $valores, 'idJugador', $idjugador);
+			$result2= updateA('categoria_grupo', array('idGrupo','idCategoria'), array(2,2) , array($grupo_id,$cat_id ), 'idCategoria_grupo', $cat_grup);	
+			if ($result && $result2){		
 								
 										$resultados=array('resp'=> 1);
 									}

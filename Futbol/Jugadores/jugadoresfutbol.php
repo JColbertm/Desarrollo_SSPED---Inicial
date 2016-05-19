@@ -13,21 +13,24 @@
           $('[data-toggle="tooltip"]').tooltip()
         })
         imagen_defecto()
-        llena_select()
-        llena_select2()
+        llena_select('modGrupoJ','1')
+        llena_select('modGrupoJ2','2')
+ 
         $('#formRegistroJ').on('submit', registro_jugadores)
         $('#formModificarJ').on('submit', modificar_jugadores)
-        $('#buscarMod1').on('keyup', buscar_tecladoJ)
+        $('#buscarMod1').on('keyup', function(){ buscar_tecladoJ('buscarMod1','2','1')})
         $('#eliminacion').on('click', eliminar_jugadores)
-        $('#EliJugador').on('keyup', buscar_tecladoJ2)
-        $('#select1').on('change',llena_selectC)
-        listarJ();
-        listarJ2();
+        $('#EliJugador').on('keyup', function(){ buscar_tecladoJ('EliJugador','4','2')})
+        $('#select1').on('change',function(){llena_selectC('')})
+        $('#select2').on('change',function(){llena_selectC('2')})
+        listarJ('resultado2','1');
+        listarJ('resultado4','2');
         limpiarRJ();
         
          $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-             listarJ();
-              listarJ2();
+             listarJ('resultado2','1');
+             listarJ('resultado4','2');
+              
               limpiarEJ();
               limpiarMJ();
               limpiarRJ();
@@ -37,6 +40,7 @@
       //funcion registrar jugadores
       function registro_jugadores()
       {
+
           setTimeout("$('.ocultar').hide();", 5000);
           var formData = new FormData($('#formRegistroJ')[0]); 
           formData.append( 'opcion','registrar');
@@ -51,7 +55,8 @@
           })
           .done(function(data) {
               var resp = $.parseJSON(data);
-            listarJ();
+            listarJ('resultado2','1');
+            listarJ('resultado4','2');
             limpiarMJ();
             console.log(data);
             console.log(resp);
@@ -90,7 +95,11 @@
           setTimeout("$('.ocultar').hide();", 5000);
           var formData = new FormData($('#formModificarJ')[0]);
           formData.append( 'opcion','modificar');
-          formData.append( 'idJugador',idj);          
+          formData.append( 'idJugador',idj);
+          formData.append( 'idGrupoCategoria',idgc);    
+
+
+               
           console.log(formData);
           $.ajax({
             url: 'jugadores.php',
@@ -101,7 +110,8 @@
           })
           .done(function(data) {
             var resp = $.parseJSON(data);
-            listarJ();
+            llena_select('modGrupoJ','1')
+            llena_select('modGrupoJ2','2')
             limpiarMJ();
             console.log(data);
             console.log(resp);
@@ -109,7 +119,8 @@
             if(t==1)
             {
               var html='<div class="alert alert-success ocultar" role="alert">Modificado!</div>'; 
-              listarJ();
+              listarJ('resultado2','1');
+             listarJ('resultado4','2');
             }
             if(t==0)
             {
@@ -132,13 +143,7 @@
           event.preventDefault();
         
       }
-      function limpiarRJ()
-      {
-        $("#formRegistroJ")[0].reset();
-        $('#regFechana').val('');
-        $('#regFechana').val(0);
       
-      }
       function eliminar_jugadores()
       {
           //var datos = "&idGrupo=" + encodeURIComponent(idg2)+"&opcion=" + encodeURIComponent('eliminar');
@@ -147,11 +152,11 @@
           $.ajax({
             url: 'jugadores.php',
             type: 'POST',
-            data: {idJugador: idj, opcion: 'eliminar'}
+            data: {idJugador: idj, idGrupoCategoria: idgc, opcion: 'eliminar'}
           })
           .done(function(data) {
              var resp = $.parseJSON(data);
-             listarJ2();
+             
              limpiarEJ();
             console.log(data);
             console.log(resp);
@@ -159,6 +164,8 @@
             if(t==1)
             {
               var html='<div class="alert alert-success ocultar" id="alertaE" role="alert">Eliminado!</div>'; 
+              listarJ('resultado2','1');
+             listarJ('resultado4','2');
             }
             imagen_defecto();
             $('#resultado6').html(html);  
@@ -170,12 +177,12 @@
         
       }
       function imagen_defecto(){
-    var html2='<img src="fotos/people.png"  alt="..." class="img-rounded" width="150" heigth="150">';
+        var html2='<img src="fotos/people.png"  alt="..." class="img-rounded" width="150" heigth="150">';
         $('#mostrar-ima').html(html2);
         $('#mostrar-ima-mod').html(html2);
         $('#mostrar-ima-eli').html(html2);
-  }
-      function listarJ(){
+      }
+      function listarJ(contenedor,funcion){
               $.ajax({
                 url: 'jugadores.php',
                 type: 'POST',
@@ -191,47 +198,14 @@
                   for(i in resp){ 
                     if(resp[i].res==1)
                     {
-                        html+='<tr onclick="mostrar_datosJ(this)"><td style="display:none">'+resp[i].idCategoria_grupo+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].imagen_ju+'</td></tr>';
-                    }
-                  }
-
-
-
-                  //$resultados[$c]=array('idCategoria_grupo'=> $data[0],'idJugador'=> $data[1],'nombre_ju'=> $data[2],'apellidop_ju'=> $data[3], 'apellidom_ju' => $data[4],'fechana_ju' => $data[5],'nombre_gru' => $data[6], 'idGrupo' => $data[7],'categoria_sub' => $data[8], 'idCategoria' => $data[9],'imagen_ju' => $data[10], 'res'=> 1);
-
-
-                  html+= '</tbody></table></div>';
-
-                  $('#resultado2').html(html);
-
-              })
-              .fail(function() {
-                console.log("error");
-              })
-             
-          }
-          function listarJ2(){
-              $.ajax({
-                url: 'jugadores.php',
-                type: 'POST',
-                data: {opcion: 'listar'}
-              })
-              .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>NomGrupo</th></tr></thead><tbody>';
-        
-                  for(i in resp){ 
-                    if(resp[i].res==1)
-                    {
-                        html+='<tr onclick="mostrar_datosJ2(this)"><td style="display:none">'+resp[i].idJugador+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none"></td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_grupo+'</td><td style="display:none">'+resp[i].imagen_ju+'</td></tr>';
+                        html+='<tr onclick="mostrar_datosJ'+funcion+'(this)"><td style="display:none">'+resp[i].idCategoria_grupo+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].imagen_ju+'</td><td style="display:none">'+resp[i].idJugador+'</td></tr>';
                     }
                   }
                   html+= '</tbody></table></div>';
 
-                  $('#resultado4').html(html);
+                  $('#'+contenedor+'').html(html);
+
+                  //$('#resultado2').html(html);
 
               })
               .fail(function() {
@@ -240,8 +214,8 @@
              
           }
       //busca jugadores por nombre
-      function buscar_tecladoJ(){
-            var n = $('#buscarMod1').val();
+      function buscar_tecladoJ(n,resultado,funcion){
+            var n = $('#'+n+'').val();
             console.log(n);
             var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar');//{a: n, opcion:'buscar'};
             console.log(o);
@@ -256,17 +230,17 @@
                 console.log(data2);
                 console.log(resp);
 
-                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>NomGrupo</th></tr></thead><tbody>';
+                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>Grupo</th><th>Categoria</th></tr></thead><tbody>';
         
                   for(i in resp){ 
                     if(resp[i].res==1)
                     {
-                        html+='<tr onclick="mostrar_datosJ(this)"><td style="display:none">'+resp[i].idJugador+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none"></td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_grupo+'</td></tr>';
+                        html+='<tr onclick="mostrar_datosJ'+funcion+'(this)"><td style="display:none">'+resp[i].idCategoria_grupo+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_gru+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].imagen_ju+'</td><td style="display:none">'+resp[i].idJugador+'</td></tr>';
                     }
                   }
                   html+= '</tbody></table></div>';
 
-                  $('#resultado2').html(html);
+                  $('#resultado'+resultado+'').html(html);
 
               })
               .fail(function() {
@@ -274,43 +248,9 @@
               })
              
           }
-          //busqueda para eliminar
-           function buscar_tecladoJ2(){
-            var n = $('#EliJugador').val();
-            console.log(n);
-            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscar');//{a: n, opcion:'buscar'};
-            console.log(o);
-            //setTimeout("$('.ocultar').hide();", 5000);
-              $.ajax({
-                url: 'jugadores.php',
-                type: 'POST',
-                data: o
-              })
-              .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th>Nombre</th><th>Apellido P.</th><th>Apellido M.</th><th>Fecha N.</th><th>NomGrupo</th></tr></thead><tbody>';
-        
-                  for(i in resp){ 
-                    if(resp[i].res==1)
-                    {
-                        html+='<tr onclick="mostrar_datosJ2(this)"><td style="display:none">'+resp[i].idJugador+'</td><td style="display:none">'+resp[i].idGrupo+'</td><td style="display:none"></td><td>'+resp[i].nombre_ju+'</td><td>'+resp[i].apellidop_ju+'</td><td>'+resp[i].apellidom_ju+'</td><td>'+resp[i].fechana_ju+'</td><td>'+resp[i].nombre_grupo+'</td></tr>';
-                    }
-                  }
-                  html+= '</tbody></table></div>';
-
-                  $('#resultado4').html(html);
-
-              })
-              .fail(function() {
-                console.log("error");
-              })
-             
-          }
+         
       //llena select registro jugadores: grupos
-      function llena_select(){
+      function llena_select(id,select){
               $.ajax({
                 url: 'jugadores.php',
                 type: 'POST',
@@ -321,36 +261,32 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<select class="form-control" id="modGrupoJ" name="modGrupoJ" required><option></option>  ';
+                var html = '<select class="form-control" id="'+id+'" name="'+id+'" required><option></option>  ';
                
                   for(i in resp){ 
                     html+='<option value="'+resp[i].idGrupo+'">'+resp[i].nombre_gru+'</option> ';
-                  
                   }
                   html+= '</select>';
 
-                  $('#select1').html(html);
-
+                  $('#select'+select+'').html(html);
               })
               .fail(function() {
                 console.log("error");
-              })
-             
+              })     
           }
-
-           function llena_selectC(){
-            console.log( $('#modGrupoJ').val() );
+           function llena_selectC(numero){
+            console.log( $('#modGrupoJ'+numero+'').val() );
               $.ajax({
                 url: 'jugadores.php',
                 type: 'POST',
-                data: {opcion: 'c_buscar', idgrupo: $('#modGrupoJ').val()}
+                data: {opcion: 'c_buscar', idgrupo: $('#modGrupoJ'+numero+'').val()}
               })
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<select class="form-control" id="modCatJ" name="modCatJ" required>';
+                var html = '<select class="form-control" id="modCatJ'+numero+'" name="modCatJ'+numero+'" required>';
                
                   for(i in resp){ 
                     html+='<option value="'+resp[i].idCategoria+'">'+resp[i].categoria_sub+'</option> ';
@@ -358,7 +294,7 @@
                   }
                   html+= '</select>';
                
-                  $('#selectCat').html(html);
+                  $('#selectCat'+numero+'').html(html);
 
               })
               .fail(function() {
@@ -366,39 +302,16 @@
               })
              
           }
+
+         
           //llena el select de la pestaña modificar
-          function llena_select2(){
-              $.ajax({
-                url: 'jugadores.php',
-                type: 'POST',
-                data: {opcion: 's_buscar'}
-              })
-              .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                var html = '<select class="form-control" id="modGrupoJ2" name="modGrupoJ2"  required>';
-                  for(i in resp){ 
-                    html+='<option value="'+resp[i].idGrupo+'">'+resp[i].nombre_gru+'</option> ';
-                  }
-                  html+= '</select>';
-
-    
-                  $('#select2').html(html);
-
-              })
-              .fail(function() {
-                console.log("error");
-              })
-             
-          }
-
-          
+         
           var idj;
+          var idgc;
           var url;
-          function mostrar_datosJ(f)
+          function mostrar_datosJ1(f)
           {
+            
               row0= $(f).find('td:eq(0)').text();
               row1 = $(f).find('td:eq(1)').text();
               row2 = $(f).find('td:eq(2)').text();
@@ -406,11 +319,15 @@
               row4 = $(f).find('td:eq(4)').text();
               row5 = $(f).find('td:eq(5)').text();
               row6 = $(f).find('td:eq(6)').text();
+              row9 = $(f).find('td:eq(7)').text();
 
               row7 = $(f).find('td:eq(9)').text();
-              idj=row0;
+
+              row10 = $(f).find('td:eq(10)').text();
+              idj=row10;
+              idgc=row0;
               url=row2;
-              $('#modCatJ').val(row2);
+              $('#modCatJ2').val(row2);
               $('#modNombreJ').val(row3);
               $('#modApellido1J').val(row4);
               $('#modApellido2J').val(row5);
@@ -420,19 +337,8 @@
               $('#mostrar-ima-mod').html(html4);
               //console.log(row6);
               //console.log(idg+' '+idc);
-
-              
-              
-          }
-           function limpiarMJ()
-          {
-              $('#modNombreJ').val('');
-              $('#modApellido1J').val('');
-              $('#modApellido2J').val('');
-              $('#modFechaJ').val('');
-              $('#modGrupoJ2').val('');
-              $('#buscarMod1').val('');
-        
+              llena_selectC('2');
+    
           }
 
            function mostrar_datosJ2(f)
@@ -446,19 +352,42 @@
               row6 = $(f).find('td:eq(6)').text();
               row7 = $(f).find('td:eq(7)').text();
               row8 = $(f).find('td:eq(8)').text();
-              idj=row0;
+              row9 = $(f).find('td:eq(9)').text();
+              row10 = $(f).find('td:eq(10)').text();
+              idj=row10;
+              idgc=row0;
               $('#elNombreJ').val(row3);
               $('#elApellido1J').val(row4);
               $('#elApellido2J').val(row5);
               $('#elFechaJ').val(row6);
               $('#elGrupoJ2').val(row7);
+              $('#elCatJ2').val(row8);
               url=row2;
-              var html4='<img src="'+row8+'"  alt="..." class="img-rounded" width="200" heigth="200">'
+              var html4='<img src="'+row9+'"  alt="..." class="img-rounded" width="200" heigth="200">'
               $('#mostrar-ima-eli').html(html4);
 
               //console.log(row6);
               //console.log(idg+' '+idc);
               
+          }
+
+          function limpiarMJ()
+          {
+              $('#modNombreJ').val('');
+              $('#modApellido1J').val('');
+              $('#modApellido2J').val('');
+              $('#modFechaJ').val('');
+              $('#modGrupoJ2').val('');
+              $('#buscarMod1').val('');
+        
+          }
+          function limpiarRJ()
+          {
+            $("#formRegistroJ")[0].reset();
+            $('#regFechana').val('');
+            $('#regFechana').val(0);
+            $('#modCatJ').html('');
+          
           }
           function limpiarEJ()
           {   
@@ -468,8 +397,9 @@
               $('#elFechaJ').val('');
               $('#elGrupoJ2').val('');
               $('#EliJugador').val('');
- 
+              $('#elCatJ2').val('');
           }
+          
       //funcion para aceptar solo numeros
      function justNumbers(e)
     {
@@ -583,7 +513,16 @@
             <div class="form-group">
               <label class="col-sm-offset-1 col-sm-2 control-label">Categoria</label>
               <div class="col-sm-3" id="selectCat">
-                <div class="alert alert-danger ocultar" role="alert" center >Seleccione un grupo!</div>
+                <select class="form-control" id="modCatJ2" name="modCatJ2">
+                   
+                    <option value="1">Sub 5</option>
+                    <option value="2">Sub 7</option>
+                    <option value="3">Sub 9</option>
+                    <option value="4">Sub 11</option>
+                    <option value="5">Sub 13</option>
+                    <option value="6">Sub 15</option>
+                    <option value="7">Preprofesional</option>
+                  </select>
               </div>
             </div>
             
@@ -698,7 +637,9 @@
             <div class="form-group">
               <label class="col-sm-offset-1 col-sm-2 control-label">Categoria</label>
               <div class="col-sm-3" id="selectCat2">
-              <select class="form-control" id="modCatJ" name="modCatJ">
+          
+                
+              <select class="form-control" id="modCatJ2" name="modCatJ2">
                    
                     <option value="1">Sub 5</option>
                     <option value="2">Sub 7</option>
@@ -708,6 +649,7 @@
                     <option value="6">Sub 15</option>
                     <option value="7">Preprofesional</option>
                   </select>
+ 
 
              
               </div>
@@ -829,6 +771,13 @@
               <label class="col-sm-offset-1 col-sm-2 control-label">Equipo</label>
               <div class="col-sm-3">
                 <input type="text" class="form-control" id="elGrupoJ2" placeholder="Equipo" readonly="">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-sm-offset-1 col-sm-2 control-label">Categoria</label>
+              <div class="col-sm-3">
+                <input type="text" class="form-control" id="elCatJ2" placeholder="Equipo" readonly="">
               </div>
             </div>
 

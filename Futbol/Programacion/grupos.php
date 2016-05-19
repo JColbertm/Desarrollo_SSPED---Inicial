@@ -37,7 +37,7 @@
 		//break;
 		case "buscar":
 			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("select grupo.idGrupo, categoria_grupo.idCategoria_grupo, grupo.nombre_gru,  categoria.categoria_sub, categoria.idCategoria from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1");
+			$result= execSqlA("select grupo.idGrupo, categoria_grupo.idCategoria_grupo, grupo.nombre_gru,  categoria.categoria_sub, categoria.idCategoria from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1 and grupo.idEntrenador=".$_SESSION['id_en']."");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
@@ -58,7 +58,7 @@
 		break;
 		case "buscar2":
 			$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru,  categoria.categoria_sub from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1");
+			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru,  categoria.categoria_sub from grupo,categoria,categoria_grupo where grupo.nombre_gru LIKE '%$a%' and grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1 and grupo.idEntrenador=".$_SESSION['id_en']."");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
@@ -78,7 +78,7 @@
 			
 		break;
 		case "listar":
-			$result= execSqlA("select grupo.idGrupo, categoria_grupo.idCategoria_grupo, grupo.nombre_gru,  categoria.categoria_sub, categoria.idCategoria from grupo,categoria,categoria_grupo where grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1");
+			$result= execSqlA("select grupo.idGrupo, categoria_grupo.idCategoria_grupo, grupo.nombre_gru,  categoria.categoria_sub, categoria.idCategoria from grupo,categoria,categoria_grupo where grupo.idGrupo=categoria_grupo.idGrupo and categoria.idCategoria=categoria_grupo.idCategoria and grupo.estado_gru=1 and grupo.idEntrenador=".$_SESSION['id_en']."");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
