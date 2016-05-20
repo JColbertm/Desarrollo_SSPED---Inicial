@@ -1084,13 +1084,9 @@
                   <input type="button" class="col-xs-6 btn btn-success"  value="Guardar" id="Guardar" method="post" disabled="">
                 </div>
                 <input type="hidden" value="" id="planifi" name="planifi">
-
-
                  <?php 
                  echo "
                   <input type='hidden' id='id_categ' name='id_categ' value='".$_GET['idc']."'>
-                  
-
                   ";
                   ?>
                
