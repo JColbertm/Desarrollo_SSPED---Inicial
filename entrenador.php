@@ -14,11 +14,10 @@
 			$h = filter_var($_POST['passwordcoach'],FILTER_SANITIZE_STRING);
 			$i = filter_var($_POST['password2coach'],FILTER_SANITIZE_STRING);
 
-
 			//insertamos nuevo registro en tabla ENTRENADOR
 			if ($h == $i) 
 			{
-				$campos = array('idEntrenador','nombre_en', 'apellidop_en', 'apellidom_en', 'fechana_en', 'carnet_en', 'fono_en', 'correo_en', 'pass_en', 'estado_en', 'fechacreacion');
+				$campos = array('idEntrenador','nombre_en', 'apellidop_en', 'apellidom_en', 'fechana_en', 'carnet_en', 'fono_en', 'correo_en', 'pass_en', 'estado_en', 'fecha_creacion');
 				$valores = array(null, $a, $b, $c, $d, $e, $f, $g , $h, 1, $fecha_actual);
 				$result= insertA('entrenador', $campos, array(2,2,2,2,2,2,2,2,2,2,2) , $valores);	
 				if ($result){		
