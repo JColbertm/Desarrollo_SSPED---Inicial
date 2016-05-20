@@ -38,31 +38,31 @@ function generarTabla(){
 	cabeceraTablaDias='<tr>';
 cabeceraTablaDias+='<th>Nombre</th><th>T.T</th>';
 	if ($("#checkLu").is(':checked')){
-		cabeceraTablaDias+='<th> <button type="button" class="btn btn-primary" onclick="diasemana(1,1);"  style="width: 130px;">Lunes</button><br><input style="width: 130px;" required type="date" id="fechalunes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th> <button id="idlunes" type="button" class="btn btn-primary" onclick="diasemana(1,1);"  style="width: 130px;">Lunes</button><br><input style="width: 130px;" required type="date" id="fechalunes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 		dias+='1';
 	}
 	if ($("#checkMa").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(2,2);" style="width: 130px;"> Martes </button><br><input style="width: 130px;" required type="date" id="fechamartes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="idmartes" type="button" class="btn btn-primary" onclick="diasemana(2,2);" style="width: 130px;"> Martes </button><br><input style="width: 130px;" required type="date" id="fechamartes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='2';
 	}
 	if ($("#checkMi").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(3,3);" style="width: 130px;"> Miercoles </button></><br><input style="width: 130px;" required type="date" id="fechamiercoles" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="idmiercoles" type="button" class="btn btn-primary" onclick="diasemana(3,3);" style="width: 130px;"> Miercoles </button></><br><input style="width: 130px;" required type="date" id="fechamiercoles" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='3';
 	}
 	if ($("#checkJu").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(4,4);" style="width: 130px;"> Jueves </button><br><input style="width: 130px;" required type="date" id="fechajueves" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="idjueves" type="button" class="btn btn-primary" onclick="diasemana(4,4);" style="width: 130px;"> Jueves </button><br><input style="width: 130px;" required type="date" id="fechajueves" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='4';
 	}
 	if ($("#checkVi").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(5,5);" style="width: 130px;"> Viernes </button><br><input style="width: 130px;" required type="date" id="fechaviernes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="idviernes" type="button" class="btn btn-primary" onclick="diasemana(5,5);" style="width: 130px;"> Viernes </button><br><input style="width: 130px;" required type="date" id="fechaviernes" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='5';
 	}
 	if ($("#checkSa").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(6,6);" style="width: 130px;"> Sabado </button><br><input style="width: 130px;" required type="date" id="fechasabado" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="idsabado" type="button" class="btn btn-primary" onclick="diasemana(6,6);" style="width: 130px;"> Sabado </button><br><input style="width: 130px;" required type="date" id="fechasabado" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='6';
 	}
 	if ($("#checkDo").is(':checked')){
-		cabeceraTablaDias+='<th><button type="button" class="btn btn-primary" onclick="diasemana(7,7);" style="width: 130px;"> Domingo </button><br><input style="width: 130px;" required type="date" id="fechadomingo" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
+		cabeceraTablaDias+='<th><button id="iddomingo" type="button" class="btn btn-primary" onclick="diasemana(7,7);" style="width: 130px;"> Domingo </button><br><input style="width: 130px;" required type="date" id="fechadomingo" step="1" min="2015-01-01" max="2020-12-31" value="'+"<"+'?php echo date('+"'Y-m-d'"+');?'+">"+'"></th>';
 	dias+='7';
 	}
 

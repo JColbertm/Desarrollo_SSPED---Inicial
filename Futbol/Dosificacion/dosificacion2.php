@@ -435,13 +435,20 @@
 
       })
 function diasemana(id){
-  if(id==1){var dias="LUNES";formCreacion.mandar.disabled=false;}
-  if(id==2){var dias="MARTES";formCreacion.mandar.disabled=false;}
-  if(id==3){var dias="MIERCOLES";formCreacion.mandar.disabled=false;}
-  if(id==4){var dias="JUEVES";formCreacion.mandar.disabled=false;}
-  if(id==5){var dias="VIERNES";formCreacion.mandar.disabled=false;}
-  if(id==6){var dias="SABADO";formCreacion.mandar.disabled=false;}
-  if(id==7){var dias="DOMINGO";formCreacion.mandar.disabled=false;}
+  if(id==1){var dias="LUNES";formCreacion.mandar.disabled=false;
+  formCreacion.idlunes.disabled=true;}
+  if(id==2){var dias="MARTES";formCreacion.mandar.disabled=false;
+formCreacion.idmartes.disabled=true;}
+  if(id==3){var dias="MIERCOLES";formCreacion.mandar.disabled=false;
+formCreacion.idmiercoles.disabled=true;}
+  if(id==4){var dias="JUEVES";formCreacion.mandar.disabled=false;
+formCreacion.idjueves.disabled=true;}
+  if(id==5){var dias="VIERNES";formCreacion.mandar.disabled=false;
+formCreacion.idviernes.disabled=true;}
+  if(id==6){var dias="SABADO";formCreacion.mandar.disabled=false;
+formCreacion.idsabado.disabled=true;}
+  if(id==7){var dias="DOMINGO";formCreacion.mandar.disabled=false;
+formCreacion.iddomingo.disabled=true;}
    $("#mostrar-ejercicios").show();
               var diasemana='<h2>'+dias+'</h2>';
               $("#nombreDia").html(diasemana);
