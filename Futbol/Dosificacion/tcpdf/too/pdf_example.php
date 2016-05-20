@@ -66,7 +66,7 @@ $row= execSqlA("select a.nombre_gru, a.idGrupo from grupo a,planificacion b wher
  	$nombre_gru=$data['nombre_gru'];
  	$idGrupo=$data['idGrupo'];
 }
-$row= execSqlA("select count(idGrupo)as sumado from jugador where idGrupo = \"".$idGrupo."\"");while ($data = mysqli_fetch_array($row)){
+$row= execSqlA("select count(a.idGrupCat)as sumado from jugador a,categoria_grupo b where a.idGrupCat = b.idCategoria_grupo and b.idGrupo=\"".$idGrupo."\"");while ($data = mysqli_fetch_array($row)){
  	$numero_jugadores=$data['sumado'];
 }
 $row= execSqlA("select a.categoria_sub from categoria a,categoria_grupo b where b.idGrupo=\"".$idGrupo."\" and a.idCategoria=b.idCategoria");while ($data = mysqli_fetch_array($row)){

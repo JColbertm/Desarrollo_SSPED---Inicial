@@ -202,6 +202,9 @@ echo json_encode($resultados);
 						$select15=filter_var($_POST["seleccionado15"],FILTER_VALIDATE_INT);}else{$select15='';}
 					if(isset($_POST["seleccionado16"])){
 						$select16=filter_var($_POST["seleccionado16"],FILTER_VALIDATE_INT);}else{$select16='';}
+			$selecionados[0] = array("1" => $select1);
+			$selecionados[1] = array("2" => $select2);
+			$selecionados[2] = array("3" => $select3);
 
 			$result= execSqlA("select ejercicio.nombre,categoria.categoria_sub,tipo_ejercicio.ejercicio,elemento_tecnico.elemento_tecnico,ejercicio.descripcion,ejercicio.imagen_ejercicio
 								from ejercicio
@@ -211,9 +214,9 @@ echo json_encode($resultados);
                                 on 	ejercicio.idEjer_tecnico=elemento_tecnico.idEjer_tecnico
                                 inner  JOIN tipo_ejercicio
                                 on 	ejercicio.idTipo_ejercicio=tipo_ejercicio.idTipo_ejercicio
-								where estado_ejer=1
-								and ejercicio.idCategoria=\"".$cate."\"
-								or ejercicio.idEjer_tecnico=\"".$select1."\"
+								where ejercicio.idCategoria=\"".$cate."\" 
+								and estado_ejer=1
+								and ejercicio.idEjer_tecnico=\"".$select11."\"
                                 or ejercicio.idEjer_tecnico=\"".$select2."\"
                                 or ejercicio.idEjer_tecnico=\"".$select3."\"
                                 or ejercicio.idEjer_tecnico=\"".$select4."\"

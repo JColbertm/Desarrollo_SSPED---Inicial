@@ -435,13 +435,13 @@
 
       })
 function diasemana(id){
-  if(id==1){var dias="LUNES";}
-  if(id==2){var dias="MARTES";}
-  if(id==3){var dias="MIERCOLES";}
-  if(id==4){var dias="JUEVES";}
-  if(id==5){var dias="VIERNES";}
-  if(id==6){var dias="SABADO";}
-  if(id==7){var dias="DOMINGO";}
+  if(id==1){var dias="LUNES";formCreacion.mandar.disabled=false;}
+  if(id==2){var dias="MARTES";formCreacion.mandar.disabled=false;}
+  if(id==3){var dias="MIERCOLES";formCreacion.mandar.disabled=false;}
+  if(id==4){var dias="JUEVES";formCreacion.mandar.disabled=false;}
+  if(id==5){var dias="VIERNES";formCreacion.mandar.disabled=false;}
+  if(id==6){var dias="SABADO";formCreacion.mandar.disabled=false;}
+  if(id==7){var dias="DOMINGO";formCreacion.mandar.disabled=false;}
    $("#mostrar-ejercicios").show();
               var diasemana='<h2>'+dias+'</h2>';
               $("#nombreDia").html(diasemana);

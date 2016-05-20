@@ -206,5 +206,4 @@ if(isset($_POST["lu"])&&isset($_POST["ma"]) && isset($_POST["mi"]) && isset($_PO
         echo $re;
             
     }
-    
 ?>

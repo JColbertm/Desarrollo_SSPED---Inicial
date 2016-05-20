@@ -170,7 +170,7 @@ function verdatos(){
     return html2;
   }
 
-      function RegistrarDatos(){
+  function RegistrarDatos(){
       setTimeout("$('.ocultar').hide();", 5000);
       var input = $("<input>").attr("type", "hidden").attr("name", "opcion").val("registrar");
       $('#formRegistro').append($(input));
