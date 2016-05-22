@@ -1,7 +1,8 @@
 <?php
+@session_start();
 include("databaseA.php");
     //llena el combo box con las CATEGORIAS
-    $result= execSqlA("select DISTINCT a.idGrupo, b.nombre_gru,e.categoria_sub from planificacion a,categoria_grupo c, grupo b,categoria e  where b.estado_gru=1 and a.idGrupo=b.idGrupo and a.estado=1 and b.idGrupo=c.idGrupo and c.idCategoria=e.idCategoria ");
+    $result= execSqlA("select DISTINCT a.idGrupo, b.nombre_gru,e.categoria_sub from planificacion a,categoria_grupo c, grupo b,categoria e  where b.estado_gru=1 and b.idEntrenador= \"".$_SESSION['id_en']."\"and a.idGrupo=b.idGrupo and a.estado=1 and b.idGrupo=c.idGrupo and c.idCategoria=e.idCategoria ");
     $equipo = '<option value="0"> </option>';//Elegir Categoria
     while( $fila = $result->fetch_array() )
     {

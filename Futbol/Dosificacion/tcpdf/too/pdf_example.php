@@ -280,7 +280,7 @@ $htmlcontent = '
 <tr>
 
 <th rowspan="4" colspan="4"></th>
-<th rowspan="2" colspan="8" align="center"><H2>Temporada 2023</H2></th>
+<th rowspan="2" colspan="8" align="center"><H2>Temporada </H2></th>
 <th rowspan="4" colspan="4">PERIODO: '.$peri.'<br>ETAPA: '.$etapa.'<BR>MESOCICLO: '. $romanos.'<BR>MICROCICLO: '.$microciclo.'</th>
 <th rowspan="2" colspan="2">N CLASE</th>
 </tr>

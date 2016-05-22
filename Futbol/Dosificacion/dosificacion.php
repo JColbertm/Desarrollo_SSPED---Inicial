@@ -1,5 +1,6 @@
 
 <?php
+@session_start();
 		$opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		include("databaseA.php");
 	switch ($opcion) {
