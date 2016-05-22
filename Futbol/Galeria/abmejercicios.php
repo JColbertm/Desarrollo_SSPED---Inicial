@@ -189,7 +189,7 @@ function verdatos(){
             var t= resp.resp;
             if(t==1)
             {
-              var html='<div class="alert alert-success ocultar" role="alert" center >Insertado!</div>';
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Insertado!</div>';
               var html2=imagen_defecto();
               $("#formRegistro")[0].reset();
               $('#mostrar-ima').html(html2);
@@ -197,15 +197,15 @@ function verdatos(){
             }
             if(t==0)
             {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >No se pudo Registrar!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >No se pudo Registrar!</div>';
             }
             if(t==2)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >NO es imagen!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >NO es imagen!</div>';
             }
             if(t==3)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >Insertar Imagenes menores a 8mb</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >Insertar Imagenes menores a 8mb</div>';
             }
             $('#resultado').html(html);
 
@@ -245,10 +245,10 @@ function verdatos(){
             var t= resp.resp;
             if(t==1)
             {
-              var html='<div class="alert alert-success ocultar" role="alert" center >Eliminado!</div>';
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Eliminado!</div>';
             }
             else{
-              var html='<div  class="alert alert-danger ocultar" role="alert"> No se pudo eliminar</div>'; 
+              var html='<div  class="alert alert-danger ocultar" role="alert" align="center" > No se pudo eliminar</div>'; 
             }
             var html2=imagen_defecto();
             $('#mostrar-ima-eli').html(html2);
@@ -260,17 +260,6 @@ function verdatos(){
             console.log("error");
           })
           event.preventDefault();
-
-/*
-        .done(function(respuesta){
-              
-            if(respuesta==1)
-            {
-              var html='<div class="alert alert-success" role="alert">Insertado!</div>'; 
-            }
-            $('#resultado').html(html); 
-            })
-      */  
       }
       function buscar_teclado(){
             var n = $('#modNombre').val();
@@ -451,22 +440,22 @@ function verdatos(){
             var t= resp.resp;
             if(t==1)
             {
-              var html='<div class="alert alert-success ocultar" role="alert" center >Modificardo!</div>';
+              var html='<div class="alert alert-success ocultar" role="alert" align="center" >Modificardo!</div>';
               var html2=imagen_defecto();
               $('#mostrar-ima-mod').html(html2);
               $("#formModificar")[0].reset();
             }
             if(t==0)
             {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >No se pudo Registrar!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >No se pudo Registrar!</div>';
             }
             if(t==2)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >NO es imagen!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >NO es imagen!</div>';
             }
             if(t==3)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" center >Insertar Imagenes menores a 8mb</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >Insertar Imagenes menores a 8mb</div>';
             }
             $('#resultado-mod').html(html);
             actualizar_tablas();

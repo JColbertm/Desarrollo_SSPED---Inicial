@@ -1545,39 +1545,7 @@ if(b==5){
     }
     limites=limit;
     console.log(limites);
-}
-
-function buscar_teclado(){
-     /*   var n = $('#micro-cre').val();
-            console.log(n);
-            var o = "a="+encodeURIComponent(n)+"&opcion="+ encodeURIComponent('buscara');//{a: n, opcion:'buscar'};
-            console.log(o);
-            
-              $.ajax({
-                url: 'dosificacion.php',
-                type: 'POST',
-                data: o
-              })
-              .done(function(data2) {
-                var resp = $.parseJSON(data2);//json a objeto
-                console.log(data2);
-                console.log(resp);
-
-                var html = '<div class="col-sm-3 table-responsive"><br><table class="table table-hover"><thead><tr><th>Nombre</th><th>T.T</th>' 
-                        
-                  for(i in resp){ 
-                    html+='<tr style="display:none"><td>'+resp[i].idDireccion+'</td></tr><tr><td><br>Tecnico</td><td><br>'+resp[i].sistema_juego+'</td></tr><tr><td><br>Preparation Fisica</td><td><br>'+resp[i].preparation_fisica+'</td></tr><tr><td><br>Sistema de Juego</td><td><br>'+resp[i].tecnico_tactico+'</td></tr><tr><td><br>Accion Psi</td><td><br>'+resp[i].competencia+'</td></tr><tr><td><br>Competencia</td><td><br>'+resp[i].accion_psi+'</td></tr><tr><td><br>Sub Total</td><td><br>'+resp[i].total+'</td></tr>';
-                  }
-                  html+= '</tbody></table></div>';
-
-                  $('#resultado2').html(html);
-
-              })
-              .fail(function() {
-                console.log("error");
-              })*/
-     }
-     
+}    
     </script>
 </head>
 <body>
