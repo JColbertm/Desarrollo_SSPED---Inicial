@@ -34,7 +34,7 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Grupo</th><th>tipo_plan</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>tipo_plan</th></tr></thead><tbody>';
                  
 
                   for(i in resp){ 
@@ -157,7 +157,7 @@
               })
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
-                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Grupo</th><th>tipo_plan</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>tipo_plan</th></tr></thead><tbody>';
         
 
 
@@ -498,7 +498,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Grupo:</label>
+                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Equipo:</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" id="grupoP" name="grupoP" placeholder="Nombre del grupo" readonly="">
                 </div>

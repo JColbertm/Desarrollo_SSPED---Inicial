@@ -71,7 +71,7 @@ $gru = RecuperarIdItemA('grupo', array('idGrupo'), array($nombre['idGrupo']));
 
 
 $html = '<b>Nombre planificacion:</b> '.$nombre['nombre'].'<br>';
-$html = $html.'<b>Grupo:</b> '.$gru['nombre_gru'];
+$html = $html.'<b>Equipo:</b> '.$gru['nombre_gru'];
 
 $mesos = execSqlA('SELECT idMesociclo from direccion where idPlanificacion = '.$_POST['planifi'].'');
 $mes=array();
@@ -101,22 +101,22 @@ for($g=0; $g< count($mes); $g++){
     else{
         $count=$count;
     }
-        if($count==1){$mesoo='I';$color='#FFE4E1';}
-        if($count==2){$mesoo='II';$color='#778899';}
-        if($count==3){$mesoo='III';$color='#87CEEB';}
-        if($count==4){$mesoo='IV';$color='#ADD8E6';}
-        if($count==5){$mesoo='V';$color='#E0FFFF';}
-        if($count==6){$mesoo='VI';$color='#00FA9A';}
-        if($count==7){$mesoo='VII';$color='#7FFFD4';}
-        if($count==8){$mesoo='VIII';$color='#FF4500';}
-        if($count==9){$mesoo='IX';$color='#E9967A';}
-        if($count==10){$mesoo='X';$color='#CD853F';}
-        if($count==11){$mesoo='XI';$color='#FF7F50';}
-        if($count==12){$mesoo='XII';$color='#F5F5DC';}
-        if($count==13){$mesoo='XIII';$color='#F5DEB3';}
-        if($count==14){$mesoo='XIV';$color='#8FBC8F';}
-        if($count==15){$mesoo='XV';$color='#FFE4E1';}
-        if($count==16){$mesoo='XVI';$color='#778899';}
+        if($count==1){$mesoo='I';$color='#5C3317';}
+        if($count==2){$mesoo='II';$color='#FFFF00';}
+        if($count==3){$mesoo='III';$color='#A62A6A';}
+        if($count==4){$mesoo='IV';$color='#D8BFD8';}
+        if($count==5){$mesoo='V';$color='#0000FF';}
+        if($count==6){$mesoo='VI';$color='#5F9F9F';}
+        if($count==7){$mesoo='VII';$color='#4F2F4F';}
+        if($count==8){$mesoo='VIII';$color='#DB9370';}
+        if($count==9){$mesoo='IX';$color='#238E68';}
+        if($count==10){$mesoo='X';$color='#99CC32';}
+        if($count==11){$mesoo='XI';$color='#D98719';}
+        if($count==12){$mesoo='XII';$color='#D8D8BF';}
+        if($count==13){$mesoo='XIII';$color='#42426F';}
+        if($count==14){$mesoo='XIV';$color='#3299CC';}
+        if($count==15){$mesoo='XV';$color='#6B4226';}
+        if($count==16){$mesoo='XVI';$color='#B5A642';}
         if($count==17){$mesoo='XVII';$color='#E0FFFF';}
         if($count==18){$mesoo='XVIII';$color='#F5F5DC';}
         if($count==19){$mesoo='XIX';$color='#00FA9A';}
