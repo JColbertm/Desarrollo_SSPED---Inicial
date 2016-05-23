@@ -107,7 +107,13 @@
           $("#FormularioExportacion").submit();
        })
 
-    })
+
+
+    $("#btnguardaasis").on('click', function(){
+      insertar_datos();
+    });
+
+    });
 
     function llenar_tabla(equipo, tiempo)
     {
@@ -127,47 +133,38 @@
         var pts = 100/tiempo;
         console.log(pts);
         var nombre = '<table class="table table-bordered" align="center">'+
-                    '<thead>'+
+                     '<thead>'+
                         '<tr>'+
-                          '<th>Nombre</th>'+
-                        '<tr>'+
-                    '</thead>'+
-                    '<tbody>';
-                    for(i in resp)
-                    { 
-                      if(resp[i].res==1)
-                      {
-                        nombre += '<tr>'+
+                          '<th>Nombre</th>';
+
+                          for (var j = 1; j <= tiempo; j++) 
+                          {
+                            if(j<10)
+                            {
+                              nombre +='<th>C_'+j+'</th>';
+                            } 
+                            else
+                            {
+                              nombre +='<th>C'+j+'</th>';
+                            }                        
+                          }
+
+            nombre +=   '<th>Total_Clases</th>'+
+                        '<th>Total_Porcentual</th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                        '<form class="form-inline text-left" role="form" name="formulario" method="post">';
+
+
+                        for(i in resp)
+                        { 
+                          if(resp[i].res==1)
+                          {
+                            nombre += '<tr>'+
                                   '<td>'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>';
-                      }
-                    }
-
-                    nombre += '</tr>'+
-                              '</tbody>'+
-                              '</table>';
-
-        var tabla = '<table class="table table-bordered " align="center">'+
-                    '<thead>'+
-                    '<tr>';
-
-                    for (var j = 1; j <= tiempo; j++) 
-                    {
-                      if(j<10)
-                      {
-                        tabla +='<th>C_'+j+'</th>';
-                      } 
-                      else
-                      {
-                        tabla +='<th>C'+j+'</th>';
-                      }                        
-                    }
-                  
-                    tabla +=  '<th>Total_Clases</th>'+
-                              '<th>Total_Porcentual</th>'+
-                              '</tr>'+
-                              '</thead>'+
-                              '<tbody>'+
-                              '<form class="form-inline text-left" role="form" name="formulario" method="post">';
+                          }
+                        }
               var r=0;
               var f=0;
                     for(n in resp)
@@ -178,25 +175,23 @@
                         
                         for (var k = 1; k <= tiempo; k++) 
                         {
-                          tabla += '<td><input type="checkbox" name="checkbox'+(r+1)+'" id="'+(r+1)+'" class=" check form-control" value="'+pts+'" onClick="if (this.checked){ sumar(this.value,'+f+');} else{restar(this.value,'+f+')}" ></td>'; 
+                          nombre += '<td><input type="checkbox" name="checkbox'+(r+1)+'" id="'+(r+1)+'" class=" check form-control" value="'+pts+'" onClick="if (this.checked){ sumar(this.value,'+f+');} else{restar(this.value,'+f+')}" ></td>'; 
                             r=r+1;
                         }                  
-                          tabla +=  '<td>'+
+                          nombre +=  '<td>'+
                                   '<input type="text" class="form-control" name="total" value="0" id="total'+f+'" placeholder="0" readonly></td>'+   
                                   '<td><input type="text" class="form-control" placeholder="0" id="porcentaje'+f+'" value="0" readonly></td>'+
-                                  '</tr>'; 
-                        
+                                  '</tr>';                         
                       }
-
 
                     }
         
-                    tabla +=  '</form>'+
+                    nombre +=  '</form>'+
                               '</tbody>'+
                               '</table>';
 
         $('#nombre').html(nombre);
-        $('#tabla').html(tabla);
+      
         document.formCreacion.generar.disabled=true;
         })
         .fail(function() 
@@ -264,6 +259,30 @@
          }
         $('#total'+id).val(eval("total"+ide));
       }
+
+      function insertar_datos(){
+         var id = "opcion=" + encodeURIComponent('insertar');
+          console.log(id);
+          $.ajax({
+            url: 'jugadores.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            console.log(resp);
+            var t= resp.resp; 
+            if(t==1)
+            {
+              console.log("insertado");
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();
+      }
   
 </script>
 </head>
@@ -292,99 +311,43 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       Asistencia
-    </div>
-      
+    </div> 
     <div class="panel-body" >
-      <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
-        <!-- Contenido pestana Programacion de microciclos -->
+      <div>
+
+      <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Asistencia</a></li>
+          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Seguimiento</a></li>
+        </ul>
+
+        <!-- Tab panes -->
         <div class="tab-content">
-          <!-- Contenido Pestaña creacion -->
-          <div class="tab-pane fade in active" id="creacion">
-            <div align="center">
-              <h3>Seguimiento Asistencia</h3>  
-            </div> 
-            <br>
-              <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
-                <div class="row">
-                  <label class="col-sm-offset-2 col-sm-1 control-label">Equipo:</label>
-                  <div class="col-sm-2">
-                    <select class="form-control" id="equipo-cre" name="creacion-equi" required>
-                      <?php echo $equipo; ?>                  
-                    </select>
-                  </div>
-                  <label class=" col-sm-2 control-label">Nombre Planificacion:</label>
-                  <div class="col-sm-2">
-                    <select class="form-control" id="plan-cre" name="creacion-tipo" required>
-                  
-                    </select>
-                  </div>
-                </div>
-                <br> 
-                <div class="row">
-                  <label class=" col-sm-offset-2 col-sm-1 control-label">Etapas:</label>
-                  <div class="col-sm-2">
-                    <select class="form-control" id="etapas-cre" name="creacion-meso" required>
-                      <?php echo $etapas; ?>                  
-                    </select>
-                  </div>
-                  <label class=" col-sm-2 control-label">Mesociclos:</label>
-                  <div class="col-sm-2">
-                    <select class="form-control" id="meso-cre" required>
-            
-                    </select>
-                  </div>
-                </div>
-                <br>
-                <div row>
-                  <div class="col-sm-offset-9 col-sm-3 col-xs-6">
-                    <button type="button" class="btn btn-primary" id="generar" disabled>
-                      Generar
-                    </button>
-                  </div>  
-                </div>    
-              </form>  
-              <br>         
-              <br>
-              <!-- Table -->
-              <div class=" col-sm-12" id="Exportar_a_Excel">
-                <div class="col-sm-3 col-xs-6">
-                  <div id="nombre" class="table-editable table-responsive">
-
-                  </div>
-                </div> 
-                <div class="col-sm-9 col-xs-6">
-                  <div id="tabla" class="table-editable  table-responsive">
-
-                  </div>
-                </div>
-              </div>             
-                  
-              <div align="right">
-                <form id="form" name="gua">
-                  <button type="button" class="btn btn-primary" >
-                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                    <span class="hidden-xs">
-                      Guardar
-                    </span>
-                  </button>
-                  <button type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal">
-                    <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
-                    <span class="hidden-xs">
-                      Exportar
-                    </span>
-                  </button>
-                </form>
-              </div>
-            </div>
+          <div role="tabpanel" class="tab-pane active" id="home">
+            <?php 
+              require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/Jugadores/asistencia.php";
+            ?>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="profile">
+            <?php 
+              require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/Jugadores/seguimiento.php";
+            ?>
           </div>
         </div>
-      </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+      
     <?php 
       require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";
     ?>
 </body>
 </html>
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

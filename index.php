@@ -1,6 +1,15 @@
 <?php
-  session_start();
+@session_start();
+  if (isset($_SESSION['id_en']))
+  {
+    header('Location: /Desarrollo_SSPED/indexr.php');  
+  }
+  else
+  {
+    
+  }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head> 
@@ -23,7 +32,7 @@
         interval: 3500
       });
       $('#cierre_sesion').on('click', function(){
-        
+        unsset($_SESSION['id_en']);
       })
     }) 
     function limpiar_datos()
@@ -167,7 +176,79 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo repellendus ipsum provident sit numquam optio quis odio autem repellat assumenda nobis, non, iste dolor esse ut tempora! Quis, voluptas, eum!<BR>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugit, ab. Illo, totam quaerat facere eaque sequi nam molestias. Necessitatibus blanditiis adipisci quis modi possimus explicabo itaque ab consequatur sunt?</h6><br>
             
-            <a href="/Desarrollo_SSPED/Futbol/futbol.php">
+            <a href="/Desarrollo_SSPED/Futbol/triatlonindex.php">
+              <button type="button" class="btn btn-info">
+                Seleccionar
+              </button>
+            </a>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div class="jumbotron">
+        <div class="media">
+          <div class="media-left col-sm-5 col-sm-offset-0 col-xs-offset-1 col-xs-10">
+            <?php 
+              require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/imgnatacion.php";
+            ?>
+         </div> 
+        <div class="media-body">
+          <p><h4 class="media-heading">NATACION:</h4></p>
+            <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati fuga saepe temporibus perspiciatis maioresiste voluptatum voluptatibus repellat repudiandae, enim exercitationem assumenda quo, natus officiis esse, vel itaque a unde.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo repellendus ipsum provident sit numquam optio quis odio autem repellat assumenda nobis, non, iste dolor esse ut tempora! Quis, voluptas, eum!<BR>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugit, ab. Illo, totam quaerat facere eaque sequi nam molestias. Necessitatibus blanditiis adipisci quis modi possimus explicabo itaque ab consequatur sunt?</h6><br>
+            
+            <a href="/Desarrollo_SSPED/Futbol/triatlonindex.php">
+              <button type="button" class="btn btn-info">
+                Seleccionar
+              </button>
+            </a>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div class="jumbotron">
+        <div class="media">
+          <div class="media-left col-sm-5 col-sm-offset-0 col-xs-offset-1 col-xs-10">
+            <?php 
+              require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/imgciclismo.php";
+            ?>
+         </div> 
+        <div class="media-body">
+          <p><h4 class="media-heading">CICLISMO:</h4></p>
+            <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati fuga saepe temporibus perspiciatis maioresiste voluptatum voluptatibus repellat repudiandae, enim exercitationem assumenda quo, natus officiis esse, vel itaque a unde.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo repellendus ipsum provident sit numquam optio quis odio autem repellat assumenda nobis, non, iste dolor esse ut tempora! Quis, voluptas, eum!<BR>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugit, ab. Illo, totam quaerat facere eaque sequi nam molestias. Necessitatibus blanditiis adipisci quis modi possimus explicabo itaque ab consequatur sunt?</h6><br>
+            
+            <a href="/Desarrollo_SSPED/Futbol/triatlonindex.php">
+              <button type="button" class="btn btn-info">
+                Seleccionar
+              </button>
+            </a>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+  <div class="col-sm-offset-2 col-sm-8 col-xs-12">
+    <div class="jumbotron">
+        <div class="media">
+          <div class="media-left col-sm-5 col-sm-offset-0 col-xs-offset-1 col-xs-10">
+            <?php 
+              require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/imgatletismo.php";
+            ?>
+         </div> 
+        <div class="media-body">
+          <p><h4 class="media-heading">ATLETISMO:</h4></p>
+            <h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati fuga saepe temporibus perspiciatis maioresiste voluptatum voluptatibus repellat repudiandae, enim exercitationem assumenda quo, natus officiis esse, vel itaque a unde.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo repellendus ipsum provident sit numquam optio quis odio autem repellat assumenda nobis, non, iste dolor esse ut tempora! Quis, voluptas, eum!<BR>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, fugit, ab. Illo, totam quaerat facere eaque sequi nam molestias. Necessitatibus blanditiis adipisci quis modi possimus explicabo itaque ab consequatur sunt?</h6><br>
+            
+            <a href="/Desarrollo_SSPED/Futbol/triatlonindex.php">
               <button type="button" class="btn btn-info">
                 Seleccionar
               </button>

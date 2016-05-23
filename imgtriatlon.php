@@ -4,7 +4,7 @@
   		<div class="carousel-inner" role="listbox">
 
     		<div class="item active">
-    		<a href="/Desarrollo_SSPED/Futbol/futbol.php">
+    		<a href="/Desarrollo_SSPED/Triatlon/triatlonindex.php">
       			<img class="img-rounded media-object" src="/Desarrollo_SSPED/Imagenes/ImaTriatlon/tria1.jpg" alt="Imagen Futbol">
       		</a>
     		</div>

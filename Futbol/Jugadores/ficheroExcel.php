@@ -11,7 +11,7 @@ if($_POST['imp']=='excel')
 elseif($_POST['imp']=='pdf')
 {
 	
-	include("dompdf_config.inc.php"); 
+	require_once("../dompdf/dompdf_config.inc.php"); 
 	
 	
 	$documento=$_POST['nombre'].'.pdf';

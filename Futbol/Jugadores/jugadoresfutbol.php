@@ -448,9 +448,13 @@
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listabotones1.php";
   ?>
 
+<!--  llamada a menu de opciones futbol horizontal -->
+    <?php
+      require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/listahorizontal.php";
+    ?>
 
 <!-- Contenedor Pestaña ABM Equipo -->
-  <div class="col-xs-8 col-sm-7">
+  <div class="col-xs-12 col-sm-8">
    <div class="panel panel-default">
      <div class="panel-heading">Administrar Jugadores</div>
         <div class="panel-body">

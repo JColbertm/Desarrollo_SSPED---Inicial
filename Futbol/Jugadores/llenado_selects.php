@@ -1,7 +1,8 @@
 <?php
+@session_start();
 include("databaseA.php");
     //llena el combo box con las CATEGORIAS
-    $result= execSqlA("select DISTINCT a.idGrupo, b.nombre_gru,e.categoria_sub from planificacion a,categoria_grupo c, grupo b,categoria e  where b.estado_gru=1 and a.idGrupo=b.idGrupo and a.estado=1 and b.idGrupo=c.idGrupo and c.idCategoria=e.idCategoria ");
+    $result= execSqlA("select DISTINCT a.idGrupo, b.nombre_gru,e.categoria_sub from planificacion a,categoria_grupo c, grupo b,categoria e  where b.estado_gru=1 and b.idEntrenador= \"".$_SESSION['id_en']."\"and a.idGrupo=b.idGrupo and a.estado=1 and b.idGrupo=c.idGrupo and c.idCategoria=e.idCategoria ");
     $equipo = '<option value="0"> </option>';//Elegir Categoria
     while( $fila = $result->fetch_array() )
     {
@@ -139,7 +140,38 @@ if(isset($_POST["lu"])&&isset($_POST["ma"]) && isset($_POST["mi"]) && isset($_PO
         $plan=$_POST["plan"];
         $meso=$_POST["meso"];
         $micro = '<option value="0"> </option>';//Elige un micro
-        $result= execSqlA("select idDireccion, semana from direccion  where idMesociclo =\"".$meso."\" and idPlanificacion=\"".$plan."\"");    
+        $result= execSqlA("select idDireccion, semana from direccion  where idMesociclo =\"".$meso."\" and idPlanificacion=\"".$plan."\" and estado = 0");    
+        while( $fila = $result->fetch_array() )
+        {
+            $micro.='<option value="'.$fila["idDireccion"].'">'.$fila["semana"].'</option>';
+        }
+
+        echo $micro;
+    }
+    
+    ////////////////////////////////////
+     //////////////////////////////////// ver
+    if(isset($_POST["microver"]))
+    {
+        $micro=$_POST["microver"];
+        $dia = '<option value="0"> </option>';//Elige un dia
+        $result= execSqlA("select a.idProgramacion, b.dia from programacion a, dia b  where a.idDireccion=\"".$micro."\" and a.idDia=b.idDia");    
+        while( $fila = $result->fetch_array() )
+        {
+            $dia.='<option value="'.$fila["idProgramacion"].'">'.$fila["dia"].'</option>';
+        }
+
+        echo $dia;
+    }
+    
+    ////////////////////////////////////
+     ////////////////////////////////////
+    if(isset($_POST["mesover"]) && isset($_POST["planver"]))
+    {
+        $plan=$_POST["planver"];
+        $meso=$_POST["mesover"];
+        $micro = '<option value="0"> </option>';//Elige un micro
+        $result= execSqlA("select idDireccion, semana from direccion  where idMesociclo =\"".$meso."\" and idPlanificacion=\"".$plan."\" and estado = 1");    
         while( $fila = $result->fetch_array() )
         {
             $micro.='<option value="'.$fila["idDireccion"].'">'.$fila["semana"].'</option>';
@@ -169,11 +201,10 @@ if(isset($_POST["lu"])&&isset($_POST["ma"]) && isset($_POST["mi"]) && isset($_PO
         $plan=$_POST["idplane"];
         $equipo=$_POST["idequipoe"];
         $fecha=$_POST["fechae"];
-        $result= execSqlA("select  tiempo_clase, from planificacion where idTipo_plan = \"".$plan."\" and idGrupo = \"".$equipo."\" and fecha_inicio_pre=\"".$fecha."\"");
+        $result= execSqlA("select  tiempo_clase from planificacion where idTipo_plan = \"".$plan."\" and idGrupo = \"".$equipo."\" and fecha_inicio_pre=\"".$fecha."\"");
         $fila = $result->fetch_array();
         $re=$fila["tiempo_clase"];
         echo $re;
             
     }
-
 ?>
