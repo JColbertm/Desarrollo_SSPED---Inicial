@@ -26,8 +26,7 @@
 							}
 				    }else{
 				    	$filename = strtolower($foto);
-						$whitelist = array('jpg', 'png', 'gif', 'jpeg'); //example of white list
-    				if ($_FILES["abrir-ima"]["type"]=="image/jpeg" || $_FILES["abrir-ima"]["type"]=="image/pjpeg" || $_FILES["abrir-ima"]["type"]=="image/gif" || $_FILES["abrir-ima"]["type"]=="image/bmp" || $_FILES["abrir-ima"]["type"]=="image/png")
+    				if ($_FILES["abrir-ima"]["type"]=="image/jpeg")
 						{
 							if($_FILES['abrir-ima']['size'] <= 5900000)
 							{
@@ -100,22 +99,41 @@ echo json_encode($resultados);
 				    	}else{
 				    	$destino=$foto_mod;
 				    	}
+				    	$result2= updateA('ejercicio', array('idTipo_ejercicio','idCategoria', 'nombre','idEjer_tecnico','metodo','tarea','descripcion','imagen_ejercicio','estado_ejer'), array(2,2,2,2,2,2,2,2,2) , array($pre,$cate,$nom,$ele,$metodo,$tarea,$descrip,$destino,"1"), 'idEjercicio', $idejer);
+									if ($result2){		
+										$resultados=array('resp'=> 1);
+									}
+									else
+									{
+										$resultados=array('resp'=> 0);
+									}
 				   }
 				    else{
-				    $ruta=$_FILES["abrir-ima-mod"]["tmp_name"];
-				    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
-				    copy($ruta,$destino);
+					$filename = strtolower($foto);
+						$whitelist = array('jpg'); //lista , 'png', 'gif', 'jpeg'
+    				if ($_FILES["abrir-ima-mod"]["type"]=="image/jpeg")
+						{
+							if($_FILES['abrir-ima-mod']['size'] <= 5900000)
+							{
+									$ruta=$_FILES["abrir-ima-mod"]["tmp_name"];
+								    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
+								    copy($ruta,$destino);
+								   $result2= updateA('ejercicio', array('idTipo_ejercicio','idCategoria','nombre','idEjer_tecnico','metodo','tarea','descripcion','imagen_ejercicio','estado_ejer'), array(2,2,2,2,2,2,2,2,2) , array($pre,$cate,$nom,$ele,$metodo,$tarea,$descrip,$destino,"1"), 'idEjercicio', $idejer);
+									if ($result2){		
+										$resultados=array('resp'=> 1);
+									}
+									else
+									{
+										$resultados=array('resp'=> 0);
+									}
+							}else{
+								$resultados=array('resp'=> 3);
+							}
+				}else{
+					$resultados=array('resp'=> 2);
+				}}	
 
-					}	
-
-			$result2= updateA('ejercicio', array('idTipo_ejercicio','idCategoria', 'nombre','idEjer_tecnico','metodo','tarea','descripcion','imagen_ejercicio','estado_ejer'), array(2,2,2,2,2,2,2,2,2) , array($pre,$cate,$nom,$ele,$metodo,$tarea,$descrip,$destino,"1"), 'idEjercicio', $idejer);
-			if ($result2){		
-				$resultados=array('resp'=> 1);
-			}
-			else
-			{
-				$resultados=array('resp'=> 0);
-			}
+			
 			echo json_encode($resultados);
 			flush();
 		break;

@@ -1575,7 +1575,7 @@ if(b==5){
 <div class="col-xs-12 col-sm-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Programacion de microciclos</h3>
+      <h3 class="panel-title"><strong>Programacion de microciclos</strong></h3>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs" role="tablist">
@@ -1586,10 +1586,10 @@ if(b==5){
      <div class="tab-content">
         <!-- Contenido Pestaña creacion -->
         <div class="tab-pane fade in active" id="creacion">
-          <div align="center"><h3>Creacion Semana</h3></div> 
+          <div align="center"><h3><strong>Creacion Semana</strong></h3><br></div> 
             <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
               <div class="row">
-                <label class="col-sm-1 control-label">Equipo:</label>
+                <label class="col-sm-offset-2 col-sm-1 control-label">Equipo:</label>
                 <div class="col-sm-2">
                   <select class="form-control" id="equipo-cre" name="creacion-equi" required>
                     <?php echo $equipo;?>                  
@@ -1626,12 +1626,10 @@ if(b==5){
             <br>
             <br>
             <div class="row">
-              <div class="col-sm-offset-1 col-sm-2">
+              <div class="col-sm-offset-1 col-sm-1">
                 <label>Dias: </label>
               </div>                    
-            </div>
-            <div class="row">
-              <div class="col-sm-offset-1 col-sm-10">
+              <div class=" col-sm-10">
                 <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkLu" value="1">Lunes</label>
                 <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMa" value="2">Martes</label>
                 <label class="checkbox-inline"><input type="checkbox" name="optradio" id="checkMi" value="3">Miercoles</label>

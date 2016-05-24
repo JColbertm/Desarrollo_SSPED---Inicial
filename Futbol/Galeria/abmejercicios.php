@@ -201,7 +201,7 @@ function verdatos(){
             }
             if(t==2)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >NO es imagen!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >Elija una imagen con formato .JPG</div>';
             }
             if(t==3)
               {
@@ -447,11 +447,11 @@ function verdatos(){
             }
             if(t==0)
             {
-              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >No se pudo Registrar!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >No se pudo Modificar!</div>';
             }
             if(t==2)
               {
-              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >NO es imagen!</div>';
+              var html='<div class="alert alert-danger ocultar" role="alert" align="center" >Elija una imagen con formato .JPG</div>';
             }
             if(t==3)
               {
