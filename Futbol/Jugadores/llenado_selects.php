@@ -2,56 +2,19 @@
 @session_start();
 include("databaseA.php");
     //llena el combo box con las CATEGORIAS
-    $result= execSqlA("select DISTINCT a.idGrupo, b.nombre_gru,e.categoria_sub from planificacion a,categoria_grupo c, grupo b,categoria e  where b.estado_gru=1 and b.idEntrenador= \"".$_SESSION['id_en']."\"and a.idGrupo=b.idGrupo and a.estado=1 and b.idGrupo=c.idGrupo and c.idCategoria=e.idCategoria ");
+    $result=execSqlA("select idCategoria_grupo, idGrupo, idCategoria from categoria_grupo");
     $equipo = '<option value="0"> </option>';//Elegir Categoria
     while( $fila = $result->fetch_array() )
     {
-        $equipo.='<option value="'.$fila["idGrupo"].'">'.$fila["nombre_gru"].' '.$fila["categoria_sub"].'</option>';
+        $sql=execSqlA("select a.nombre_gru, b.categoria_sub from grupo a, categoria b, categoria_grupo c where a.idGrupo= \"".$fila["idGrupo"]."\" and b.idCategoria =\"".$fila["idCategoria"]."\" and a.idEntrenador = \"".$_SESSION['id_en']."\"  and c.idCategoria_grupo = \"".$fila['idCategoria_grupo']."\" ");
+
+        while( $filas = $sql->fetch_array() )
+        {
+            $equipo.='<option value="'.$fila["idCategoria_grupo"].'">'.$filas["nombre_gru"].' '.$filas["categoria_sub"].'</option>';
+        }   
     }
     ////////////////////////////////////
-    //llena el combo box con modal EJER_TECNICO
-    $subelemento= '<option></option>';//Elegir Categoria
-    $result= execSqlA("select idSub_ejercicio, sub_ejercicio from sub_ejercicio where idSub_ejercicio=1 or idSub_ejercicio=2 or idSub_ejercicio=3");
-    while( $fila = $result->fetch_array() )
-    {
-        $subelemento.='<option value="'.$fila["idSub_ejercicio"].'">'.$fila["sub_ejercicio"].'</option>';
-    }
-
-    //llena el combo box con modal EJER_TECNICO_FISICO
-
-    $result= execSqlA("select idEjer_tecnico, elemento_tecnico from elemento_tecnico where idTipo_ejercicio=2");
-    $elemento_tecnico_fis = '<option></option>';//Elegir preparacion
-    while( $fila = $result->fetch_array() )
-    {
-        $elemento_tecnico_fis.='<option value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</option>';
-    }
-
-    //llena el combo box con modal EJER_TECNICO_TACTICO
-
-    $result= execSqlA("select idEjer_tecnico, elemento_tecnico from elemento_tecnico where idTipo_ejercicio=3");
-    $elemento_tecnico_tac = '<option></option>';//Elegir preparacion
-    while( $fila = $result->fetch_array() )
-    {
-        $elemento_tecnico_tac.='<option value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</option>';
-    }
-
-//llena el combo box con modal EJER_ACCIONES_PSI
-
-    $result= execSqlA("select idEjer_tecnico, elemento_tecnico from elemento_tecnico where idTipo_ejercicio=4");
-    $elemento_accpsi = '<option></option>';//Elegir preparacion
-    while( $fila = $result->fetch_array() )
-    {
-        $elemento_accpsi.='<option value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</option>';
-    }
-
-//llena el combo box con modal EJER_COMP
-
-    $result= execSqlA("select idEjer_tecnico, elemento_tecnico from elemento_tecnico where idTipo_ejercicio=5");
-    $elemento_comp = '<option></option>';//Elegir preparacion
-    while( $fila = $result->fetch_array() )
-    {
-        $elemento_comp.='<option value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</option>';
-    }
+    
 //llena el combo box con Etapas
     $result= execSqlA("select idEtapa, etapa from etapas");
     $etapas = '<option value="0"></option>';//Elegir preparacion
@@ -60,47 +23,23 @@ include("databaseA.php");
         $etapas.='<option value="'.$fila["idEtapa"].'">'.$fila["etapa"].'</option>';
     }
 
-if(isset($_POST["lu"])&&isset($_POST["ma"]) && isset($_POST["mi"]) && isset($_POST["ju"]) && isset($_POST["vi"]) && isset($_POST["sa"]) && isset($_POST["do"])){
-    $a=$_POST["lu"];
-    $b=$_POST["ma"];
-    $c=$_POST["mi"];
-    $d=$_POST["ju"];
-    $e=$_POST["vi"];
-    $f=$_POST["sa"];
-    $g=$_POST["do"];
-    $result= execSqlA("select idDia, dia from dia where idDia=\"".$a."\" or idDia=\"".$b."\" or idDia=\"".$c."\" or idDia=\"".$d."\" or idDia=\"".$e."\" or idDia=\"".$f."\" or idDia=\"".$g."\"" );
-    $dia = '<option></option>';//Elegir preparacion
-    while( $fila = $result->fetch_array() )
-    {
-        $dia.='<option value="'.$fila["idDia"].'">'.$fila["dia"].'</option>';
-    }
-    echo $dia;
-}
-    //////////////////////////////////// llena los ejericico de acuerdo a sub ejercicio
-    if(isset($_POST["sub"])){
-        $pre=$_POST["sub"];
-        $elemento= '<option></option>';//Elegir Categoria
-        $result = execSqlA("select idEjer_tecnico, elemento_tecnico from elemento_tecnico where idSub_ejercicio= '".$pre."'");
-        while( $fila = $result->fetch_array() )
-        {
-            $elemento.='<option value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</option>';
-        }
 
-        echo $elemento;
-        
-    }
     ////////////////////////////////////
     if(isset($_POST["equipo-cre"]))
     {
+        $idplansub = $_POST["equipo-cre"];
+        $result=execSqlA("select idGrupo from categoria_grupo where idCategoria_grupo = $idplansub");
+
         $plan = '<option value="0"> </option>';//Equipo
-
-        $result= execSqlA("select idPlanificacion, nombre from planificacion where idGrupo=".$_POST["equipo-cre"]);        
-
         while( $fila = $result->fetch_array() )
         {
-            $plan.='<option value="'.$fila["idPlanificacion"].'">'.$fila["nombre"].'</option>';
+            $resulta = execSqlA("select idPlanificacion, nombre from planificacion where idGrupo=".$fila["idGrupo"]);  
+            while( $filas = $resulta->fetch_array() )
+            {
+                $plan.='<option value="'.$filas["idPlanificacion"].'">'.$filas["nombre"].'</option>';
+            }              
         }
-
+        
         echo $plan;
     }
     ////////////////////////////////////

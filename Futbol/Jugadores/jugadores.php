@@ -204,7 +204,7 @@
 									$ruta=$_FILES["abrir-ima-mod"]["tmp_name"];
 								    $destino=filter_var("fotos/".$foto,FILTER_SANITIZE_STRING);
 								    copy($ruta,$destino);
-$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju');
+			$campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_ju');
 			$valores = array($nom,$ap1,$ap2,$fecha,$destino);
 			//actualiza nombre de equipo en la tabla grupo
 			$result= updateA('jugador', $campos, array(2,2,2,2,2) , $valores, 'idJugador', $idjugador);
@@ -258,10 +258,15 @@ $campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_j
 
 
 		case "insertar":
-			
-			$campos = array('idAsistencia','idGrupCat', 'idPlanificacion', 'idEtapa', 'idMesosciclo', 'idJugador', 'C_1', 'C_2', 'C_3', 'C_4', 'C_5', 'C_6', 'C_7', 'C_8', 'C_9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27', 'C28', 'C29', 'C30', 'C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C37', 'C38', 'C39', 'C40', 'C41', 'C42', 'total_clases', 'total_nota');
-			$valores = array('',21,1,12,1,1,1,1,1,1,0,0,1,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 6, 75);
-			$result= insertA('asistencia', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,), $valores);
+			$idplancat=$_POST["plansub"];
+            $idplan=$_POST["plan"];
+            $etapa=$_POST["etapa"];
+            $meso=$_POST["meso-cre"];
+            
+
+            $campos =  array('idAsistencia', 'idGrupCat', 'idPlanificacion', 'idEtapa', 'idMesociclo', 'idJugador', 'C_1', 'C_2', 'C_3', 'C_4', 'C_5', 'C_6', 'C_7', 'C_8', 'C_9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27', 'C28', 'C29', 'C30', 'C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C37', 'C38', 'C39', 'C40', 'C41', 'C42', 'total_clases', 'total_nota');
+			$valores = array('',$idplancat,$idplan,$etapa,$meso,1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,0);
+			$result= insertA('asistencia', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2), $valores);
 			if ($result)
 			{		
 				$resultados=array('resp'=> 1);
@@ -270,8 +275,11 @@ $campos = array('nombre_ju','apellidop_ju','apellidom_ju','fechana_ju','imagen_j
 			{
 				$resultados=array('resp'=> 0);
 			}
+			echo json_encode($resultados);
+			flush();
 
-		break;		
+		break;	
+			
 	
 	}
 	

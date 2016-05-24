@@ -40,7 +40,7 @@
         <br>
         <div class="row">
           <div class="col-sm-offset-9 col-sm-3 col-xs-6">
-            <button type="button" class="btn btn-primary" id="generar" >
+            <button type="button" class="btn btn-primary" id="generarasi" disabled >
               Generar
             </button>
           </div>  

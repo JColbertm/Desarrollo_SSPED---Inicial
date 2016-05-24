@@ -13,7 +13,7 @@
     <script type="text/javascript">
     $(document).ready(function() 
     {
-      $('#generar').on('click', function()
+      $('#generarasi').on('click', function()
       {
         $('#equipo-cre').prop('disabled',true);
         $('#plan-cre').prop('disabled',true);
@@ -21,10 +21,10 @@
         $('#meso-cre').prop('disabled',true);
 
         var plan=$("#plan-cre").val();
-        var idequipo = $('#equipo-cre').val();
+        var plansub = $('#equipo-cre').val();
         var meso=$('#meso-cre').val();
         var etapa=$('#etapas-cre').val();
-        var o = "equipo="+ encodeURIComponent(idequipo)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opc="+encodeURIComponent('clases')+"&etapa="+encodeURIComponent(etapa);
+        var o = "plansub="+ encodeURIComponent(plansub)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opc="+encodeURIComponent('clases')+"&etapa="+encodeURIComponent(etapa);
         console.log(o);
         $.ajax
         ({
@@ -57,9 +57,8 @@
               $("#plan-cre").html(plan);
               $('#etapas-cre').val(0);
               $('#meso-cre').val(0);
-              $('#micro-cre').val(0);
               $('#formCreacion :checked').removeAttr('checked');
-              document.formCreacion.generar.disabled=true;
+              document.formCreacion.generarasi.disabled=true;
             }
           })
         });
@@ -75,7 +74,7 @@
           })
         });
         
-//Llenar mesociclos
+      //Llenar mesociclos
      $("#etapas-cre").change(function(){
             $('#meso-cre').val(0);
             var idetapas=$("#etapas-cre").val();
@@ -92,13 +91,13 @@
               $("#meso-cre").html(meso);
              $('#formCreacion :checked').removeAttr('checked');
               $('#micro-cre').val(0);
-             document.formCreacion.generar.disabled=true;
+             document.formCreacion.generarasi.disabled=true;
             }
           })
         });
 //Llenar microciclos
        $("#meso-cre").change(function(){
-          document.formCreacion.generar.disabled=false;
+          document.formCreacion.generarasi.disabled=false;
         });
 
 
@@ -162,7 +161,7 @@
                           if(resp[i].res==1)
                           {
                             nombre += '<tr>'+
-                                  '<td>'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>';
+                                  '<td value="'+resp[i].idJugador+'">'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>';
                           }
                         }
               var r=0;
@@ -192,7 +191,7 @@
 
         $('#nombre').html(nombre);
       
-        document.formCreacion.generar.disabled=true;
+        document.formCreacion.generarasi.disabled=true;
         })
         .fail(function() 
         {
@@ -261,12 +260,16 @@
       }
 
       function insertar_datos(){
-         var id = "opcion=" + encodeURIComponent('insertar');
-          console.log(id);
+        var plan=$("#plan-cre").val();
+        var plansub = $('#equipo-cre').val();
+        var meso=$('#meso-cre').val();
+        var etapa=$('#etapas-cre').val();
+        var o = "plansub="+ encodeURIComponent(plansub)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opcion="+encodeURIComponent('insertar')+"&etapa="+encodeURIComponent(etapa);
+          console.log(o);
           $.ajax({
             url: 'jugadores.php',
             type: 'POST',
-            data: id
+            data: o
           })
           .done(function(data) {
             console.log(data);

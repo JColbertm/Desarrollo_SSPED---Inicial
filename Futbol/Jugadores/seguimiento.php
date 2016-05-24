@@ -1,4 +1,4 @@
-<form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
+<form class="form-horizontal" id="formseguimiento" name="formseguimiento" method="POST" enctype="multipart/form-data">
   <!-- Contenido pestana Programacion de microciclos -->
   <div class="tab-content">
     <!-- Contenido Pestaña creacion -->
@@ -7,7 +7,7 @@
         <h3>Seguimiento Asistencia</h3>  
       </div> 
       <br>
-      <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
+      <form class="form-horizontal" id="formseguimiento" name="formseguimiento" method="POST" enctype="multipart/form-data">
         <div class="row">
           <label class="col-sm-offset-2 col-sm-1 control-label">Equipo:</label>
           <div class="col-sm-2">
@@ -40,7 +40,7 @@
         <br>
         <div class="row">
           <div class="col-sm-offset-9 col-sm-3 col-xs-6">
-            <button type="button" class="btn btn-primary" id="generar" disabled>
+            <button type="button" class="btn btn-primary" id="generarsegui" disabled>
               Generar
             </button>
           </div>  
