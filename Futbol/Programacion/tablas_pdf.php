@@ -123,19 +123,21 @@ $periodo1 = $et[0]+$et[1];
 $periodo2 = $et[2]+$et[3];
 
 $color_final_etapa=array();
+$nombre_final_etapa=array();
 for($l=0; $l<=3;$l++)
 {
     for($j=0;$j<$et[$l]; $j++)
     {
         
-        if($l==0){$color_etapa='#F5DEB3';}
-        if($l==1){$color_etapa='#238E68';}
-        if($l==2){$color_etapa='#6B4226';}
-        if($l==3){$color_etapa='#DB9370';}
+        if($l==0){$color_etapa='#F5DEB3';$nombre='P-TE';}
+        if($l==1){$color_etapa='#238E68';$nombre='P-ES';}
+        if($l==2){$color_etapa='#6B4226';$nombre='P-CO';}
+        if($l==3){$color_etapa='#DB9370';$nombre='COM';}
         array_push($color_final_etapa,$color_etapa);
+        array_push($nombre_final_etapa,$nombre);
     }
 }
-
+$nombre_final_periodo=array();
 
 $color_final_periodo=array();
 for($l=0; $l<=1;$l++)
@@ -145,10 +147,11 @@ for($l=0; $l<=1;$l++)
     for($j=0;$j<$b; $j++)
     {
         
-        if($l==0){$color_periodo='#D8BFD8';}
-        if($l==1){$color_periodo='#238E68';}
+        if($l==0){$color_periodo='#D8BFD8';$nombreP='PRE';}
+        if($l==1){$color_periodo='#238E68';$nombreP='COM';}
         
         array_push($color_final_periodo,$color_periodo);
+         array_push($nombre_final_periodo,$nombreP);
     }
 }
 
@@ -248,8 +251,8 @@ if (mysqli_num_rows($result)>0){
            $html = $html.'
                        <td WIDTH="38" >
                             <table WIDTH="38" style="border-collapse: collapse;"  >  
-                                <tr><td style=" border: 1px solid black;background-color:'.$color_final_periodo[$m].';"> </td></tr>
-                                <tr><td style="  border: 1px solid black; background-color:'.$color_final_etapa[$m].';"></td></tr>
+                                <tr><td style=" border: 1px solid black;background-color:'.$color_final_periodo[$m].';text-align: center;"><b>'.$nombre_final_periodo[$m].'</b> </td></tr>
+                                <tr><td style="  border: 1px solid black; background-color:'.$color_final_etapa[$m].';text-align: center;"><b>'.$nombre_final_etapa[$m].'</b></td></tr>
                                 <tr><td style="background-color:'.$color_final[$m].';  border: 1px solid black;text-align: center;"><b>'.$meso_final[$m].'</b></td></tr>
                                 <tr><td style="  border: 1px solid black; text-align: center;">'.$columna[$m][0].'</td></tr>
                                 <tr><td style="  border: 1px solid black;text-align: center;">'.$columna[$m][1].'</td></tr>
@@ -289,8 +292,8 @@ if (mysqli_num_rows($result)>0){
                             <tr>';
 
 
-                           $html = $html.' <td style=" border: 1px solid black;background-color:'.$color_final_periodo[$cp].';"> </td></tr>
-                                <tr><td style=" border: 1px solid black;background-color:'.$color_final_etapa[$cp].';"> </td></tr>
+                           $html = $html.' <td style=" border: 1px solid black;background-color:'.$color_final_periodo[$cp].';text-align: center;"><b>'.$nombre_final_periodo[$cp].'</b></td></tr>
+                                <tr><td style=" border: 1px solid black;background-color:'.$color_final_etapa[$cp].';text-align: center;"><b> '.$nombre_final_etapa[$cp].'</b></td></tr>
                                 <tr><td style="background-color:'.$color_final[$cp].';  border: 1px solid black;text-align: center;"><b>'.$meso_final[$cp].'</b></td></tr>
                                 <tr><td style=" border: 1px solid black;text-align: center;">'.$c[0].'</td></tr>
                                 <tr><td style="  border: 1px solid black;text-align: center;">'.$c[1].'</td></tr>
@@ -346,15 +349,15 @@ $tamcol= $size_columna-25;
                        <td WIDTH="38">
                             <table WIDTH="38" style="border-collapse: collapse;">  
                             
-                                <tr><td style="  border: 1px solid black;background-color:'.$color_final_periodo[$p].'; "> </td></tr>
-                                <tr><td style="  border: 1px solid black; background-color:'.$color_final_etapa[$p].';text-align: center;"> </td></tr>
-                                <tr><td style="background-color:'.$color_final[$p].'; border: 1px solid black;"><b>'.$meso_final[$p].'</b></td></tr>
-                                <tr><td style="  border: 1px solid black; text-align: center;">'.$columna[$p][0].'</td></tr>
-                                <tr><td style="  border: 1px solid black;text-align: center; ">'.$columna[$p][1].'</td></tr>
-                                <tr><td style="  border: 1px solid black;text-align: center; ">'.$columna[$p][2].'</td></tr>
-                                <tr><td style="  border: 1px solid black; text-align: center;">'.$columna[$p][3].'</td></tr>
-                                <tr><td style="  border: 1px solid black; text-align: center;">'.$columna[$p][5].'</td></tr>
-                                <tr><td style="  border: 1px solid black;text-align: center; ">'.$columna[$p][4].'</td></tr>
+                                <tr><td style="  border: 1px solid black;background-color:'.$color_final_periodo[$p].'; text-align: center;"> <b>'.$nombre_final_periodo[$p].'</b></td></tr>
+                                <tr><td style="  border: 1px solid black; background-color:'.$color_final_etapa[$p].';text-align: center;"><b> '.$nombre_final_etapa[$p].'</b></td></tr>
+                                <tr><td style="background-color:'.$color_final[$p].'; border: 1px solid black;text-align: center;"><b>'.$meso_final[$p].'</b></td></tr>
+                                <tr><td style="  border: 1px solid black; text-align: center;text-align: center;">'.$columna[$p][0].'</td></tr>
+                                <tr><td style="  border: 1px solid black;text-align: center;text-align: center; ">'.$columna[$p][1].'</td></tr>
+                                <tr><td style="  border: 1px solid black;text-align: center;text-align: center; ">'.$columna[$p][2].'</td></tr>
+                                <tr><td style="  border: 1px solid black; text-align: center;text-align: center;">'.$columna[$p][3].'</td></tr>
+                                <tr><td style="  border: 1px solid black; text-align: center;text-align: center;">'.$columna[$p][5].'</td></tr>
+                                <tr><td style="  border: 1px solid black;text-align: center; text-align: center;">'.$columna[$p][4].'</td></tr>
                                 ';
                                 $r=$columna[$p][1]+$columna[$p][2]+$columna[$p][3]+$columna[$p][4]+$columna[$p][5];
                                 $html = $html.' <tr><td style="  border: 1px solid black; text-align: center;">'.$r.'</td></tr>
