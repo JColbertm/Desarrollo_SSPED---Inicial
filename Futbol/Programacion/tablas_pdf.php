@@ -74,7 +74,7 @@ if($nombre['idTipo_plan']==4){$tp='Competencia';}
 //$categor = RecuperarIdItemA('categoria', array('idCategoria'), array($_POST['id_categ']));
 
 
-$html ='<table width="100%"style="border-collapse: collapse;" >';
+$html ='<table width="90%"style="border-collapse: collapse;" >';
 
 $html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Nombre planificacion:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['nombre'].'</td></tr>';
 $html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Fecha de inicio:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['fecha_inicio_pre'].'</td></tr>';
@@ -205,9 +205,15 @@ $i=0;$r=0;
 if (mysqli_num_rows($result)>0){       
         $html = $html. '<div align="center">
             <h1>Macrociclo.</h1>
-            <br /><br /> </div>           
+            <br /></div>           
             <table  width="100%" border="0" cellspacing="0" cellpadding="0">
-             <tr >
+             <tr >';
+if (mysqli_num_rows($result)<15)
+{
+     $html = $html.'
+                    <td WIDTH="200"  ></td>';
+}
+             $html = $html.'
                     <td WIDTH="60"  >
                         <table  WIDTH="60" style="border-collapse: collapse;"> 
                                 <tr bgcolor="#DCDCDC" ><td style="border: 1px solid black; text-align: center; ">Periodos</td></tr>
