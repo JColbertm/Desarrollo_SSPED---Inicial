@@ -69,7 +69,7 @@
 			flush();
 		break;
 		case "s_buscar":
-			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru from grupo");
+			$result= execSqlA("select grupo.idGrupo, grupo.nombre_gru from grupo where idEntrenador=".$_SESSION['id_en']."" );
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;

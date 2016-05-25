@@ -34,7 +34,7 @@
                 console.log(data2);
                 console.log(resp);
 
-                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>tipo_plan</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>Categoria</th><th>tipo_plan</th></tr></thead><tbody>';
                  
 
                   for(i in resp){ 
@@ -42,7 +42,7 @@
                     if(resp[i].res==1)
                     {
 
-                    html+='<tr onclick="mostrar_datos(this)"><td style="visibility:hidden;">'+resp[i].id+'</td><td>'+resp[i].nombre+'</td><td >'+resp[i].grupo+'</td><td >'+resp[i].tipo_plan+'</td></tr>';
+                    html+='<tr onclick="mostrar_datos(this)"><td style="visibility:hidden;">'+resp[i].id+'</td><td>'+resp[i].nombre+'</td><td >'+resp[i].grupo+'</td><td >'+resp[i].categoria+'</td><td >'+resp[i].tipo_plan+'</td></tr>';
                     }
                   }
                   
@@ -100,10 +100,12 @@
               row2 = $(f).find('td:eq(1)').text();
               row3 = $(f).find('td:eq(2)').text();
               row4= $(f).find('td:eq(3)').text();
+              row5= $(f).find('td:eq(4)').text();
               $('#nombreP').val(row2);
               $('#grupoP').val(row3);
-              $('#planP').val(row4);
+              $('#planP').val(row5);
               $('#idP').val(row);
+              $('#id_categ').val(row4);
               $('#planifi').val(row);
               console.log(row);
              
@@ -157,18 +159,19 @@
               })
               .done(function(data2) {
                 var resp = $.parseJSON(data2);//json a objeto
-                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>tipo_plan</th></tr></thead><tbody>';
+                var html = '<div class="table-responsive col-sm-offset-1 col-sm-10" style="height: 200px; overflow-y:scroll;"><table class="table table-hover"  ><thead><tr><th style="visibility:hidden;">Nro.</th><th >Nombre</th><th>Equipo</th><th>Categoria</th><th>tipo_plan</th></tr></thead><tbody>';
         
 
 
                   for(i in resp){ 
                     if(resp[i].res==1)
                     {
-                    html+='<tr onclick="mostrar_datos(this)"><td style="visibility:hidden;">'+resp[i].id+'</td><td>'+resp[i].nombre+'</td><td >'+resp[i].grupo+'</td><td >'+resp[i].tipo_plan+'</td></tr>';}
+                    html+='<tr onclick="mostrar_datos(this)"><td style="visibility:hidden;">'+resp[i].id+'</td><td>'+resp[i].nombre+'</td><td >'+resp[i].grupo+'</td><td>'+resp[i].categoria+'</td><td >'+resp[i].tipo_plan+'</td></tr>';}
                   }
                   html+= '</tbody></table></div>';
 
                   $('#planificaciones').html(html);
+
 
               })
               .fail(function() {
@@ -194,7 +197,7 @@
               console.log(idg2);
               $('#mensaje').html('');
               $('#plani').html('<div class="col-sm-2">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'&idc='+row4+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Anual'+
                      '  </span>'+
@@ -203,7 +206,7 @@
                    '</div> '+
 
                    '<div class="col-sm-3">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'&idc='+row4+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Trimestral'+
                      '  </span>'+
@@ -213,7 +216,7 @@
 
 
               '<div class="col-sm-3">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'&idc='+row4+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Semestral'+
                      '  </span>'+
@@ -222,7 +225,7 @@
                    '</div> '+
 
                    '<div class="col-sm-4">'+
-                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'&idc='+row4+'">'+
+                  ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
                       '   Competencia'+
                      '  </span>'+
@@ -436,7 +439,7 @@
               </div>
               <!--  Tabla de resultado de busqueda -->
               <div class="col-sm-7 col-xs-12 form-group table-responsive" id="ResBusqueda">
-                        
+                        <div class="col-sm-5 col-xs-12 form-group "></div>
               
               </div>
               <!--  formulario de muestra de informacion -->
@@ -470,6 +473,7 @@
             <h4>Buscar Planificacion</h4>
             <form class="form-horizontal" id="formModificar" method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/tablas_pdf.php" target="_blank">
              <input type="hidden" value="" id="planifi" name="planifi">
+             
             <br>
               <div class="form-group">
                 <label class="col-sm-offset-1 col-sm-2 control-label" id="buscaNo">Nombre:</label>
@@ -501,6 +505,12 @@
                 <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Equipo:</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" id="grupoP" name="grupoP" placeholder="Nombre del grupo" readonly="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputNombre" class="col-xs-offset-1 col-xs-3 control-label">Categoria:</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control" id="id_categ" name="id_categ" placeholder="Categoria" readonly="">
                 </div>
               </div>
               <div class="form-group">

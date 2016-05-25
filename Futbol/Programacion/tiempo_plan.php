@@ -260,6 +260,7 @@
         }
 
        function calcular(){
+        if($('#nombrePlanificacion').val()!=''){
           setTimeout("$('.ocultar').hide();", 5000);
           var datos= $('#calculoplan').serialize();
           if($('#es_comp').val()==1)
@@ -307,12 +308,17 @@
               else{
               $('#tiempototal').val(tiempo+' horas');}
               $('#fechafincomp').val(fech);
-              $('#plansiguiente').click(function(){
+              $('#plansiguiente').click(function(){ 
                 $('#pes1').html('<a href="#periodos" aria-controls="periodos" role="tab" data-toggle="tab" >Periodos y Etapas</a>');  
-                $('.nav-tabs > .active').next('li').find('a').trigger('click');
-              });
+                $('.nav-tabs > .active').next('li').find('a').trigger('click');              });
               limpiar();
          })
+
+          }
+          else{
+            var html='<br><div  class="alert alert-danger ocultar" role="alert">Ingrese nombre de la planificacion!</div>';
+              $('#informacion').html(html);
+          }
         }
 
         function sumar_col1(c)
@@ -630,7 +636,7 @@
                       <label><strong>Nombre:</strong></label>
                     </div>  
                     <div class="col-sm-10 col-xs-12">
-                      <input type="text" value="" placeholder="Planificacion" class="form-control" name="nombrePlanificacion" style="" required=""><br>
+                      <input type="text" value="" placeholder="Planificacion" class="form-control" name="nombrePlanificacion" id="nombrePlanificacion" style="" required="" ><br>
                     </div>
                   </div>
                   <br><br><br>
@@ -750,8 +756,9 @@
                       <input type="text" class="form-control" id="cantidias" name="cantidias" placeholder="Cantidad de Dias" readonly="">
                     </div>
                   </div>
-                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">            
-                    <div class="col-sm-4 col-xs-12">
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">  
+                  <br>
+                  <div class="col-sm-4 col-xs-12">
                       <label>Tiempo Total:</label>
                     </div>
                     <div class="col-sm-4 col-xs-12">
@@ -759,7 +766,7 @@
                     </div>
                   </div>
                   <?php if($_GET['plan']!='Competencia'){ ?>
-                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">            
+                  <div class="form-group col-sm-7 col-sm-offset-5 col-xs-12">   <br>         
                     <div class="col-sm-4 col-xs-12">
                       <label>Fecha Final:</label>
                     </div>
@@ -896,12 +903,12 @@
               <div class="row">
                 <!-- PRIMER TABLA-->
                 <div class="col-md-6">
-                  <label>Preparacion General</label>                
+                  <label>Pre-temporada</label>                
                   <table class="table table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th>Ciclo</th>
-                        <th>Tiempo</th> 
+                        <th>Mesociclo</th>
+                        <th>Semanas</th> 
                       </tr>
                     </thead>                    
                     <tbody id="cuerpoTablaPG">
@@ -918,8 +925,8 @@
                   <table class="table table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th>Ciclo</th>
-                        <th>Tiempo</th> 
+                        <th>Mesociclo</th>
+                        <th>Semanas</th> 
                       </tr>
                     </thead>                
                     <tbody id="cuerpoTablaPE">
@@ -938,8 +945,8 @@
                   <table class="table table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th>Ciclo</th>
-                        <th>Tiempo</th> 
+                        <th>Mesociclo</th>
+                        <th>Semanas</th> 
                       </tr>
                     </thead>                    
                     <tbody id="cuerpoTablaPC">
@@ -956,8 +963,8 @@
                   <table class="table table-hover table-bordered">
                     <thead>
                       <tr>
-                        <th>Ciclo</th>
-                        <th>Tiempo</th> 
+                        <th>Mesociclo</th>
+                        <th>Semanas</th> 
                       </tr>
                     </thead>
                     <tbody id="cuerpoTablaC">
@@ -982,14 +989,14 @@
             <div id="home" class="tab-pane fade in active">
               <div class="col-md-3">
                 <div class="row">
-                  <div><center><h4> Preparacion<BR>General</h4></center>
+                  <div><center><h4> Pre<br>Temporada</h4></center>
                     <div class="col-xs-7 col-md-7">
-                      <div class="form-group" align="center" ><h6>Tecnico</h6></div>
-                      <div class="form-group" align="center" ><h6>Tecnico Fisico</h6></div>
-                      <div class="form-group" align="center"><h6>Tecnico Tactico</h6></div>  
-                      <div class="form-group" align="center"><h6>Pre Psicologico</h6></div>
-                      <div class="form-group" align="center"><h6>Competencia</h6></div>
-                      <div class="form-group" align="center" ><h6>Total</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico Fisico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Tecnico Tactico</h6></div>  
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Pre Psicologico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Competencia</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Total</h6></div>
                     </div>
                     <div class="col-xs-5 col-md-1"style="line-height: 2.7" >
                       <form class="form-inline text-left" role="form" id="colum1" name="colum1" action="" method="post">
@@ -1008,12 +1015,12 @@
                 <div class="row">
                   <div> <center><h4> Preparacion<BR>Especial</h4></center>
                     <div class="col-xs-7 col-md-7">
-                      <div class="form-group" align="center" ><h6>Tecnico</h6></div>
-                      <div class="form-group" align="center" ><h6>Tecnico Ficico</h6></div>
-                      <div class="form-group" align="center"><h6>Tecnico Tactico</h6></div>  
-                      <div class="form-group" align="center"><h6>Pre<BR>Psicologico</h6></div>
-                      <div class="form-group" align="center"><h6>Competencia</h6></div>
-                      <div class="form-group" align="center" ><h6>Total</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico Ficico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Tecnico Tactico</h6></div>  
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Pre<BR>Psicologico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Competencia</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Total</h6></div>
                     </div>
                     <div class="col-xs-5 col-md-1"style="line-height: 2.7" >
                       <form class="form-inline text-left" role="form" id="colum2" name="colum2" action="" method="post" >        
@@ -1032,12 +1039,12 @@
                 <div class="row">
                   <div><center><h4> Pre<BR>Competitivo</h4></center>
                     <div class="col-xs-7 col-md-7">
-                      <div class="form-group" align="center" ><h6>Tecnico</h6></div>
-                      <div class="form-group" align="center" ><h6>Tecnico Fisico</h6></div>
-                      <div class="form-group" align="center"><h6>Tecnico Tactico</h6></div>  
-                      <div class="form-group" align="center"><h6>Pre<BR>Psicologico</h6></div>
-                      <div class="form-group" align="center"><h6>Competencia</h6></div>
-                      <div class="form-group" align="center" ><h6>Total</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico Fisico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Tecnico Tactico</h6></div>  
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Pre<BR>Psicologico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Competencia</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Total</h6></div>
                     </div>
                     <div class="col-xs-5 col-md-1"style="line-height: 2.7" >
                       <form class="form-inline text-left" role="form" name="colum3" id="colum3" action="" method="post">
@@ -1056,12 +1063,12 @@
                 <div class="row">
                   <div><center><h4><BR>Competitivo</h4></center>
                     <div class="col-xs-7 col-md-7">
-                      <div class="form-group" align="center" ><h6>Tecnico</h6></div>
-                      <div class="form-group" align="center" ><h6>Tecnico Fisico</h6></div>
-                      <div class="form-group" align="center"><h6>Tecnico Tactico</h6></div>  
-                      <div class="form-group" align="center"><h6>Pre<BR>Psicologico</h6></div>
-                      <div class="form-group" align="center"><h6>Competencia</h6></div>
-                      <div class="form-group" align="center" ><h6>Total</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Tecnico Fisico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Tecnico Tactico</h6></div>  
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Pre<BR>Psicologico</h6></div>
+                      <div class="form-group" align="center"><h6 style="margin-bottom: 17px;">Competencia</h6></div>
+                      <div class="form-group" align="center" ><h6 style="margin-bottom: 17px;">Total</h6></div>
                     </div>
                     <div class="col-xs-5 col-md-1"style="line-height: 2.7" >
                       <form class="form-inline text-left" role="form" name="colum4" id="colum4" action="" method="post">   

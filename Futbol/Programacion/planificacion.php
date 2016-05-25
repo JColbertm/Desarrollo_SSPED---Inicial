@@ -5,13 +5,13 @@
 		switch ($opcion)
 		{
 			case "listar":
-			$result= execSqlA("select planificacion.idPlanificacion, planificacion.nombre, grupo.nombre_gru, tipo_plan.plan from planificacion, grupo, tipo_plan where planificacion.idGrupo = grupo.idGrupo and planificacion.idTipo_plan=tipo_plan.idTipo_plan and planificacion.estado=1");
+			$result= execSqlA("select planificacion.idPlanificacion, planificacion.nombre, grupo.nombre_gru, categoria.categoria_sub, tipo_plan.plan  from planificacion,grupo,tipo_plan,categoria_grupo,categoria where planificacion.idGrupo = grupo.idGrupo and planificacion.idTipo_plan=tipo_plan.idTipo_plan and categoria_grupo.idGrupo=planificacion.idGrupo and categoria_grupo.idCategoria=categoria.idCategoria and planificacion.estado=1");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {
 				$c=0;
 				while($data = mysqli_fetch_array($result))
 				{
-						$resultados[$c]=array('id'=> $data[0], 'nombre'=> $data[1],'grupo'=> $data[2],'tipo_plan'=> $data[3], 'res'=> 1);
+						$resultados[$c]=array('id'=> $data[0], 'nombre'=> $data[1],'grupo'=> $data[2],'categoria' => $data[3],'tipo_plan'=> $data[4], 'res'=> 1);
 						$c++;
 				}	
 			}
@@ -48,13 +48,13 @@
 
 			case "buscar":
 				$a = filter_var($_POST['a'],FILTER_SANITIZE_STRING);
-				$result= execSqlA("select planificacion.idPlanificacion, planificacion.nombre, grupo.nombre_gru, tipo_plan.plan from planificacion,grupo,tipo_plan where planificacion.nombre LIKE '%$a%' and planificacion.idGrupo = grupo.idGrupo and planificacion.idTipo_plan=tipo_plan.idTipo_plan and planificacion.estado=1");
+				$result= execSqlA("select planificacion.idPlanificacion, planificacion.nombre, grupo.nombre_gru, categoria.categoria_sub, tipo_plan.plan  from planificacion,grupo,tipo_plan,categoria_grupo,categoria where planificacion.nombre LIKE '%$a%' and planificacion.idGrupo = grupo.idGrupo and planificacion.idTipo_plan=tipo_plan.idTipo_plan and categoria_grupo.idGrupo=planificacion.idGrupo and categoria_grupo.idCategoria=categoria.idCategoria and planificacion.estado=1");
 				$resultados=array();
 				if (mysqli_num_rows($result)  > 0) {
 					$c=0;
 					while($data = mysqli_fetch_array($result))
 				{
-						$resultados[$c]=array('id'=> $data[0], 'nombre'=> $data[1],'grupo'=> $data[2],'tipo_plan'=> $data[3], 'res'=> 1);
+						$resultados[$c]=array('id'=> $data[0], 'nombre'=> $data[1],'grupo'=> $data[2],'categoria' => $data[3],'tipo_plan'=> $data[4], 'res'=> 1);
 						$c++;
 					}	
 				}
@@ -295,23 +295,23 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
-									 $tot5= ($tot5*$t_real)/100;
+									 $tot5= round(($tot5*$t_real)/100);
 
 									$total = 0;
 									$total=$tot1+$tot2+$tot3+$tot4+$tot5;
@@ -325,18 +325,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -360,19 +360,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -391,18 +391,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -425,19 +425,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -455,18 +455,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -489,19 +489,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -519,18 +519,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -553,19 +553,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -583,18 +583,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -617,19 +617,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -647,18 +647,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -682,19 +682,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -712,18 +712,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -747,19 +747,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -777,18 +777,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -811,19 +811,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -841,18 +841,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -879,19 +879,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -909,18 +909,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -938,18 +938,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -972,19 +972,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1002,18 +1002,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1031,18 +1031,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1065,19 +1065,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1095,18 +1095,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1124,18 +1124,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1158,19 +1158,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1187,18 +1187,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1216,18 +1216,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1251,19 +1251,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1281,18 +1281,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1310,18 +1310,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1344,19 +1344,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1374,18 +1374,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1403,18 +1403,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1438,19 +1438,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1468,18 +1468,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1497,18 +1497,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1532,19 +1532,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1562,18 +1562,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1591,18 +1591,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1625,19 +1625,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1655,18 +1655,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1684,18 +1684,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1722,19 +1722,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1752,18 +1752,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1781,18 +1781,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1810,18 +1810,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1845,19 +1845,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1875,18 +1875,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1903,18 +1903,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1932,18 +1932,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -1966,19 +1966,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -1995,18 +1995,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2023,18 +2023,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2052,18 +2052,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2087,19 +2087,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2116,18 +2116,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2145,18 +2145,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2174,18 +2174,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2209,19 +2209,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2239,18 +2239,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+55)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2267,18 +2267,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2296,18 +2296,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+45)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2331,19 +2331,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+45)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2361,18 +2361,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2390,18 +2390,18 @@
 								
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+55)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2419,18 +2419,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2455,19 +2455,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2486,18 +2486,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2516,18 +2516,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2546,18 +2546,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2582,19 +2582,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2615,18 +2615,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2645,18 +2645,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2674,18 +2674,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2710,19 +2710,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2741,18 +2741,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2771,18 +2771,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2801,18 +2801,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2840,19 +2840,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -2871,18 +2871,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2900,18 +2900,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2929,18 +2929,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2959,18 +2959,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -2995,19 +2995,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3026,18 +3026,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3056,18 +3056,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3085,18 +3085,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3114,18 +3114,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3149,19 +3149,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3180,18 +3180,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3210,18 +3210,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3239,18 +3239,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3268,18 +3268,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3303,19 +3303,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3334,18 +3334,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3361,18 +3361,18 @@
 									$result10="";
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3390,18 +3390,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3420,18 +3420,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3455,19 +3455,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3486,18 +3486,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3515,18 +3515,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3544,18 +3544,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3574,18 +3574,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3610,19 +3610,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3640,18 +3640,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3670,18 +3670,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3699,18 +3699,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3728,18 +3728,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3763,19 +3763,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3793,18 +3793,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3822,18 +3822,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3852,18 +3852,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3882,18 +3882,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3917,19 +3917,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -3947,18 +3947,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -3977,18 +3977,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4007,18 +4007,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4037,18 +4037,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4073,19 +4073,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4104,18 +4104,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4134,18 +4134,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4164,18 +4164,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4194,18 +4194,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4233,19 +4233,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4264,18 +4264,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4294,18 +4294,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4324,18 +4324,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4353,18 +4353,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4383,18 +4383,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4419,19 +4419,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4450,18 +4450,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4480,18 +4480,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4509,18 +4509,18 @@
 									$h++;
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4538,18 +4538,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4567,18 +4567,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4602,19 +4602,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4632,18 +4632,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4661,18 +4661,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4690,18 +4690,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4719,18 +4719,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4748,18 +4748,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4783,19 +4783,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4813,18 +4813,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4841,18 +4841,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4870,18 +4870,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4899,18 +4899,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4927,18 +4927,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -4962,19 +4962,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -4992,18 +4992,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5020,18 +5020,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5049,18 +5049,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5078,18 +5078,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5106,18 +5106,18 @@
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5147,19 +5147,19 @@
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -5176,18 +5176,18 @@
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5205,18 +5205,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5234,18 +5234,18 @@
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5262,18 +5262,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5291,18 +5291,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5326,19 +5326,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -5356,18 +5356,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5385,18 +5385,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5413,18 +5413,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5441,18 +5441,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5469,18 +5469,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5504,19 +5504,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -5534,18 +5534,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5562,18 +5562,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5597,18 +5597,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5632,18 +5632,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5667,18 +5667,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5708,19 +5708,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -5738,18 +5738,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5767,18 +5767,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5796,18 +5796,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5825,18 +5825,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5854,18 +5854,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5908,19 +5908,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -5938,18 +5938,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -5973,19 +5973,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6004,18 +6004,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6038,19 +6038,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6068,18 +6068,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6102,19 +6102,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6132,18 +6132,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6166,19 +6166,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6196,18 +6196,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6230,19 +6230,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6260,18 +6260,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6295,19 +6295,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6325,18 +6325,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6360,19 +6360,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6390,18 +6390,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6424,19 +6424,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6454,18 +6454,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6492,19 +6492,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6522,18 +6522,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6551,18 +6551,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6585,19 +6585,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6615,18 +6615,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6644,18 +6644,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6678,19 +6678,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6708,18 +6708,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6737,18 +6737,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6771,19 +6771,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6800,18 +6800,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6829,18 +6829,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6864,19 +6864,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6894,18 +6894,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6923,18 +6923,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -6957,19 +6957,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -6987,18 +6987,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7016,18 +7016,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7051,19 +7051,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7081,18 +7081,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7110,18 +7110,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7145,19 +7145,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7175,18 +7175,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7204,18 +7204,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7238,19 +7238,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7268,18 +7268,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7297,18 +7297,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7335,19 +7335,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7365,18 +7365,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7394,18 +7394,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7423,18 +7423,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7458,19 +7458,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7488,18 +7488,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7516,18 +7516,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7545,18 +7545,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7579,19 +7579,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7608,18 +7608,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7636,18 +7636,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7665,18 +7665,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7700,19 +7700,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7729,18 +7729,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7758,18 +7758,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7787,18 +7787,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7822,19 +7822,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7852,18 +7852,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+55)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7880,18 +7880,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7909,18 +7909,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+45)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -7944,19 +7944,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+45)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -7974,18 +7974,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8003,18 +8003,18 @@ $total = 0;
 								
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+55)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8032,18 +8032,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8068,19 +8068,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8099,18 +8099,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8129,18 +8129,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8159,18 +8159,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8195,19 +8195,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8228,18 +8228,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8258,18 +8258,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8287,18 +8287,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8323,19 +8323,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8354,18 +8354,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8384,18 +8384,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8414,18 +8414,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8453,19 +8453,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8484,18 +8484,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8513,18 +8513,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8542,18 +8542,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8572,18 +8572,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8608,19 +8608,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8639,18 +8639,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8669,18 +8669,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8698,18 +8698,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8727,18 +8727,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8762,19 +8762,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8793,18 +8793,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8823,18 +8823,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8852,18 +8852,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8881,18 +8881,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8916,19 +8916,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -8947,18 +8947,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -8974,18 +8974,18 @@ $total = 0;
 									$result10="";
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9003,18 +9003,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9033,18 +9033,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9068,19 +9068,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9099,18 +9099,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9128,18 +9128,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9157,18 +9157,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9187,18 +9187,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9223,19 +9223,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9253,18 +9253,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9283,18 +9283,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9312,18 +9312,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9341,18 +9341,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9376,19 +9376,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9406,18 +9406,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9435,18 +9435,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9465,18 +9465,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9495,18 +9495,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9530,19 +9530,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9560,18 +9560,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9590,18 +9590,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9620,18 +9620,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9650,18 +9650,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9686,19 +9686,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9717,18 +9717,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9747,18 +9747,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9777,18 +9777,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9807,18 +9807,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9846,19 +9846,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -9877,18 +9877,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9907,18 +9907,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9937,18 +9937,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9966,18 +9966,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -9996,18 +9996,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10032,19 +10032,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10063,18 +10063,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10093,18 +10093,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10122,18 +10122,18 @@ $total = 0;
 									$h++;
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10151,18 +10151,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10180,18 +10180,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10215,19 +10215,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10245,18 +10245,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10274,18 +10274,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10303,18 +10303,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10332,18 +10332,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10361,18 +10361,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10396,19 +10396,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10426,18 +10426,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10454,18 +10454,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10483,18 +10483,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10512,18 +10512,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10540,18 +10540,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10575,19 +10575,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10605,18 +10605,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10633,18 +10633,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10662,18 +10662,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10691,18 +10691,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10719,18 +10719,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10760,19 +10760,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10789,18 +10789,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10818,18 +10818,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10847,18 +10847,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10875,18 +10875,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10904,18 +10904,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10939,19 +10939,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -10969,18 +10969,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -10998,18 +10998,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11026,18 +11026,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11054,18 +11054,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11082,18 +11082,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11117,19 +11117,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11147,18 +11147,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11175,18 +11175,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11210,18 +11210,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11245,18 +11245,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11280,18 +11280,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11321,19 +11321,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11351,18 +11351,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11380,18 +11380,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11409,18 +11409,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11438,18 +11438,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11467,18 +11467,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11522,19 +11522,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11552,18 +11552,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11587,19 +11587,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11618,18 +11618,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11652,19 +11652,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11682,18 +11682,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11716,19 +11716,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11746,18 +11746,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11780,19 +11780,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11810,18 +11810,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11844,19 +11844,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11874,18 +11874,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11909,19 +11909,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -11939,18 +11939,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -11974,19 +11974,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12004,18 +12004,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12038,19 +12038,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12068,18 +12068,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12106,19 +12106,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12136,18 +12136,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12165,18 +12165,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12199,19 +12199,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12229,18 +12229,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12258,18 +12258,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12292,19 +12292,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12322,18 +12322,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12351,18 +12351,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12385,19 +12385,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12414,18 +12414,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12443,18 +12443,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12478,19 +12478,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12508,18 +12508,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12537,18 +12537,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12571,19 +12571,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12601,18 +12601,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12630,18 +12630,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12665,19 +12665,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12695,18 +12695,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12724,18 +12724,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12759,19 +12759,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12789,18 +12789,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12818,18 +12818,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12852,19 +12852,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12882,18 +12882,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12911,18 +12911,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -12949,19 +12949,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -12979,18 +12979,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13008,18 +13008,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13037,18 +13037,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13072,19 +13072,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13102,18 +13102,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13130,18 +13130,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13159,18 +13159,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13193,19 +13193,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13222,18 +13222,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13250,18 +13250,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13279,18 +13279,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13314,19 +13314,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13343,18 +13343,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13372,18 +13372,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13401,18 +13401,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13436,19 +13436,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13466,18 +13466,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+55)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13494,18 +13494,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13523,18 +13523,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+45)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13558,19 +13558,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+45)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13588,18 +13588,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13617,18 +13617,18 @@ $total = 0;
 								
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+55)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13646,18 +13646,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13682,19 +13682,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13713,18 +13713,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13743,18 +13743,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13773,18 +13773,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13809,19 +13809,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13842,18 +13842,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13872,18 +13872,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13901,18 +13901,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13937,19 +13937,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -13968,18 +13968,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -13998,18 +13998,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14028,18 +14028,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14067,19 +14067,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14098,18 +14098,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14127,18 +14127,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14156,18 +14156,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14186,18 +14186,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14222,19 +14222,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14253,18 +14253,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14283,18 +14283,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14312,18 +14312,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14341,18 +14341,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14376,19 +14376,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14407,18 +14407,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14437,18 +14437,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14466,18 +14466,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14495,18 +14495,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14530,19 +14530,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14561,18 +14561,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14588,18 +14588,18 @@ $total = 0;
 									$result10="";
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14617,18 +14617,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14647,18 +14647,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14682,19 +14682,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14713,18 +14713,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14742,18 +14742,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14771,18 +14771,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14801,18 +14801,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14837,19 +14837,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -14867,18 +14867,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14897,18 +14897,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14926,18 +14926,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14955,18 +14955,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -14990,19 +14990,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15020,18 +15020,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15049,18 +15049,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15079,18 +15079,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15109,18 +15109,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15144,19 +15144,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15174,18 +15174,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15204,18 +15204,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15234,18 +15234,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15264,18 +15264,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15300,19 +15300,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15331,18 +15331,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15361,18 +15361,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15391,18 +15391,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15421,18 +15421,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15460,19 +15460,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15491,18 +15491,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15521,18 +15521,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15551,18 +15551,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15580,18 +15580,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15610,18 +15610,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15646,19 +15646,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15677,18 +15677,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15707,18 +15707,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15736,18 +15736,18 @@ $total = 0;
 									$h++;
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15765,18 +15765,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15794,18 +15794,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15829,19 +15829,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -15859,18 +15859,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15888,18 +15888,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15917,18 +15917,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15946,18 +15946,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -15975,18 +15975,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16010,19 +16010,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16040,18 +16040,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16068,18 +16068,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16097,18 +16097,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16126,18 +16126,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16154,18 +16154,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16189,19 +16189,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16219,18 +16219,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16247,18 +16247,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16276,18 +16276,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16305,18 +16305,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16333,18 +16333,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16374,19 +16374,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16403,18 +16403,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16432,18 +16432,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16461,18 +16461,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16489,18 +16489,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16518,18 +16518,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16553,19 +16553,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16583,18 +16583,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16612,18 +16612,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16640,18 +16640,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16668,18 +16668,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16696,18 +16696,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16731,19 +16731,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16761,18 +16761,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16789,18 +16789,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16824,18 +16824,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16859,18 +16859,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16894,18 +16894,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16935,19 +16935,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -16965,18 +16965,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -16994,18 +16994,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17023,18 +17023,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17052,18 +17052,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17081,18 +17081,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17139,19 +17139,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17169,18 +17169,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17204,19 +17204,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17235,18 +17235,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17269,19 +17269,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17299,18 +17299,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17333,19 +17333,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17363,18 +17363,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17397,19 +17397,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17427,18 +17427,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17461,19 +17461,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17491,18 +17491,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17526,19 +17526,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17556,18 +17556,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17591,19 +17591,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17621,18 +17621,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17655,19 +17655,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17685,18 +17685,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17723,19 +17723,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17753,18 +17753,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17782,18 +17782,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17816,19 +17816,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17846,18 +17846,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17875,18 +17875,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17909,19 +17909,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -17939,18 +17939,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -17968,18 +17968,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18002,19 +18002,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18031,18 +18031,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18060,18 +18060,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18095,19 +18095,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18125,18 +18125,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18154,18 +18154,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18188,19 +18188,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18218,18 +18218,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18247,18 +18247,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18282,19 +18282,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18312,18 +18312,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18341,18 +18341,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18376,19 +18376,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18406,18 +18406,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18435,18 +18435,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18469,19 +18469,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18499,18 +18499,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18528,18 +18528,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18566,19 +18566,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18596,18 +18596,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18625,18 +18625,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18654,18 +18654,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18689,19 +18689,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18719,18 +18719,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18747,18 +18747,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18776,18 +18776,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18810,19 +18810,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18839,18 +18839,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18867,18 +18867,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18896,18 +18896,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18931,19 +18931,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -18960,18 +18960,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -18989,18 +18989,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19018,18 +19018,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19053,19 +19053,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19083,18 +19083,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+55)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19111,18 +19111,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19140,18 +19140,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+45)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19175,19 +19175,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+45)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19205,18 +19205,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19234,18 +19234,18 @@ $total = 0;
 								
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+55)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19263,18 +19263,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19299,19 +19299,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19330,18 +19330,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19360,18 +19360,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19390,18 +19390,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19426,19 +19426,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19459,18 +19459,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19489,18 +19489,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19518,18 +19518,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19554,19 +19554,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+55)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+45)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19585,18 +19585,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19615,18 +19615,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+45)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+55)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19645,18 +19645,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19684,19 +19684,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19715,18 +19715,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19744,18 +19744,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19773,18 +19773,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19803,18 +19803,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19839,19 +19839,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -19870,18 +19870,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19900,18 +19900,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19929,18 +19929,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19958,18 +19958,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -19993,19 +19993,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20024,18 +20024,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20054,18 +20054,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20083,18 +20083,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20112,18 +20112,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20147,19 +20147,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+10)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20178,18 +20178,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20205,18 +20205,18 @@ $total = 0;
 									$result10="";
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20234,18 +20234,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20264,18 +20264,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+10)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20299,19 +20299,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20330,18 +20330,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20359,18 +20359,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20388,18 +20388,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20418,18 +20418,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20454,19 +20454,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20484,18 +20484,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20514,18 +20514,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20543,18 +20543,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20572,18 +20572,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20607,19 +20607,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20637,18 +20637,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20666,18 +20666,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20696,18 +20696,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20726,18 +20726,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20761,19 +20761,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20791,18 +20791,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20821,18 +20821,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20851,18 +20851,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20881,18 +20881,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20917,19 +20917,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -20948,18 +20948,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -20978,18 +20978,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21008,18 +21008,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21038,18 +21038,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21077,19 +21077,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -21108,18 +21108,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21138,18 +21138,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21168,18 +21168,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21197,18 +21197,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21227,18 +21227,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21263,19 +21263,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -21294,18 +21294,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21324,18 +21324,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21353,18 +21353,18 @@ $total = 0;
 									$h++;
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21382,18 +21382,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21411,18 +21411,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21446,19 +21446,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -21476,18 +21476,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21505,18 +21505,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21534,18 +21534,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21563,18 +21563,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21592,18 +21592,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21627,19 +21627,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -21657,18 +21657,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21685,18 +21685,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21714,18 +21714,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+10)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21743,18 +21743,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21771,18 +21771,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+10)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21806,19 +21806,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -21836,18 +21836,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21864,18 +21864,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21893,18 +21893,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+60)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21922,18 +21922,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21950,18 +21950,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+40)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -21991,19 +21991,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -22020,18 +22020,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22049,18 +22049,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22078,18 +22078,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+40)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22106,18 +22106,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22135,18 +22135,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+60)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22170,19 +22170,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -22200,18 +22200,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22229,18 +22229,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22257,18 +22257,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+50)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22285,18 +22285,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+30)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22313,18 +22313,18 @@ $total = 0;
 									
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis+20)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22348,19 +22348,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -22378,18 +22378,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22406,18 +22406,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22441,18 +22441,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+20)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+30)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22476,18 +22476,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+30)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+20)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22511,18 +22511,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+20)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+30)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com+50)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22552,19 +22552,19 @@ $total = 0;
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 									
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 									
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 									 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 									 
 
 									 $tot5= $gen_psi/2;
@@ -22582,18 +22582,18 @@ $total = 0;
 
 									 $tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22611,18 +22611,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22640,18 +22640,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+60)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+40)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22669,18 +22669,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+50)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+50)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
@@ -22698,18 +22698,18 @@ $total = 0;
 
 									$tot1=$tot2=$tot3=$tot4=$tot5=0;
 									 $tot1= ($gen_tec+40)/2;
-									 $tot1= ($tot1*$t_real)/100; 
+									 $tot1= round(($tot1*$t_real)/100); 
 
 									 $tot2= ($gen_fis)/2;
-									 $tot2= ($tot2*$t_real)/100; 
+									 $tot2= round(($tot2*$t_real)/100); 
 
 
 									 $tot3= ($gen_tac+60)/2;
-									 $tot3= ($tot3*$t_real)/100; 
+									 $tot3= round(($tot3*$t_real)/100); 
 
 
 									 $tot4= ($gen_com)/2;
-									 $tot4= ($tot4*$t_real)/100;
+									 $tot4= round(($tot4*$t_real)/100);
 
 
 									 $tot5= ($gen_psi)/2;
