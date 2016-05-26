@@ -126,10 +126,17 @@ if(isset($_POST["lu"])&&isset($_POST["ma"]) && isset($_POST["mi"]) && isset($_PO
         $plan=$_POST["plan"];
         $meso = '<option value="0"> </option>';//Elige un meso
         $result= execSqlA('select idMesociclo, ciclo from mesociclo where idPlanificacion = \''.$plan.'\' and idPlanificacion_etapa= \''.$etapa.'\'');        
-
+        $ciclo="";
+        $numeros=array("1","2","3","4","5","6","7","8","9","10","11","12","13",
+            "14","15","16","17","18","19","20","21","22","23","24","25");
+        $romanos = array("I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII",
+            "XIV","XV","XVI","XVII","XVIII","IXX","XX","XXI","XXII","XXIII","XXIV","XXV");
         while( $fila = $result->fetch_array() )
         {
-            $meso.='<option value="'.$fila["idMesociclo"].'">'.$fila["ciclo"].'</option>';
+            for($i=0;$i<24;$i++){
+                if($fila["ciclo"]==$numeros[$i]){$ciclo=$romanos[$i];}
+            }
+            $meso.='<option value="'.$fila["idMesociclo"].'">'.$ciclo.'</option>';
         }
     
         echo $meso;

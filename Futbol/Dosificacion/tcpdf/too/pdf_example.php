@@ -36,6 +36,8 @@ require_once('tcpdf_include.php');
 			$id=$_POST['idpro'];
 		}
 
+
+
 $row= execSqlA("SELECT * FROM programacion WHERE idProgramacion = \"".$id."\"");
 
 while ($data = mysqli_fetch_array($row)){
@@ -62,6 +64,21 @@ $ejer55= $data['ejer55'];
  $row= execSqlA("SELECT idPlanificacion FROM direccion WHERE idDireccion = \"".$idDireccion."\"");while ($data = mysqli_fetch_array($row)){
  	$idPlani=$data['idPlanificacion'];
 }
+// seleccionamos el ano de inicio de la planificacion
+$row= execSqlA("SELECT YEAR(fecha_inicio_pre)as ano FROM planificacion where idPlanificacion = \"".$idPlani."\"");
+while ($data = mysqli_fetch_array($row)){
+ 	$ano=$data['ano'];
+}
+// seleccionamos el ano donde termina de la planificacion
+$row= execSqlA("SELECT YEAR(fecha_fin)as ano_fin FROM planificacion where idPlanificacion = \"".$idPlani."\"");
+while ($data = mysqli_fetch_array($row)){
+ 	$ano_fin=$data['ano_fin'];
+}
+
+//Fijamos condiciones si son iguales o distintos
+$gestion="";
+ if($ano==$ano_fin){$gestion=$ano;}else{$gestion=$ano."-".$ano_fin;}
+//
 $row= execSqlA("select a.nombre_gru, a.idGrupo from grupo a,planificacion b where a.idGrupo =b.idGrupo and idPlanificacion= \"".$idPlani."\"");while ($data = mysqli_fetch_array($row)){
  	$nombre_gru=$data['nombre_gru'];
  	$idGrupo=$data['idGrupo'];
@@ -84,26 +101,14 @@ if($idPlani_etapa==2){$etapa="Preparacion Fisica";}
 if($idPlani_etapa==3){$etapa="Pre Competitivo";}
 if($idPlani_etapa==4){$etapa="Competitivo";}
 
-if($ciclo==1){$romanos="I";}
-if($ciclo==2){$romanos="II";}
-if($ciclo==3){$romanos="III";}
-if($ciclo==4){$romanos="IV";}
-if($ciclo==5){$romanos="V";}
-if($ciclo==6){$romanos="VI";}
-if($ciclo==7){$romanos="VII";}
-if($ciclo==8){$romanos="VIII";}
-if($ciclo==9){$romanos="IX";}
-if($ciclo==10){$romanos="X";}
-if($ciclo==11){$romanos="XI";}
-if($ciclo==12){$romanos="XII";}
-if($ciclo==13){$romanos="XIII";}
-if($ciclo==14){$romanos="XIV";}
-if($ciclo==15){$romanos="XV";}
-if($ciclo==16){$romanos="XVI";}
-if($ciclo==17){$romanos="XVII";}
-if($ciclo==18){$romanos="XVIII";}
-if($ciclo==19){$romanos="XIX";}
-if($ciclo==20){$romanos="XX";}
+		$romanos="";
+        $numeros=array("1","2","3","4","5","6","7","8","9","10","11","12","13",
+            "14","15","16","17","18","19","20","21","22","23","24","25");
+        $romanos_letras = array("I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII",
+            "XIV","XV","XVI","XVII","XVIII","IXX","XX","XXI","XXII","XXIII","XXIV","XXV");
+        for($i=0;$i<25;$i++){
+                if($ciclo==$numeros[$i]){$romanos=$romanos_letras[$i];}
+            }
 
 $row= execSqlA("select semana from direccion where idMesociclo=\"".$idMeso."\" and idPlanificacion=\"".$idPlani."\" and idDireccion=\"".$idDireccion."\"");while ($data = mysqli_fetch_array($row)){
  	$microciclo=$data['semana'];
@@ -280,7 +285,7 @@ $htmlcontent = '
 <tr>
 
 <th rowspan="4" colspan="4"></th>
-<th rowspan="2" colspan="8" align="center"><H2>Temporada </H2></th>
+<th rowspan="2" colspan="8" align="center"><H2>Temporada '.$gestion.'</H2></th>
 <th rowspan="4" colspan="4">PERIODO: '.$peri.'<br>ETAPA: '.$etapa.'<BR>MESOCICLO: '. $romanos.'<BR>MICROCICLO: '.$microciclo.'</th>
 <th rowspan="2" colspan="2">N CLASE</th>
 </tr>
@@ -335,7 +340,7 @@ $htmlcontent .= '
 <th colspan="7" align="center">REPRESENTACION</th>
 <th colspan="2" align="right">'.$tec.' MIN</th>
 </tr>
-'; }
+'; 
 if ($ejercicio1!=""){
 $htmlcontent .= '
 <tr>
@@ -351,7 +356,7 @@ $htmlcontent .= '
 <th colspan="9" height="100" align="center"><img src="../../../Galeria/acciones_abm_ejer/'.$foto11.'" alt="Mountain View" style="width:100px;height:100px;"></th>
 </tr>
 '
-; }
+; }}
 if ($fis!=0){
 $htmlcontent .= '
 <tr>
@@ -362,7 +367,7 @@ $htmlcontent .= '
 <th colspan="7" align="center">REPRESENTACION</th>
 <th colspan="2" align="right">'.$fis.' MIN</th>
 </tr>
-'; }
+'; 
 if ($ejercicio2!=""){
 $htmlcontent .= '
 <tr>
@@ -377,7 +382,7 @@ $htmlcontent .= '
 <th colspan="9" height="100" align="center"><img src="../../../Galeria/acciones_abm_ejer/'.$foto22.'" alt="Mountain View" style="width:100px;height:100px;"></th>
 </tr>
 '
-; }
+; }}
 if ($tac!=0){
 $htmlcontent .= '
 <tr>
@@ -388,7 +393,7 @@ $htmlcontent .= '
 <th colspan="7" align="center">REPRESENTACION</th>
 <th colspan="2" align="right">'.$tac.' MIN</th>
 </tr>
-'; }
+'; 
 if ($ejercicio3!=""){
 $htmlcontent .= '
 <tr>
@@ -403,7 +408,7 @@ $htmlcontent .= '
 <th colspan="9" height="95" align="center"><img src="../../../Galeria/acciones_abm_ejer/'.$foto33.'" alt="Mountain View" style="width:100px;height:100px;"></th>
 </tr>
 '
-; }
+; }}
 if ($psi!=0){
 $htmlcontent .= '
 <tr>
@@ -414,7 +419,7 @@ $htmlcontent .= '
 <th colspan="7" align="center">REPRESENTACION</th>
 <th colspan="2" align="right">'.$psi.' MIN</th>
 </tr>
-'; }
+'; 
 if ($ejercicio4!=""){
 $htmlcontent .= '
 <tr>
@@ -429,7 +434,7 @@ $htmlcontent .= '
 <th colspan="9" height="100" align="center"><img src="../../../Galeria/acciones_abm_ejer/'.$foto44.'" alt="Mountain View" style="width:100px;height:100px;"></th>
 </tr>
 '
-;} 
+;} }
 if($comp!=0){
 $htmlcontent .= '
 <tr>
@@ -440,7 +445,7 @@ $htmlcontent .= '
 <th colspan="7" align="center">REPRESENTACION</th>
 <th colspan="2" align="right">'.$comp.' MIN</th>
 </tr>
-'; }
+'; 
 if ($ejercicio5!=""){
 $htmlcontent .= '
 <tr>
@@ -455,7 +460,7 @@ $htmlcontent .= '
 <th colspan="9" height="100" align="center"><img src="../../../Galeria/acciones_abm_ejer/'.$foto55.'" alt="Mountain View" style="width:100px;height:100px;"></th>
 </tr>
 '
-; }
+; }}
 $htmlcontent .= '
 <tr>
 <th colspan="16" align="center">PARTE FINAL</th>

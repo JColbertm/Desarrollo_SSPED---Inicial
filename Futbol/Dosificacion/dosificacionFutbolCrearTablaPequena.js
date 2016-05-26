@@ -114,9 +114,9 @@ $("#cabeceraTablaDias").html(cabeceraTablaDias);
                   	var psi=resp[i].accion_psi;
                   	var comp=resp[i].competencia;
                   	console.log(tec);
-                  	console.log(comp);
                   //  html+='<tr style="display:none"><td >'+resp[i].idDireccion+'</td></tr><tr><td><br>Tecnico</td><td id="tec"><br>'+resp[i].sistema_juego+'</td></tr><tr><td><br>Preparation Fisica</td><td id="fis"><br>'+resp[i].preparation_fisica+'</td></tr><tr><td><br>Sistema de Juego</td><td id="tac"><br>'+resp[i].tecnico_tactico+'</td></tr><tr><td><br>Accion Psi</td><td id="psi"><br>'+resp[i].accion_psi+'</td></tr><tr><td><br>Competencia</td><td id="comp"><br>'+resp[i].competencia+'</td></tr><tr><td><br>Sub Total</td><td><br>'+resp[i].total+'</td></tr>';
                   }
+                   
                   //html+= '</tbody></table></div>';
 
                   //$('#resultado2').html(html);
@@ -140,7 +140,7 @@ $("#cabeceraTablaDias").html(cabeceraTablaDias);
 						         }  
 						         for(i=0;i<1;i++){
 							
-							cuerpoTablaDias+='<tr><td><br>Sub Total</td><td><br>'+resp[i].total+'</td>';
+							cuerpoTablaDias+='<tr><td>Tiempo Disponible<br>Semana</td><td><input style="width: 70px;" type="text" class="form-control" maxlength="5" readonly="" id="total_semana" value="'+resp[i].total+'"/></td>';
 							for (j=1;j<=diasPosibles;j++){
 								cuerpoTablaDias+='<td> <input style="width: 130px;"  type="text" value="0" class="form-control" id="res_col'+j+'" name="colum'+j+'" placeholder="0" maxlength="3" size="1" readonly="" /> </td>';
 

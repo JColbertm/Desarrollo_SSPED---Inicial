@@ -20,6 +20,7 @@
             var fecha= $("#plan-cre-fecha").val();
             formCreacion.mandar.disabled=true;
             formPdf.mostrar_pdf.disabled=true;
+
             //combo box dias
           var diases=dias_escogidos();
           var l=diases[1];
@@ -53,7 +54,7 @@
             ///////////Boton Guardar
             $("#mandar").click(function(){
             formCreacion.mandar.disabled=true;
-                      document.formCreacion.btnCargar.disabled=true;
+            document.formCreacion.btnCargar.disabled=true;
                     
                     var o = "idplan="+encodeURIComponent(idplan)+"&idequipo="+ encodeURIComponent(idequipo)+"&fecha="+encodeURIComponent(fecha);
                     console.log(o);      
@@ -66,7 +67,38 @@
                         console.log(data2);
                         console.log(resp);
                        guardarDia(n1,resp,diases);
-            
+                       $('#modal-tecnico-id1').val(" ");
+                       $('#modal-tecnico-id2').val(" ");
+                       $('#modal-fisico-id1').val(" ");
+                       $('#modal-fisico-id2').val(" ");
+                       $('#modal-tactico-id1').val(" ");
+                       $('#modal-tactico-id2').val(" ");
+                       $('#modal-psi-id1').val(" ");
+                       $('#modal-psi-id2').val(" ");
+                       $('#modal-comp-id1').val(" ");
+                       $('#modal-comp-id2').val(" ");
+
+                       $('#modal-tecnico-nom1').val(" ");
+                       $('#modal-tecnico-desc1').val(" ");
+                       $('#modal-tecnico-nom2').val(" ");
+                       $('#modal-tecnico-desc2').val(" ");
+                       $('#modal-fisico-nom1').val(" ");
+                       $('#modal-fisico-desc1').val(" ");
+                       $('#modal-fisico-nom2').val(" ");
+                       $('#modal-fisico-desc1').val(" ");
+                       $('#modal-tactico-nom1').val(" ");
+                       $('#modal-tactico-desc1').val(" ");
+                       $('#modal-tactico-nom2').val(" ");
+                       $('#modal-tactico-desc2').val(" ");
+                       $('#modal-psi-nom1').val(" ");
+                       $('#modal-psi-desc1').val(" ");
+                       $('#modal-psi-nom2').val(" ");
+                       $('#modal-psi-desc2').val(" ");
+                       $('#modal-comp-nom1').val(" ");
+                       $('#modal-comp-desc1').val(" ");
+                       $('#modal-comp-nom2').val(" ");
+                       $('#modal-comp-desc2').val(" ");
+
                               })
 
                 
@@ -77,7 +109,6 @@
             s();
                       generarTabla();                      
             $("#mostrar-tabla").show();
-            buscar_teclado();
             $('#equipo-cre').prop('disabled',true);
             $('#plan-cre').prop('disabled',true);
             $('#plan-cre-fecha').prop('disabled',true);
@@ -95,7 +126,7 @@
         
          $("#dosi-dia").change(function(){
          
-            formCreacion.mandar.disabled=false;
+            if($('#total_semana').val()==0){formCreacion.mandar.disabled=true}else{formCreacion.mandar.disabled=true;}
             
         });
         //Si selecciona otro Equipo limpia todo y LLENA SELECT DE PLANES
@@ -435,20 +466,43 @@
 
       })
 function diasemana(id){
-  if(id==1){var dias="LUNES";formCreacion.mandar.disabled=false;
-  formCreacion.idlunes.disabled=true;}
-  if(id==2){var dias="MARTES";formCreacion.mandar.disabled=false;
-formCreacion.idmartes.disabled=true;}
-  if(id==3){var dias="MIERCOLES";formCreacion.mandar.disabled=false;
-formCreacion.idmiercoles.disabled=true;}
-  if(id==4){var dias="JUEVES";formCreacion.mandar.disabled=false;
-formCreacion.idjueves.disabled=true;}
-  if(id==5){var dias="VIERNES";formCreacion.mandar.disabled=false;
-formCreacion.idviernes.disabled=true;}
-  if(id==6){var dias="SABADO";formCreacion.mandar.disabled=false;
-formCreacion.idsabado.disabled=true;}
-  if(id==7){var dias="DOMINGO";formCreacion.mandar.disabled=false;
-formCreacion.iddomingo.disabled=true;}
+  if(id==1){
+    var dias="LUNES";
+  formCreacion.idlunes.disabled=true;
+  if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+
+  if(id==2){var dias="MARTES";
+formCreacion.idmartes.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+  if(id==3){var dias="MIERCOLES";
+formCreacion.idmiercoles.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+  if(id==4){var dias="JUEVES";
+formCreacion.idjueves.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+    if(id==5){var dias="VIERNES";
+formCreacion.idviernes.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+  if(id==6){var dias="SABADO";
+formCreacion.idsabado.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
+  if(id==7){var dias="DOMINGO";
+formCreacion.iddomingo.disabled=true;
+if($('#total_semana').val()==0){
+  formCreacion.mandar.disabled=false;}else{formCreacion.mandar.disabled=true;}
+  }
    $("#mostrar-ejercicios").show();
               var diasemana='<h2>'+dias+'</h2>';
               $("#nombreDia").html(diasemana);
@@ -508,39 +562,42 @@ $('#fis').val(fis-t2);
 $('#tac').val(tac-t3);
 $('#psi').val(psi-t4);
 $('#comp').val(comp-t5);
+$('#total_semana').val(eval($('#tec').val()+'+'+$('#fis').val()+'+'+$('#tac').val()+'+'+$('#psi').val()+'+'+$('#comp').val()));
+if($('#total_semana').val()==0){
+  document.getElementById('total_semana').style.backgroundColor="#BDECB6";
+  formCreacion.mandar.disabled=false;
+}else{formCreacion.mandar.disabled=true;}
         if(t1<tec)
           {            
-          document.getElementById('tec').style.backgroundColor="#FDF4E3";formCreacion.mandar.disabled=true;
+          document.getElementById('tec').style.backgroundColor="#FDF4E3";
           }else{
-            if(t1>tec){document.getElementById('tec').style.backgroundColor="#B44C43";formCreacion.mandar.disabled=true;             
-
+            if(t1>tec){document.getElementById('tec').style.backgroundColor="#B44C43";
           }else{
-            document.getElementById('tec').style.backgroundColor="#BDECB6";formCreacion.mandar.disabled=false;
+            document.getElementById('tec').style.backgroundColor="#BDECB6";
           }}
-        
         if(t2<fis)
           {
-          document.getElementById('fis').style.backgroundColor="#FDF4E3";formCreacion.mandar.disabled=true;
-          }else{if(t2>fis){document.getElementById('fis').style.backgroundColor="#B44C43";formCreacion.mandar.disabled=true;}else{
-            document.getElementById('fis').style.backgroundColor="#BDECB6";formCreacion.mandar.disabled=false;
+          document.getElementById('fis').style.backgroundColor="#FDF4E3";
+          }else{if(t2>fis){document.getElementById('fis').style.backgroundColor="#B44C43";}else{
+            document.getElementById('fis').style.backgroundColor="#BDECB6";
           }}
         if(t3<tac)
           {
-          document.getElementById('tac').style.backgroundColor="#FDF4E3";formCreacion.mandar.disabled=true;
-          }else{if(t3>tac){document.getElementById('tac').style.backgroundColor="#B44C43";formCreacion.mandar.disabled=true;}else{
-            document.getElementById('tac').style.backgroundColor="#BDECB6";formCreacion.mandar.disabled=false;
+          document.getElementById('tac').style.backgroundColor="#FDF4E3";
+          }else{if(t3>tac){document.getElementById('tac').style.backgroundColor="#B44C43";}else{
+            document.getElementById('tac').style.backgroundColor="#BDECB6";
           }}        
         if(t4<psi)
           {
-          document.getElementById('psi').style.backgroundColor="#FDF4E3";formCreacion.mandar.disabled=true;
-          }else{if(t4>psi){document.getElementById('psi').style.backgroundColor="#B44C43";formCreacion.mandar.disabled=true;}else{
-            document.getElementById('psi').style.backgroundColor="#BDECB6";formCreacion.mandar.disabled=false;
+          document.getElementById('psi').style.backgroundColor="#FDF4E3";
+          }else{if(t4>psi){document.getElementById('psi').style.backgroundColor="#B44C43";}else{
+            document.getElementById('psi').style.backgroundColor="#BDECB6";
           }}
         if(t5<comp)
           {
-          document.getElementById('comp').style.backgroundColor="#FDF4E3";formCreacion.mandar.disabled=true;
-          }else{if(t5>comp){document.getElementById('comp').style.backgroundColor="#B44C43";formCreacion.mandar.disabled=true;}else{
-            document.getElementById('comp').style.backgroundColor="#BDECB6";formCreacion.mandar.disabled=false;
+          document.getElementById('comp').style.backgroundColor="#FDF4E3";
+          }else{if(t5>comp){document.getElementById('comp').style.backgroundColor="#B44C43";}else{
+            document.getElementById('comp').style.backgroundColor="#BDECB6";
           }}
         
 }
@@ -604,10 +661,6 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     var t4=eval(operando7+operacion+operando8);
     var t5=eval(operando9+operacion+operando10);
 
-    if((result+result2)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
-
     limite_tt(t1,t2,t3,t4,t5,tec,fis,tac,psi,comp);
     var res='res_col1';
     limite_min(result,res,tiempo1);
@@ -658,9 +711,7 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     limite_min(result2,res2,tiempo1);
     var res3='res_col3';
     limite_min(result3,res3,tiempo1);
-    if((result+result2+result3)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
+    
    
   }
   if(diasPosibles==4){
@@ -718,9 +769,7 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     var res4='res_col4';
     limite_min(result4,res4,tiempo1);
 
-    if((result+result2+result3+result4)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
+    
   }
   
   if(diasPosibles==5){
@@ -782,9 +831,7 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     limite_min(result4,res4,tiempo1);
     var res5='res_col5';
     limite_min(result5,res5,tiempo1);
-    if((result+result2+result3+result4+result5)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
+    
   }
 
   if(diasPosibles==6){
@@ -856,9 +903,7 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     limite_min(result5,res5,tiempo1);
     var res6='res_col6';
     limite_min(result6,res6,tiempo1);
-    if((result+result2+result3+result4+result5+result6)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
+    
   }
   if(diasPosibles==7){
 
@@ -938,9 +983,7 @@ function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){
     var res6='res_col7';
     limite_min(result7,res7,tiempo1); 
 
-    if((result+result2+result3+result4+result5+result6+result7)==(tiempo1*diasPosibles)){
-      formCreacion.mandar.disabled=false;
-}else{formCreacion.mandar.disabled=true;}
+    
   }
 }  
 function guardarDia(direccion,cant_dias,dias_val){
@@ -1656,7 +1699,6 @@ if(b==5){
     
                     </tbody>
                   </table>
-                </form>
               </div>
               <div id="mostrar-ejercicios" style="display:none;">
                 <div class="col-xs-12" align="center" id="nombreDia"></div>
