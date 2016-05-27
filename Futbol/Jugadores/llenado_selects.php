@@ -75,19 +75,18 @@ include("databaseA.php");
     }
 
 
-    if(isset($_POST["etapas_crea"]) && isset($_POST["plan"]))
+    if(isset($_POST["etapas_crea"]) && isset($_POST["plan_crea"]))
     {
-        $etapa=$_POST["etapas_crea"];
-        $plan=$_POST["plan"];
-        $meso = '<option value="0"> </option>';//Elige un meso
-        $result= execSqlA('select idMesociclo, ciclo from mesociclo where idPlanificacion = \''.$plan.'\' and idPlanificacion_etapa= \''.$etapa.'\' and asistencia = 1' );        
+        $etapa_cre=$_POST["etapas_crea"];
+        $plan_cre=$_POST["plan_crea"];
+        $meso_cre = '<option value="0"> </option>';//Elige un meso
+        $sql_segui= execSqlA('select idMesociclo, ciclo from mesociclo where idPlanificacion = \''.$plan_crea.'\' and idPlanificacion_etapa= \''.$etapa_crea.'\' and asistencia = 1' );        
 
-        while( $fila = $result->fetch_array() )
+        while( $segui = $sql_segui->fetch_array() )
         {
-            $meso.='<option value="'.$fila["idMesociclo"].'">'.$fila["ciclo"].'</option>';
+            $meso_cre.='<option value="'.$segui["idMesociclo"].'">'.$segui["ciclo"].'</option>';
         }
-    
-        echo $meso_segui;
+        echo $meso_cre;
     }
     
 
