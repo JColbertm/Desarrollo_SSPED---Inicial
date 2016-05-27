@@ -608,10 +608,11 @@ function limite_min(min,col,tiempo1){
 
   if(result<tiempo1)
           {
+                document.getElementById(col).style.backgroundColor="transparent";
 
           }
           else{if(result>tiempo1){
-                    }
+                    document.getElementById(col).style.backgroundColor="transparent";}
                     else{document.getElementById(col).style.backgroundColor="#BDECB6"}
 
 }
