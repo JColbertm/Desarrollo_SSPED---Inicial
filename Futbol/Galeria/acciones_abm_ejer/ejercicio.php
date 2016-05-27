@@ -190,40 +190,6 @@ echo json_encode($resultados);
 					$cate=filter_var($_POST["cate"],FILTER_SANITIZE_STRING);
 					if(isset($_POST["seleccionado1"])){
 						$select1=filter_var($_POST["seleccionado1"],FILTER_VALIDATE_INT);}else{$select1='';}
-					if(isset($_POST["seleccionado2"])){
-						$select2=filter_var($_POST["seleccionado2"],FILTER_VALIDATE_INT);}else{$select2='';}
-					if(isset($_POST["seleccionado3"])){
-						$select3=filter_var($_POST["seleccionado3"],FILTER_VALIDATE_INT);}else{$select3='';}
-					if(isset($_POST["seleccionado4"])){
-						$select4=filter_var($_POST["seleccionado4"],FILTER_VALIDATE_INT);}else{$select4='';}
-					if(isset($_POST["seleccionado5"])){
-						$select5=filter_var($_POST["seleccionado5"],FILTER_VALIDATE_INT);}else{$select5='';}
-					if(isset($_POST["seleccionado6"])){
-						$select6=filter_var($_POST["seleccionado6"],FILTER_VALIDATE_INT);}else{$select6='';}
-					if(isset($_POST["seleccionado7"])){
-						$select7=filter_var($_POST["seleccionado7"],FILTER_VALIDATE_INT);}else{$select7='';}
-					if(isset($_POST["seleccionado8"])){
-						$select8=filter_var($_POST["seleccionado8"],FILTER_VALIDATE_INT);}else{$select8='';}
-					if(isset($_POST["seleccionado9"])){
-						$select9=filter_var($_POST["seleccionado9"],FILTER_VALIDATE_INT);}else{$select9='';}
-					if(isset($_POST["seleccionado10"])){
-						$select10=filter_var($_POST["seleccionado10"],FILTER_VALIDATE_INT);}else{$select10='';}
-					if(isset($_POST["seleccionado11"])){
-						$select11=filter_var($_POST["seleccionado11"],FILTER_VALIDATE_INT);}else{$select11='';}
-					if(isset($_POST["seleccionado12"])){
-						$select12=filter_var($_POST["seleccionado12"],FILTER_VALIDATE_INT);}else{$select12='';}
-					if(isset($_POST["seleccionado13"])){
-						$select13=filter_var($_POST["seleccionado13"],FILTER_VALIDATE_INT);}else{$select13='';}
-					if(isset($_POST["seleccionado14"])){
-						$select14=filter_var($_POST["seleccionado14"],FILTER_VALIDATE_INT);}else{$select14='';}
-					if(isset($_POST["seleccionado15"])){
-						$select15=filter_var($_POST["seleccionado15"],FILTER_VALIDATE_INT);}else{$select15='';}
-					if(isset($_POST["seleccionado16"])){
-						$select16=filter_var($_POST["seleccionado16"],FILTER_VALIDATE_INT);}else{$select16='';}
-			$selecionados[0] = array("1" => $select1);
-			$selecionados[1] = array("2" => $select2);
-			$selecionados[2] = array("3" => $select3);
-
 			$result= execSqlA("select ejercicio.nombre,categoria.categoria_sub,tipo_ejercicio.ejercicio,elemento_tecnico.elemento_tecnico,ejercicio.descripcion,ejercicio.imagen_ejercicio
 								from ejercicio
                                 inner JOIN categoria
@@ -232,24 +198,11 @@ echo json_encode($resultados);
                                 on 	ejercicio.idEjer_tecnico=elemento_tecnico.idEjer_tecnico
                                 inner  JOIN tipo_ejercicio
                                 on 	ejercicio.idTipo_ejercicio=tipo_ejercicio.idTipo_ejercicio
-								where ejercicio.idCategoria=\"".$cate."\" 
-								and estado_ejer=1
-								and ejercicio.idEjer_tecnico=\"".$select11."\"
-                                or ejercicio.idEjer_tecnico=\"".$select2."\"
-                                or ejercicio.idEjer_tecnico=\"".$select3."\"
-                                or ejercicio.idEjer_tecnico=\"".$select4."\"
-                                or ejercicio.idEjer_tecnico=\"".$select5."\"
-                                or ejercicio.idEjer_tecnico=\"".$select6."\"
-                                or ejercicio.idEjer_tecnico=\"".$select7."\"
-                                or ejercicio.idEjer_tecnico=\"".$select8."\"
-                                or ejercicio.idEjer_tecnico=\"".$select9."\"
-                                or ejercicio.idEjer_tecnico=\"".$select10."\"
-                                or ejercicio.idEjer_tecnico=\"".$select11."\"
-                                or ejercicio.idEjer_tecnico=\"".$select12."\"
-                                or ejercicio.idEjer_tecnico=\"".$select13."\"
-                                or ejercicio.idEjer_tecnico=\"".$select14."\"
-                                or ejercicio.idEjer_tecnico=\"".$select15."\"
-                                or ejercicio.idEjer_tecnico=\"".$select16."\"
+								where estado_ejer=1
+								and ejercicio.idCategoria=\"".$cate."\"
+								and ejercicio.idEjer_tecnico=\"".$select1."\"
+                                
+                                
                                 ");
 			$resultados=array();
 			if (mysqli_num_rows($result)  > 0) {

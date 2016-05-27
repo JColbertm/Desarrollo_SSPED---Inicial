@@ -608,15 +608,14 @@ function limite_min(min,col,tiempo1){
 
   if(result<tiempo1)
           {
-                document.getElementById(col).style.backgroundColor="#FDF4E3";
 
           }
           else{if(result>tiempo1){
-                    document.getElementById(col).value = result-tiempo1;
-                    document.getElementById(col).style.backgroundColor="#B44C43";}
+                    }
                     else{document.getElementById(col).style.backgroundColor="#BDECB6"}
 
-}}
+}
+}
 
 
 function calcula(operacion,diasPosibles,tiempo,tec,fis,tac,psi,comp){ 

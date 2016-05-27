@@ -65,7 +65,7 @@
           }
      function ver_check(){
  		var cate=document.getElementById("categoria").value;
-          var check_selec=$('input[type=checkbox]:checked').serialize();
+          var check_selec=$('input[type=radio]:checked').serialize();
                       console.log(check_selec);
 
  		check_selec +="&cate=" + encodeURIComponent(cate)+ "&opcion=" + encodeURIComponent('busqueda_general');
@@ -135,8 +135,33 @@
 	        				<div class="row">
 	        					<div class="col-sm-7">
 				             		<div class="form-group" id="resultado2"></div>
-					  
-	        						</div>
+					  					<div class="col-sm-12">
+										<div class="form-group">
+				  							<div class="col-md-12" align="center">
+                								<div  id="mostrar-ima" name="mostrar-ima"></div>
+											</div>
+										</div>
+				 						<div class="form-group">
+				 							<label class="col-sm-offset-1 col-sm-4 control-label">Nombre:</label>
+				 							<div class="col-sm-7">
+				 								<input type="text" class="form-control" id="nombre" placeholder="Nombre del ejercicio" readonly="">
+				 							</div>	
+				 						</div>
+										<div class="form-group">
+				 							<label class="col-sm-offset-1 col-sm-4 control-label">Categoria:</label>
+				 							<div class="col-sm-4">
+				 								<input type="text" class="form-control" id="categorias" placeholder="Categoria" readonly="">
+				 							</div>	
+				 						</div>
+										<div class="form-group">
+											<label class="col-sm-offset-1 col-sm-4 control-label">Descripcion:</label>
+											<div class="col-sm-7">
+												<textarea class="form-control" rows="4" type="text" class="form-control" id="descripcion" placeholder="Descripcion del ejercicio" readonly=""></textarea>
+											</div>				
+										</div>				
+				 					</div>
+	        					</div>
+
 				  					<div class="col-sm-5">
 				    					<div id="MainMenu">
 						  					<div class="list-group panel">
@@ -174,31 +199,7 @@
       										<button type="submit" class="btn btn-success" >Buscar</button>
     									</div>
 									</div>						
-									<div class="col-sm-7">
-										<div class="form-group">
-				  							<div class="col-md-12" align="center">
-                								<div  id="mostrar-ima" name="mostrar-ima"></div>
-											</div>
-										</div>
-				 						<div class="form-group">
-				 							<label class="col-sm-offset-1 col-sm-3 control-label">Nombre:</label>
-				 							<div class="col-sm-7">
-				 								<input type="text" class="form-control" id="nombre" placeholder="Nombre del ejercicio" readonly="">
-				 							</div>	
-				 						</div>
-										<div class="form-group">
-				 							<label class="col-sm-offset-1 col-sm-3 control-label">Categoria:</label>
-				 							<div class="col-sm-4">
-				 								<input type="text" class="form-control" id="categorias" placeholder="Categoria" readonly="">
-				 							</div>	
-				 						</div>
-										<div class="form-group">
-											<label class="col-sm-offset-1 col-sm-3 control-label">Descripcion:</label>
-											<div class="col-sm-7">
-												<textarea class="form-control" rows="4" type="text" class="form-control" id="descripcion" placeholder="Descripcion del ejercicio" readonly=""></textarea>
-											</div>				
-										</div>				
-				 					</div>		
+											
 								</div>
 							</form>
 						</div>						

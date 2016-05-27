@@ -68,7 +68,7 @@
 	$ejercicio_tecnico="";
 	while( $fila = $result->fetch_array() )
 	{
-		$ejercicio_tecnico.='<div class="checkbox"><label><input type="checkbox" name="seleccionado'.$fila["idEjer_tecnico"].'" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
+		$ejercicio_tecnico.='<div class="checkbox"><label><input type="radio" name="seleccionado1" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
 	}
 	////////////////////////////////////
 	//llena checkbox de Ejercicio_Tecnico_tactico galeriafutbol.php
@@ -77,7 +77,7 @@
 	$Ejercicio_Tecnico_tactico="";
 	while( $fila = $result->fetch_array() )
 	{
-		$Ejercicio_Tecnico_tactico.='<div class="checkbox"><label><input type="checkbox" name="seleccionado'.$fila["idEjer_tecnico"].'" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
+		$Ejercicio_Tecnico_tactico.='<div class="checkbox"><label><input type="radio" name="seleccionado1" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
 	}
 	////////////////////////////////////
 	//llena checkbox de Ejercicio_Tecnico_fisico galeriafutbol.php
@@ -86,7 +86,7 @@
 	$Ejercicio_Tactico_fisico="";
 	while( $fila = $result->fetch_array() )
 	{
-		$Ejercicio_Tactico_fisico.='<div class="checkbox"><label><input type="checkbox" name="seleccionado'.$fila["idEjer_tecnico"].'" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
+		$Ejercicio_Tactico_fisico.='<div class="checkbox"><label><input type="radio" name="seleccionado1" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
 	}
 	////////////////////////////////////
 	//llena checkbox de Ejercicio_acciones_psicologicas galeriafutbol.php
@@ -95,7 +95,7 @@
 	$Acciones_Psicologicas="";
 	while( $fila = $result->fetch_array() )
 	{
-		$Acciones_Psicologicas.='<div class="checkbox"><label><input type="checkbox" name="seleccionado'.$fila["idEjer_tecnico"].'" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
+		$Acciones_Psicologicas.='<div class="checkbox"><label><input type="radio" name="seleccionado1" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
 	}
 	////////////////////////////////////
 	//llena checkbox de Ejercicio_competencia galeriafutbol.php
@@ -104,7 +104,7 @@
 	$Competencia="";
 	while( $fila = $result->fetch_array() )
 	{
-		$Competencia.='<div class="checkbox"><label><input type="checkbox" name="seleccionado'.$fila["idEjer_tecnico"].'" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
+		$Competencia.='<div class="checkbox"><label><input type="radio" name="seleccionado1" value="'.$fila["idEjer_tecnico"].'">'.$fila["elemento_tecnico"].'</label></div>';
 	}
 	////////////////////////////////////
 
