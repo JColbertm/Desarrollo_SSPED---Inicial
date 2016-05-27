@@ -34,7 +34,7 @@
 
             $result=execSqlA("select idGrupo from categoria_grupo where idCategoria_grupo = \"".$idplansub."\"");
 
-            while( $fila = $result->fetch_array() )
+            while($fila = $result->fetch_array() )
             {
                 $resulta = execSqlA("select frecuencia from planificacion where idPlanificacion = \"".$idplan."\" and idGrupo = \"".$fila["idGrupo"]."\"");    
                 while( $filas = $resulta->fetch_array() )

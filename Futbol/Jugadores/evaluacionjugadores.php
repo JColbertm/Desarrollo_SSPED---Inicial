@@ -225,6 +225,7 @@
 
     function llenar_tabla(equipo)
     {
+      cont_evaluacion=0;
       var equipoid = equipo;
       var opcion = 'llenado';
       console.log(equipoid);
@@ -256,21 +257,21 @@
                         '<tr>'+
                         '<form class="form-inline text-left" role="form" name="form_eva" method="post">'+
                         '<tr>'+
-                            '<th>Nombre_Jugador</th>'+
-                            '<th contenteditable="true">EVAA_1 </th>'+
-                            '<th contenteditable="true">EVAA_2 </th>'+
-                            '<th contenteditable="true">EVAA_3 </th>'+
-                            '<th contenteditable="true">EVAA_4 </th>'+
-                            '<th contenteditable="false">TOTAL</th>'+
-                            '<th contenteditable="true">EVAG_1 </th>'+
-                            '<th contenteditable="true">EVAG_2 </th>'+
-                            '<th contenteditable="false">TOTAL </th>'+
-                            '<th contenteditable="true">EVAF_1 </th>'+
-                            '<th contenteditable="true">EVAF_2 </th>'+
-                            '<th contenteditable="false">TOTAL </th>'+
-                            '<th contenteditable="false">TOT_ASI</th>'+
-                            '<th contenteditable="false">TOT_No</th>'+
-                            '<th contenteditable="false">TOT_Lit</th>'+
+                            '<th id="t1">Nombre_Jugador</th>'+
+                            '<th id="t2" contenteditable="true">EVAA_1 </th>'+
+                            '<th id="t3" contenteditable="true">EVAA_2 </th>'+
+                            '<th id="t4" contenteditable="true">EVAA_3 </th>'+
+                            '<th id="t5" contenteditable="true">EVAA_4 </th>'+
+                            '<th id="t6" contenteditable="false">TOTAL</th>'+
+                            '<th id="t7" contenteditable="true">EVAG_1 </th>'+
+                            '<th id="t8" contenteditable="true">EVAG_2 </th>'+
+                            '<th id="t9" contenteditable="false">TOTAL </th>'+
+                            '<th id="t10" contenteditable="true">EVAF_1 </th>'+
+                            '<th id="t11" contenteditable="true">EVAF_2 </th>'+
+                            '<th id="t12" contenteditable="false">TOTAL </th>'+
+                            '<th id="t13" contenteditable="false">TOT_ASI</th>'+
+                            '<th id="t14" contenteditable="false">TOT_No</th>'+
+                            '<th id="t15" contenteditable="false">TOT_Lit</th>'+
                         '</tr>'+
 
                     '</thead>'+
@@ -280,7 +281,7 @@
                       if(resp[i].res==1)
                       {
                         nombre += '<tr>'+
-                                  '<td>'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>'+
+                                  '<td id="nomb_'+i+'">'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>'+
                                   //Notas Evaluacion Analitica
                             '<td><input id="sa1'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2"/></td>'+
                             '<td><input id="sa2'+i+'" onkeypress="return soloLetras(event)" type="text" value=0 class="form-control" maxlength="2"/></td>'+
@@ -306,6 +307,7 @@
                             '<td><input onfocus="total_literal('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total_lit'+i+'" readonly></td>'+
                             '</tr>';;
                       }
+                      cont_evaluacion++;
                     }
 
                     nombre += '</tr>'+
@@ -325,9 +327,10 @@
           event.preventDefault();        
     }
 
-
+    var cont_evaluacion;
     function llenar_tabla_seguimiento(equipo)
     {
+      cont_evaluacion=0;
       var equipoid = equipo;
       var opcion = 'llenado';
       console.log(equipoid);
@@ -378,10 +381,12 @@
 
                     '</thead>'+
                     '<tbody>';
+
                     for(i in resp)
                     { 
                       if(resp[i].res==1)
                       {
+                      
                         nombre += '<tr>'+
                                   '<td>'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>'+
                                   //Notas Evaluacion Analitica
@@ -408,7 +413,10 @@
 
                             '<td><input onfocus="total_literal_segui('+i+')" type="text" class="form-control" placeholder="0" value="0" id="total_lit_segui'+i+'" readonly></td>'+
                             '</tr>';
+
+
                       }
+                            
                     }
 
                     nombre += '</tr>'+
@@ -1343,12 +1351,54 @@ function sumar_fisica_segui(id)
 
     function guarda_evaluacion()
     {
+
+      /*console.log($('#nombre').find('#nomb_0').text());
+      console.log($('#nombre').find('#sa10').val());*/
       var plan=$("#plan-cre").val();
       var idequipo = $('#equipo-cre').val();
       var meso=$('#meso-cre').val();
       var etapa=$('#etapas-cre').val();
-      var o = "plansub="+ encodeURIComponent(idequipo)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opcion="+encodeURIComponent('insertar_evaluacion')+"&etapa="+encodeURIComponent(etapa);
+
+      var etapa=$('#etapas-cre').val();
+     console.log(cont_evaluacion);
+     
+var arr2= [];
+
+      for(j=2; j<=15; j++)
+      {
+      
+         arr2.push($('#nombre').find('#t'+j+'').text());
+         
+      }
+      var arrFinal = [];
+
+      for(i=0; i<cont_evaluacion;i++)
+      {
+      var arr1 = [];   
+        arr1.push($('#nombre').find('#nomb_'+i+'').text());
+        arr1.push($('#nombre').find('#sa1'+i+'').val());
+        arr1.push($('#nombre').find('#sa2'+i+'').val());
+        arr1.push($('#nombre').find('#sa3'+i+'').val());
+        arr1.push($('#nombre').find('#sa4'+i+'').val());
+        arr1.push($('#nombre').find('#totana'+i+'').val());
+        arr1.push($('#nombre').find('#sg1'+i+'').val());
+        arr1.push($('#nombre').find('#sg2'+i+'').val());
+        arr1.push($('#nombre').find('#totglob'+i+'').val());
+        arr1.push($('#nombre').find('#sf1'+i+'').val());
+        arr1.push($('#nombre').find('#sf2'+i+'').val());
+        arr1.push($('#nombre').find('#totfis'+i+'').val());
+        arr1.push($('#nombre').find('#totasi'+i+'').val());
+        arr1.push($('#nombre').find('#total'+i+'').val());
+        arr1.push($('#nombre').find('#total_lit'+i+'').val());
+
+        arrFinal.push(arr1);
+
+      }
+
+      var o = "plansub="+ encodeURIComponent(idequipo)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opcion="+encodeURIComponent('insertar_evaluacion')+"&etapa="+encodeURIComponent(etapa)+"&datos_tabla="+arrFinal+"&datos_cabecera="+arr2;
+
       console.log(o);
+
 
       $.ajax({
             url: 'jugadores.php',
@@ -1358,7 +1408,7 @@ function sumar_fisica_segui(id)
           .done(function(data) {
             console.log(data);
             var resp = $.parseJSON(data);
-            console.log(resp);
+            console.log(resp.query);
             var t= resp.resp; 
             if(t==1)
             {

@@ -298,9 +298,25 @@
             $etapa=$_POST["etapa"];
             $meso=$_POST["meso-cre"];
             
-            $campos =  array('idName_evaluacion', 'idCategoria_grupo', 'idPlanificacion', 'idEtapa', 'idMesociclo', 'Evaa_1', 'Evaa_2', 'Evaa_3', 'Evaa_4', 'Evag_1', 'Evag_2', 'Evaf_1', 'Evaf_2');
+         /*   $campos =  array('idName_evaluacion', 'idCategoria_grupo', 'idPlanificacion', 'idEtapa', 'idMesociclo', 'Evaa_1', 'Evaa_2', 'Evaa_3', 'Evaa_4', 'Evag_1', 'Evag_2', 'Evaf_1', 'Evaf_2');
 			$valores = array('',$idplancat,$idplan,$etapa,$meso,'name 1','name 2','name 3','name 4', 'name 5','name 6', 'name 7', 'name 8');
-			$result= insertA('name_evaluacion', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2), $valores);
+			$result= insertA('name_evaluacion', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2), $valores);*/
+
+
+			//insertamos los nombres a la tabla
+			$quer = "insert into name_evaluacion ( idCategoria_grupo, idPlanificacion,idEtapa,idMesociclo, Evaa_1, Evaa_2, Evaa_3, Evaa_4, Evag_1, Evag_2, Evaf_1, Evaf_2) values";
+					
+			$cabecera = explode(",",$_POST['datos_cabecera']);
+					foreach ($cabecera as $cab) {
+						$quer .= "(".$idplancat.",".$idplan.",".$etapa.",".$meso.",'".$cab[0]."','".$cab[1]."','".$cab[2]."','".$cab[3]."','".$cab[5]."','".$cab[6]."','".$cab[8]."','".$cab[9]."')";
+
+					}
+
+
+			$result = execSqlA($quer);
+					$resultados=array('query'=> $quer);
+
+
 			if ($result)
 			{		
 				$resulta= execSqlA("select idName_evaluacion from name_evaluacion where idCategoria_grupo = $idplancat and idPlanificacion = $idplan and idEtapa = $etapa and idMesociclo = $meso" );

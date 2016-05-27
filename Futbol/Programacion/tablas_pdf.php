@@ -72,9 +72,38 @@ if($nombre['idTipo_plan']==2){$tp='Trimestral';}
 if($nombre['idTipo_plan']==3){$tp='Semestral';}
 if($nombre['idTipo_plan']==4){$tp='Competencia';}
 //$categor = RecuperarIdItemA('categoria', array('idCategoria'), array($_POST['id_categ']));
+$result = execSqlA('SELECT semana, sistema_juego, preparation_fisica, tecnico_tactico, competencia, accion_psi FROM direccion where idPlanificacion = '.$_POST['planifi'].'');
+$columna = array();
+        while ($data = mysqli_fetch_array($result))
+        {
+            $fila = array();
+            array_push($fila,$data[0]);
+            array_push($fila,$data[1]);
+            array_push($fila,$data[2]);
+            array_push($fila,$data[3]);
+            array_push($fila,$data[5]);
+            array_push($fila,$data[4]);
+
+            array_push($columna,$fila);
+
+        }
 
 
-$html ='<table width="90%"style="border-collapse: collapse;" >';
+        $size_columna=count($columna);
+
+        $tamf=(38*$size_columna)+60;
+
+$html ='<div align="center" >
+            <h1>Macrociclo.</h1>
+            </div>
+
+            <center><table width="100%" style="border-collapse: collapse;" >';
+//if (mysqli_num_rows($result)<15)
+//{
+    // $html = $html.'
+      //          <tr><td rowspan="5" WIDTH="100"></td></tr>';
+//}
+
 
 $html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Nombre planificacion:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['nombre'].'</td></tr>';
 $html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Fecha de inicio:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['fecha_inicio_pre'].'</td></tr>';
@@ -95,7 +124,7 @@ $html = $html.'<tr>
 /*$html = $html.'<b>Equipo:</b> '.$gru['nombre_gru'];
 $html = $html.'<b>Equipo:</b> '.$gru['nombre_gru'];*/
 
-$html = $html.'</table>';
+$html = $html.'</table> </center>';
 
 
 $mesos = execSqlA('SELECT idMesociclo from direccion where idPlanificacion = '.$_POST['planifi'].'');
@@ -200,12 +229,10 @@ for($g=0; $g< count($mes); $g++){
         }
         }
 
-$result = execSqlA('SELECT semana, sistema_juego, preparation_fisica, tecnico_tactico, competencia, accion_psi FROM direccion where idPlanificacion = '.$_POST['planifi'].'');
+
 $i=0;$r=0;
 if (mysqli_num_rows($result)>0){       
-        $html = $html. '<div align="center">
-            <h1>Macrociclo.</h1>
-            <br /></div>           
+        $html = $html. '          
             <table  width="100%" border="0" cellspacing="0" cellpadding="0">
              <tr >';
 if (mysqli_num_rows($result)<15)
@@ -231,23 +258,7 @@ if (mysqli_num_rows($result)<15)
                 ';
            // $html=$html.'<tbody>';
 
-        $columna = array();
-        while ($data = mysqli_fetch_array($result))
-        {
-            $fila = array();
-            array_push($fila,$data[0]);
-            array_push($fila,$data[1]);
-            array_push($fila,$data[2]);
-            array_push($fila,$data[3]);
-            array_push($fila,$data[5]);
-            array_push($fila,$data[4]);
-
-            array_push($columna,$fila);
-
-        }
-
-
-        $size_columna=count($columna);
+        
         $a='';
         if($size_columna > 24)
         {
