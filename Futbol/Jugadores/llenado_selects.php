@@ -85,7 +85,7 @@ include("databaseA.php");
         while( $segui = $sql_segui->fetch_array() )
         {
             $meso_cre.='<option value="'.$segui["idMesociclo"].'">'.$segui["ciclo"].'</option>';
-        }
+        } 
         echo $meso_cre;
     }
     

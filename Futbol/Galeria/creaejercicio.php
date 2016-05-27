@@ -23,29 +23,38 @@
 
 			$( ".img" ).draggable();
 
-			$( "#droppable" ).droppable({
+			/*$( "#droppable" ).droppable({
 				drop: function( event, ui ) {
-					var ji ='<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono.png" class="img-rounded img" width="30%">';
+					var ji ='<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono.png" class="img-rounded img" width="50px">';
 				$( this )
           			.addClass( "ui-state-highlight" )
           			.find( "#droppable" )
             		.html(ji);
             		console.log("hecho");
             	}
-			});
+			});*/
+			var picture = 0;
+			$('#btn_cono').on('click', function(){
+
+        		eval("var total" + picture + " = " + $("#cono1").clone());
+
+				$('#contenido').html(eval("var total"+picture));
+				picture +=1;
+				console.log('clonado');
+			})
 
 
     	})
     	function select_img() 
     	{
     		if($('input:radio[id=optionsRadios1]:checked').val() == 1)
-    		{var img = '<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cancha-entera.jpg"  alt="Cancha Entera" class="img-rounded" width="100%">'}
+    		{var img = '<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cancha-entera.png"  alt="Cancha Entera" class="img-rounded" width="100%">'}
     		if($('input:radio[id=optionsRadios2]:checked').val() == 2)
     		{var img = '<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/media-cancha1.jpg"  alt="Media Cancha" class="img-rounded" width="100%">'}
     		if($('input:radio[id=optionsRadios3]:checked').val() == 3)
     		{var img = '<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/rectangulo.jpg"  alt="Espacio Reducido" class="img-rounded" width="100%">'}
 	
-	 		$('#droppable').html(img);  
+	 		$('#imagen').html(img);  
     	}  
 
     	//Inicio funcion para caputar la imagen del ejercicio
@@ -109,9 +118,14 @@
     				<a id="test"></a>
     			</div>
     			<div class="col-xs-8" id="droppable" class="ui-widget-header">    			
+    				<div class="col-xs-12 img" id="contenido">
     					
+    				</div>
+    				<div class="col-xs-12" id="imagen">
+    					
+    				</div>
     			</div>
-				<div class="panel panel-default col-xs-4 ui-widget-content"  id="material">
+				<div class="panel panel-default col-xs-4 ui-widget-content movimiento"  id="material">
 			  		<div class="panel-heading">
 			  				Componentes
 			  			</div>
@@ -138,12 +152,14 @@
 						<hr>
 						
 						<h4><b>Conos</b></h4>	
-						<div class="row">
-							<div class="col-xs-6">  			
-					    		<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono.png" class="img-rounded img" width="30%">
+						<div class="row" id="conos">
+							<div class="col-xs-6"> 
+								<button class="btn" id="btn_cono" name="btn_cono" type="button">
+					    		<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono.png" class="img-rounded img" width="15px" name="cono1" id="cono1">
+					    		</button> 			
 		    				</div>	
 		    				<div class="col-xs-6">  			
-		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono1.png" class="img-rounded img"  width="30%">
+		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono1.png" class="img-rounded img"  width="15px">
 		    				</div>
 						</div>
 						<h4><b>Escaleras</b></h4>
@@ -236,7 +252,7 @@
 		    			<h4><b>Trazos</b></h4>
 						<div class="row">
 				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pelota4.png" class="img-rounded img" width="30%">
+				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/flecha.png" class="img-rounded img" width="30%">
 				    		</div>	
 				    		<div class="col-xs-6">  			
 				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pelota5.png" class="img-rounded img" width="30%">
