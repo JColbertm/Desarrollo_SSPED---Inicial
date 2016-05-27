@@ -15,9 +15,10 @@
 
     	$(document).ready(function() {
     		 
-    		$(function () {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
+	        $(function () {
+		        $('[data-toggle="tooltip"]').tooltip()
+      		})	
+
 			$(".radio input[name='optionsRadios']").on('click',  select_img)
 
 			$( ".img" ).draggable();

@@ -269,7 +269,18 @@
 			$result= insertA('asistencia', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2), $valores);
 			if ($result)
 			{		
-				$resultados=array('resp'=> 1);
+				$campos_asi = array('asistencia');
+				$valores_asi = array(1);
+				//actualiza nombre de equipo en la tabla grupo
+				$result_asi = updateA('mesociclo', $campos_asi, array(2) , $valores_asi, 'idMesociclo', $meso);
+				if ($result_asi)
+				{
+					$resultados=array('resp'=> 1);			
+				}
+				else
+				{
+					$resultados=array('resp'=> 0);		
+				}
 			}
 			else
 			{
@@ -280,6 +291,55 @@
 
 		break;	
 			
+
+		case "insertar_evaluacion":
+			$idplancat=$_POST["plansub"];
+            $idplan=$_POST["plan"];
+            $etapa=$_POST["etapa"];
+            $meso=$_POST["meso-cre"];
+            
+            $campos =  array('idName_evaluacion', 'idCategoria_grupo', 'idPlanificacion', 'idEtapa', 'idMesociclo', 'Evaa_1', 'Evaa_2', 'Evaa_3', 'Evaa_4', 'Evag_1', 'Evag_2', 'Evaf_1', 'Evaf_2');
+			$valores = array('',$idplancat,$idplan,$etapa,$meso,'name 1','name 2','name 3','name 4', 'name 5','name 6', 'name 7', 'name 8');
+			$result= insertA('name_evaluacion', $campos, array(2,2,2,2,2,2,2,2,2,2,2,2,2), $valores);
+			if ($result)
+			{		
+				$resulta= execSqlA("select idName_evaluacion from name_evaluacion where idCategoria_grupo = $idplancat and idPlanificacion = $idplan and idEtapa = $etapa and idMesociclo = $meso" );
+				$resultados=array();
+				$filas = $resulta->fetch_array();
+				
+					$idnameeva = $filas['idName_evaluacion'];
+					$campos_en =  array('idEvaluacion', 'idName_evaluacion', 'idJugador', 'evaa_1', 'evaa_2', 'evaa_3', 'evaa_4', 'total_ana', 'evag_1', 'evag_2', 'total_glob', 'evaf_1', 'evaf_2', 'total_fis', 'idAsistencia', 'tot_no', 'tot_lit');
+					$valores_en = array('',$idnameeva,1,'e','e','e','e',100,'e','e',100,'e','e',100,10,100,'e');
+					$sql= insertA('evaluacion', $campos_en, array(2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2), $valores_en);
+					if ($sql)
+					{
+						$campos_eva = array('evaluacion');
+						$valores_eva = array(1);
+						//actualiza nombre de equipo en la tabla grupo
+						$result_eva = updateA('mesociclo', $campos_eva, array(2) , $valores_eva, 'idMesociclo', $meso);
+						if ($result_eva)
+						{
+							$resultados=array('resp'=> 1);			
+						}
+						else
+						{
+							$resultados=array('resp'=> 0);		
+						}
+					}	
+					else
+					{
+						$resultados=array('resp'=> 0);		
+					}				
+			
+			}
+			else
+			{
+				$resultados=array('resp'=> 0);
+			}
+			echo json_encode($resultados);
+			flush();
+
+		break;	
 	
 	}
 	

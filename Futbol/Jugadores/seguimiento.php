@@ -6,18 +6,18 @@
       <div align="center">
         <h3>Seguimiento Asistencia</h3>  
       </div> 
-      <br>
+      <br> 
       <form class="form-horizontal" id="formseguimiento" name="formseguimiento" method="POST" enctype="multipart/form-data">
         <div class="row">
           <label class="col-sm-offset-2 col-sm-1 control-label">Equipo:</label>
           <div class="col-sm-2">
-            <select class="form-control" id="equipo-cre" name="creacion-equi" required>
+            <select class="form-control" id="equipo-crea" name="creacion-equi" required>
               <?php echo $equipo; ?>                  
             </select>
           </div>
           <label class=" col-sm-2 control-label">Nombre Planificacion:</label>
           <div class="col-sm-2">
-            <select class="form-control" id="plan-cre" name="creacion-tipo" required>
+            <select class="form-control" id="plan-crea" name="creacion-tipo" required>
               
             </select>
           </div>
@@ -26,13 +26,13 @@
         <div class="row">
           <label class=" col-sm-offset-2 col-sm-1 control-label">Etapas:</label>
           <div class="col-sm-2">
-            <select class="form-control" id="etapas-cre" name="creacion-meso" required>
+            <select class="form-control" id="etapas-crea" name="creacion-meso" required>
               <?php echo $etapas; ?>                  
             </select>
           </div>
           <label class=" col-sm-2 control-label">Mesociclos:</label>
           <div class="col-sm-2">
-            <select class="form-control" id="meso-cre" required>
+            <select class="form-control" id="meso-crea" required>
          
             </select>
           </div>
@@ -50,20 +50,20 @@
       <br>
       <!-- Table -->
       <div class=" col-sm-12" id="Exportar_a_Excel">
-        <div id="nombre" class="table-editable table-responsive">
+        <div id="segui_asi" class="table-editable table-responsive">
 
         </div>
       </div>             
                   
       <div align="right">
-        <form id="form" name="gua">
-          <button type="button" class="btn btn-primary" >
+        <form id="form_seguiasi" name="form_seguiasi">
+          <button type="button" class="btn btn-primary" id="btn_saveasi" disabled>
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
             <span class="hidden-xs">
               Guardar
             </span>
           </button>
-          <button type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal">
+          <button type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal" disabled>
             <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
             <span class="hidden-xs">
               Exportar

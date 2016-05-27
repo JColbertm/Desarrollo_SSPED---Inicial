@@ -11,7 +11,7 @@
             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
               <span class="hidden-xs">
-                Programacion
+                Programaci&oacute;n
               </span>
             </a>
           </h4>
@@ -32,7 +32,7 @@
                 <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Planificacion de entrenamientos">
                   <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                     <span class="hidden-xs">
-                    Planificacion
+                    Planificaci&oacute;n
                 </span>
                 </button>
                 </a>
@@ -47,7 +47,7 @@
             <a class="collapsed" role="button" href="/Desarrollo_SSPED/Futbol/Dosificacion/dosificacion2.php">
             <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
               <span class="hidden-xs">
-                Dosificacion
+                Dosificaci&oacute;n
               </span>
             </a>
           </h4>
@@ -88,7 +88,7 @@
             <button  type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Evaluacion de Jugadores">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
             <span class="hidden-xs">
-                Evaluacion
+                Evaluaci&oacute;n
             </span>
             </button>
             </a>
@@ -133,7 +133,7 @@
                 <button type="button" class="list-group-item" data-toggle="tooltip" data-placement="top" title="Creacion de Ejercicios">
                   <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                 <span class="hidden-xs">
-                    Creacion Ejercicio
+                    Creaci&oacute;n Ejercicio
                 </span>
                 </button>
                 </a>                

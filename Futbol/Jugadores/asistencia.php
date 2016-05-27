@@ -56,14 +56,14 @@
       </div>             
                   
       <div align="right">
-        <form id="form" name="gua">
-          <button type="button" class="btn btn-primary" id="btnguardaasis">
+        <form id="formguarda_asi" name="formguarda_asi">
+          <button type="button" class="btn btn-primary" id="btnguardaasis" disabled>
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
             <span class="hidden-xs">
               Guardar
             </span>
           </button>
-          <button type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal">
+          <button type="button" class="btn btn-success" id="exportar_asi" data-toggle="modal" data-target="#myModal" disabled>
             <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
             <span class="hidden-xs">
               Exportar

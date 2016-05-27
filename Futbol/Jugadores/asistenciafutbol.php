@@ -37,8 +37,36 @@
             llenar_tabla($('#equipo-cre').val(), data)            
           }
         })
-
       })
+
+
+      $('#generarsegui').on('click', function()
+      {
+        $('#equipo-crea').prop('disabled',true);
+        $('#plan-crea').prop('disabled',true);
+        $('#etapas-crea').prop('disabled',true);
+        $('#meso-crea').prop('disabled',true);
+
+        var plan=$("#plan-crea").val();
+        var plansub = $('#equipo-crea').val();
+        var meso=$('#meso-crea').val();
+        var etapa=$('#etapas-crea').val();
+        var o = "plansub="+ encodeURIComponent(plansub)+"&meso-cre="+ encodeURIComponent(meso)+"&plan="+encodeURIComponent(plan)+"&opc="+encodeURIComponent('seguiasi')+"&etapa="+encodeURIComponent(etapa);
+        console.log(o);
+        $.ajax
+        ({
+          url:"llenar_tabla.php",
+          type: "POST",
+          data:o,
+          success: function(data)
+          {
+            console.log(data);
+            llenar_tabla_seguimiento($('#equipo-crea').val(), data)            
+          }
+        })
+      })
+
+
 
       $('check').on('change', function()
       {
@@ -57,11 +85,27 @@
               $("#plan-cre").html(plan);
               $('#etapas-cre').val(0);
               $('#meso-cre').val(0);
-              $('#formCreacion :checked').removeAttr('checked');
               document.formCreacion.generarasi.disabled=true;
             }
           })
         });
+
+        //Si selecciona otro Equipo limpia todo y LLENA SELECT DE PLANES
+        $("#equipo-crea").change(function(){
+          $.ajax({
+            url:"llenado_selects.php",
+            type: "POST",
+            data:"equipo-cre="+$("#equipo-crea").val(),
+            success: function(plan){
+              $("#plan-crea").html(plan);
+              $('#etapas-crea').val(0);
+              $('#meso-crea').val(0);
+              document.formseguimiento.generarsegui.disabled=true;
+            }
+          })
+        });
+
+
         //llena los elemento dependiendo del combobox sub elemento
         $("#tec-subele-tecnico").change(function(){
           $.ajax({
@@ -89,15 +133,39 @@
             success: function(meso){
               console.log(meso);
               $("#meso-cre").html(meso);
-             $('#formCreacion :checked').removeAttr('checked');
-              $('#micro-cre').val(0);
              document.formCreacion.generarasi.disabled=true;
             }
           })
         });
+
+     //Llenar mesociclos
+     $("#etapas-crea").change(function(){
+            $('#meso-crea').val(0);
+            var idetapas=$("#etapas-crea").val();
+            var plan=$("#plan-crea").val();
+            console.log(idetapas);
+            var o = "etapas_crea="+ encodeURIComponent(idetapas)+"&plan_crea="+ encodeURIComponent(plan);
+            console.log(o);
+          $.ajax({
+            url:"llenado_selects.php",
+            type: "POST",
+            data:o,
+            success: function(meso){
+              console.log(meso);
+              $("#meso-crea").html(meso);
+             document.formseguimiento.generarsegui.disabled=true;
+            }
+          })
+        });
+
+
 //Llenar microciclos
        $("#meso-cre").change(function(){
           document.formCreacion.generarasi.disabled=false;
+        });
+
+       $("#meso-crea").change(function(){
+          document.formseguimiento.generarsegui.disabled=false;
         });
 
 
@@ -107,9 +175,9 @@
        })
 
 
-
     $("#btnguardaasis").on('click', function(){
       insertar_datos();
+      document.formguarda_asi.exportar_asi.disabled=false;
     });
 
     });
@@ -153,44 +221,36 @@
                         '</tr>'+
                         '</thead>'+
                         '<tbody>'+
-                        '<form class="form-inline text-left" role="form" name="formulario" method="post">';
+                        '<form class="form-inline text-left" role="form" name="formu_asis" method="post">';
 
-
+                        var r=0;
+                        var f=0;
                         for(i in resp)
                         { 
                           if(resp[i].res==1)
                           {
+                            f=f+1;
                             nombre += '<tr>'+
                                   '<td value="'+resp[i].idJugador+'">'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>';
-                          }
-                        }
-              var r=0;
-              var f=0;
-                    for(n in resp)
-                    { 
-                      if(resp[n].res==1)
-                      {
-                       f=f+1;
-                        
-                        for (var k = 1; k <= tiempo; k++) 
-                        {
-                          nombre += '<td><input type="checkbox" name="checkbox'+(r+1)+'" id="'+(r+1)+'" class=" check form-control" value="'+pts+'" onClick="if (this.checked){ sumar(this.value,'+f+');} else{restar(this.value,'+f+')}" ></td>'; 
-                            r=r+1;
-                        }                  
-                          nombre +=  '<td>'+
+
+                            for (var k = 1; k <= tiempo; k++) 
+                            {
+                              nombre += '<td><input type="checkbox" name="checkbox'+(r+1)+'" id="'+(r+1)+'" class=" check form-control" value="'+pts+'" onClick="if (this.checked){ sumar(this.value,'+f+');} else{restar(this.value,'+f+')}" ></td>'; 
+                              r=r+1;
+                            }                  
+                              nombre +=  '<td>'+
                                   '<input type="text" class="form-control" name="total" value="0" id="total'+f+'" placeholder="0" readonly></td>'+   
                                   '<td><input type="text" class="form-control" placeholder="0" id="porcentaje'+f+'" value="0" readonly></td>'+
                                   '</tr>';                         
-                      }
-
-                    }
-        
+                          }
+                        }
+                     
                     nombre +=  '</form>'+
                               '</tbody>'+
                               '</table>';
 
         $('#nombre').html(nombre);
-      
+        document.formguarda_asi.btnguardaasis.disabled=false;
         document.formCreacion.generarasi.disabled=true;
         })
         .fail(function() 
@@ -200,6 +260,86 @@
           event.preventDefault();        
       }
       ///////////////
+
+
+      function llenar_tabla_seguimiento(equipo, tiempo)
+    {
+      var equipoid = equipo;
+      var opcion = 'llena_segui_asi';
+      
+      $.ajax(
+      {
+        url: 'llenar_tabla.php',
+        type: 'POST',
+        data: {ide:equipoid, opc:opcion}
+      })
+      .done(function(data) 
+      {        
+        var resp = $.parseJSON(data);
+        console.log(resp);
+        var pts = 100/tiempo;
+        console.log(pts);
+        var nombre = '<table class="table table-bordered" align="center">'+
+                     '<thead>'+
+                        '<tr>'+
+                          '<th>Nombre</th>';
+
+                          for (var j = 1; j <= tiempo; j++) 
+                          {
+                            if(j<10)
+                            {
+                              nombre +='<th>C_'+j+'</th>';
+                            } 
+                            else
+                            {
+                              nombre +='<th>C'+j+'</th>';
+                            }                        
+                          }
+
+            nombre +=   '<th>Total_Clases</th>'+
+                        '<th>Total_Porcentual</th>'+
+                        '</tr>'+
+                        '</thead>'+
+                        '<tbody>'+
+                        '<form class="form-inline text-left" role="form" name="form_segui_asi" method="post">';
+
+                        var r=0;
+                        var f=0;
+                        for(i in resp)
+                        { 
+                          f=f+1;
+                          if(resp[i].res==1)
+                          {
+                            nombre += '<tr>'+
+                                  '<td value="'+resp[i].idJugador+'">'+resp[i].nombre_ju+' '+resp[i].apellidop_ju+' '+resp[i].apellidom_ju+'</td>';
+
+                            for (var k = 1; k <= tiempo; k++) 
+                            {
+                              nombre += '<td><input type="checkbox" name="checkbox'+(r+1)+'" id="'+(r+1)+'" class=" check form-control" value="'+pts+'" onClick="if (this.checked){ sumar_segui(this.value,'+f+');} else{restar_segui(this.value,'+f+')}" ></td>'; 
+                              r=r+1;
+                            }                  
+                              nombre +=  '<td>'+
+                                  '<input type="text" class="form-control" name="total" value="0" id="totals'+f+'" placeholder="0" readonly></td>'+   
+                                  '<td><input type="text" class="form-control" placeholder="0" id="porcentajes'+f+'" value="0" readonly></td>'+
+                                  '</tr>';                         
+                          }
+                        }
+                                      
+                    nombre +=  '</form>'+
+                              '</tbody>'+
+                              '</table>';
+
+        $('#segui_asi').html(nombre);
+        document.formguarda_asi.btnguardaasis.disabled=false;
+        document.form_seguiasi.btn_saveasi.disabled=false;
+        })
+        .fail(function() 
+        {
+          console.log("error");
+        })
+          event.preventDefault();        
+      }
+    
       
       function sumar(valor, id) {
         var ide = id;
@@ -259,6 +399,68 @@
         $('#total'+id).val(eval("total"+ide));
       }
 
+
+
+      function sumar_segui(valor, id) {
+        var ide = id;
+        var canti = valor;
+        var clase = 1;
+        //creamos una variable para cada total_porcentual
+        eval("var porc" + ide + " = " + $('#porcentajes'+ide).val());
+        console.log(eval("porc"+ide));
+        operador='+'; 
+        eval("var porc" + ide + " = "+ eval("porc"+ide) +operador+valor);
+        console.log(eval("porc"+ide));
+        
+        //creamos una variable para cada total
+        eval("var totals" + ide + " = " + $('#totals'+ide).val());
+        console.log(eval("totals"+ide));
+        operador='+'; 
+        eval("var totals" + ide + " = "+ eval("totals"+ide) +operador+clase);
+        console.log(eval("totals"+ide));
+
+
+        if(eval("porc"+ide)>100)
+         {
+          $('#porcentajes'+id).val(100);
+         } 
+         else
+         {
+          $('#porcentajes'+id).val(eval("porc"+ide));
+         }
+        $('#totals'+id).val(eval("totals"+ide));
+      }
+
+      function restar_segui(valor, id ) {
+        var ide = id;
+        var canti = valor;
+        var clase = 1;
+        eval("var porc" + ide + " = " + $('#porcentajes'+ide).val());
+        console.log(eval("porc"+ide));
+        operador='-'; 
+        eval("var porc" + ide + " = "+ eval("porc"+ide) +operador+valor);
+        console.log(eval("porc"+ide));
+        
+        //creamos una variable para cada total
+        eval("var totals" + ide + " = " + $('#totals'+ide).val());
+        console.log(eval("totals"+ide));
+        operador='-'; 
+        eval("var totals" + ide + " = "+ eval("totals"+ide) +operador+clase);
+        console.log(eval("totals"+ide));
+
+        if(eval("porc"+ide)<0)
+         {
+          $('#porcentajes'+id).val(0);
+         } 
+         else
+         {
+          $('#porcentajes'+id).val(eval("porc"+ide));
+         }
+        $('#totals'+id).val(eval("totals"+ide));
+      }
+
+
+
       function insertar_datos(){
         var plan=$("#plan-cre").val();
         var plansub = $('#equipo-cre').val();
@@ -279,6 +481,7 @@
             if(t==1)
             {
               console.log("insertado");
+              document.formguarda_asi.btnguardaasis.disabled=true;
             }
           })
           .fail(function() {
