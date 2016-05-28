@@ -281,13 +281,32 @@ $pdf->SetFont('helvetica', '', 10);
 
 // set default header data
 $htmlcontent = '
-<table border="1">
+<style>
+table, td, th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+    margin-top: 5px;
+}
+.negrita{
+  font-weight: bold;
+}
+</style>
+<table border="0.5">
 <tr>
 
 <th rowspan="4" colspan="4"></th>
-<th rowspan="2" colspan="8" align="center"><H2>Temporada '.$gestion.'</H2></th>
-<th rowspan="4" colspan="4">PERIODO: '.$peri.'<br>ETAPA: '.$etapa.'<BR>MESOCICLO: '. $romanos.'<BR>MICROCICLO: '.$microciclo.'</th>
-<th rowspan="2" colspan="2">N CLASE</th>
+<th rowspan="2" colspan="8" align="center" ><h1>Temporada '.$gestion.'</h1></th>
+<th rowspan="4" colspan="4" ><strong>PERIODO:</strong> '.$peri.'<br><strong>ETAPA:</strong> '.$etapa.'<BR><strong>MESOCICLO:</strong> '. $romanos.'<BR><strong>MICROCICLO:</strong> '.$microciclo.'</th>
+<th rowspan="2" colspan="2" class="negrita">N CLASE</th>
 </tr>
 <tr>
 <th ></th>
@@ -295,11 +314,11 @@ $htmlcontent = '
 <th ></th>
 <th ></th>
 </tr>
-<tr>
-<td colspan="2">CATEGORIA</td>
-<td colspan="2">TIEMPO</td>
-<td colspan="2">N JUGADOR</td>
-<td colspan="2">FECHA</td>
+<tr weight="50">
+<td colspan="2" align="center" style="font-size:9px;" class="negrita">CATEGORIA</td>
+<td colspan="2" align="center" class="negrita">TIEMPO</td>
+<td colspan="2" align="center" class="negrita">N° JUGADOR</td>
+<td colspan="2" align="center" class="negrita">FECHA</td>
 <td rowspan="2" colspan="2"></td>
 </tr>
 <tr>
@@ -309,13 +328,13 @@ $htmlcontent = '
 <th colspan="2" align="center">'.$newDate.'</th>
 </tr>
 <tr>
-<th colspan="18">OBJETIVO</th>
+<th colspan="18" class="negrita">OBJETIVO</th>
 </tr>
 <tr>
-<th colspan="18">CONSIGNA</th>
+<th colspan="18" class="negrita">CONSIGNA</th>
 </tr>
 <tr>
-<th colspan="16" align="center">PARTE INICIAL</th>
+<th colspan="16" align="center" class="negrita">PARTE INICIAL</th>
 <th colspan="2" align="right">'.$inicio.' MIN</th>
 </tr>
 <tr>
@@ -325,7 +344,7 @@ $htmlcontent = '
 <th ></th>
 </tr>
 <tr>
-<th colspan="16" align="center">PARTE PRINCIPAL</th>
+<th colspan="16" align="center" class="negrita">PARTE PRINCIPAL</th>
 <th colspan="2" align="right"> '.$tiempo_clase.' MIN</th>
 </tr>
 '
@@ -333,18 +352,18 @@ $htmlcontent = '
 if ($tec!=0){
 $htmlcontent .= '
 <tr>
-<th colspan="18" align="center">EJERCICIO TECNICO</th>
+<th colspan="18" align="center" class="negrita">EJERCICIO TECNICO</th>
 </tr>
 <tr>
-<th colspan="9" align="center">DESCRIPCION</th>
-<th colspan="7" align="center">REPRESENTACION</th>
+<th colspan="9" align="center" class="negrita">DESCRIPCION</th>
+<th colspan="7" align="center" class="negrita">REPRESENTACION</th>
 <th colspan="2" align="right">'.$tec.' MIN</th>
 </tr>
 '; 
 if ($ejercicio1!=""){
 $htmlcontent .= '
 <tr>
-<th colspan="9">Ejercicio: '.$ejercicio1.' <br>Tarea: '.$tarea1.' <br>Metodo: '.$metodo1.' <br>Descripcion:'.$desc1.'</th>
+<td colspan="9" class="margen"><strong>Ejercicio:</strong> '.$ejercicio1.' <br><strong>Tarea:</strong> '.$tarea1.' <br>Metodo: '.$metodo1.' <br>Descripcion:'.$desc1.'</td>
 <th colspan="9" height="100" align="center" ><img src="../../../Galeria/acciones_abm_ejer/'.$foto1.'" alt="Mountain View" style="width:100px;height:100px;">
  </th>
 </tr>
@@ -360,11 +379,11 @@ $htmlcontent .= '
 if ($fis!=0){
 $htmlcontent .= '
 <tr>
-<th colspan="18" align="center">EJERCICIO FISICO</th>
+<th colspan="18" align="center" class="negrita">EJERCICIO FISICO</th>
 </tr>
 <tr>
-<th colspan="9" align="center">DESCRIPCION</th>
-<th colspan="7" align="center">REPRESENTACION</th>
+<th colspan="9" align="center" class="negrita">DESCRIPCION</th>
+<th colspan="7" align="center" class="negrita">REPRESENTACION</th>
 <th colspan="2" align="right">'.$fis.' MIN</th>
 </tr>
 '; 
@@ -386,11 +405,11 @@ $htmlcontent .= '
 if ($tac!=0){
 $htmlcontent .= '
 <tr>
-<th colspan="18" align="center">EJERCICIO TACTICO</th>
+<th colspan="18" align="center" class="negrita">EJERCICIO TACTICO</th>
 </tr>
 <tr>
-<th colspan="9" align="center">DESCRIPCION</th>
-<th colspan="7" align="center">REPRESENTACION</th>
+<th colspan="9" align="center" class="negrita">DESCRIPCION</th>
+<th colspan="7" align="center" class="negrita">REPRESENTACION</th>
 <th colspan="2" align="right">'.$tac.' MIN</th>
 </tr>
 '; 
@@ -412,11 +431,11 @@ $htmlcontent .= '
 if ($psi!=0){
 $htmlcontent .= '
 <tr>
-<th colspan="18" align="center">ACCION PSICOLOGICA</th>
+<th colspan="18" align="center" class="negrita">ACCION PSICOLOGICA</th>
 </tr>
 <tr>
-<th colspan="9" align="center">DESCRIPCION</th>
-<th colspan="7" align="center">REPRESENTACION</th>
+<th colspan="9" align="center" class="negrita">DESCRIPCION</th>
+<th colspan="7" align="center" class="negrita">REPRESENTACION</th>
 <th colspan="2" align="right">'.$psi.' MIN</th>
 </tr>
 '; 
@@ -438,11 +457,11 @@ $htmlcontent .= '
 if($comp!=0){
 $htmlcontent .= '
 <tr>
-<th colspan="18" align="center">COMPETENCIA</th>
+<th colspan="18" align="center" class="negrita">COMPETENCIA</th>
 </tr>
 <tr>
-<th colspan="9" align="center">DESCRIPCION</th>
-<th colspan="7" align="center">REPRESENTACION</th>
+<th colspan="9" align="center" class="negrita">DESCRIPCION</th>
+<th colspan="7" align="center" class="negrita">REPRESENTACION</th>
 <th colspan="2" align="right">'.$comp.' MIN</th>
 </tr>
 '; 
@@ -463,25 +482,25 @@ $htmlcontent .= '
 ; }}
 $htmlcontent .= '
 <tr>
-<th colspan="16" align="center">PARTE FINAL</th>
+<th colspan="16" align="center" class="negrita">PARTE FINAL</th>
 <th colspan="2" align="right">'.$final.' MIN</th>
 </tr>
 <tr>
 <th height="30" colspan="18"></th>
 </tr>
 <tr>
-<th height="80" colspan="18">OBSEVACIONES</th>
+<th height="80" colspan="18" class="negrita">OBSEVACIONES</th>
 </tr>
 
 
 </table>
 '
 ; 
-$w = 25;
-$h = 17;
+$w = 30;
+$h = 20;
 // Example of Image from data stream ('PHP rules')
 $ser='images/lp.jpg';
-$pdf->Image($ser, 20, 10, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, 0, false, false);
+$pdf->Image($ser, 20, 11, $w, $h, 'JPG', '', '', false, 300, '', false, false, 0, 0, false, false);
 //$image_mask = $pdf->Image("images/image_alpha.png", 50, 50, 100, '', '', '', '', false, 300, '', true, false);
 //$pdf->Image("images/image.png", 50, 50, 100, '', '', '', '', false, 300, '', false, $image_mask);
 

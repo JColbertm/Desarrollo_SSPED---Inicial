@@ -1753,7 +1753,7 @@ if(b==5){
                     <button type="button" id="mandar" class="btn btn-primary" >Guardar</button>
                   </div>
                 </form>
-                <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" id="formPdf">
+                <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/Plan_Clase.php" target="_blank" id="formPdf">
                   <div class=" col-sm-2 col-xs-6">
                   <br>
                     <input type="hidden" value="" id="dosifi" name="dosifi">
@@ -1807,7 +1807,7 @@ if(b==5){
                 </select>
               </div>
             </div>
-            <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/pdf_example.php" target="_blank" >
+            <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/Plan_Clase.php" target="_blank" >
               <div class=" col-sm-2 col-xs-12">
               <br>
                 <input type="hidden" value="" id="idpro" name="idpro">
