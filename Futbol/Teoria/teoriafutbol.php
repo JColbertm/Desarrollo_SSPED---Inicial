@@ -309,7 +309,7 @@
 
 				    		<div class="col-sm-11 col-xs-12">
 				    			<ol>
-				    			<li> <h4>Libro uno </h4> <a>Ver libro </a>
+				    			<li> <h4>Dejad que los niños y niñas jueguen </h4> <a target="_blank" href="/Desarrollo_SSPED/Futbol/Teoria/Libros/DEJAD QUE LOS NIÑOS Y NIÑAS JUEGUEN.pdf">ver libro</a>
 				    				<ul>
 				    					<li>Descripcion:
 				    						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus fugiat neque excepturi corporis eius dolores tempore aperiam cupiditate nesciunt optio, repudiandae, quis natus magnam omnis velit at reprehenderit eaque alias!</p>
@@ -317,7 +317,7 @@
 				    				</ul>
 				    			</li>
 
-				    			<li> <h4>Libro dos </h4> <a>Ver libro </a>
+				    			<li> <h4>150 Ejercicios Tecnicos </h4> <a target="_blank" href="/Desarrollo_SSPED/Futbol/Teoria/Libros/150 EJERCICIOS TECNICOS.pdf">ver libro</a>
 				    				<ul>
 				    					<li>Descripcion:
 				    						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, omnis placeat. Nemo quas neque laudantium. Adipisci, maxime. Quod nihil odio culpa, iste, necessitatibus consequatur, aut numquam reprehenderit cupiditate aperiam doloribus!</p>
@@ -325,13 +325,23 @@
 				    				</ul>
  								</li>	
 
-				    			<li> <h4>Libro tres </h4> <a>Ver libro </a>
+				    			<li> <h4>Orientacion Formativas Para el Entrenador de Futbol </h4> <a target="_blank" href="/Desarrollo_SSPED/Futbol/Teoria/Libros/ORIENTACIONES FORMATIVAS PARA EL ENTRENADOR DE FUTBOL.pdf">ver libro</a>
 				    				<ul>
 				    					<li>Descripcion:
 				    						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias laudantium, libero odio obcaecati velit temporibus debitis, eum. Cum quia, porro animi impedit odit eos sequi recusandae accusamus error ratione, enim.</p>
 				    					</li>
 				    				</ul>
 				    			</li>
+
+
+                  <li> <h4>Futbol Base Fifa </h4> <a target="_blank" href="/Desarrollo_SSPED/Futbol/Teoria/Libros/FUTBOL BASE FIFA.pdf">ver libro</a>
+                    <ul>
+                      <li>Descripcion:
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias laudantium, libero odio obcaecati velit temporibus debitis, eum. Cum quia, porro animi impedit odit eos sequi recusandae accusamus error ratione, enim.</p>
+                      </li>
+                    </ul>
+                  </li>
+
 
 				    			</ol>
 				    		</div>
