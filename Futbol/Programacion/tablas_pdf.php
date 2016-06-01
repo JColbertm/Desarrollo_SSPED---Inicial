@@ -90,40 +90,47 @@ $columna = array();
 
 
         $size_columna=count($columna);
+        if($size_columna>15)
+        {
+            $espacio=10;
+            $tamf=(38*($size_columna+3))+60;            
+        }
+        else{
+$espacio=210;
+        $tamf=(38*($size_columna+1))+82;
+}
 
-        $tamf=(38*$size_columna)+60;
 
 $html ='<div align="center" >
             <h1>Macrociclo.</h1>
             </div>
 
-            <center><table width="100%" style="border-collapse: collapse;" >';
-//if (mysqli_num_rows($result)<15)
-//{
-    // $html = $html.'
-      //          <tr><td rowspan="5" WIDTH="100"></td></tr>';
-//}
+            <center>';
 
+$html=$html.'<table width="'.$tamf.'" style="border-collapse: collapse;" >';
+/*if ($size_columna<=15)
+{
+     $html = $html.'<table width=200><tr><td>mm</td></tr></table>';
+}*/
+ 
 
-$html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Nombre planificacion:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['nombre'].'</td></tr>';
-$html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Fecha de inicio:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['fecha_inicio_pre'].'</td></tr>';
+$html = $html.'<tr><td width="'.$espacio.'"  ></td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Nombre planificacion:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['nombre'].'</td></tr>';
 
-$html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Tipo de plan:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$tp.'</td></tr>';
+$html = $html.'<tr><td width="'.$espacio.'"  ></td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Fecha de inicio:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$nombre['fecha_inicio_pre'].'</td></tr>';
 
-$html = $html.'<tr><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Equipo:</b></td><td colspan="2" style="border: 1px solid black;text-align: center;"> '.$gru['nombre_gru'].'</td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Categoria:</b></td><td colspan="2" style="border: 1px solid black;text-align: center;"> '.$_POST['id_categ'].'</td></tr>';
+$html = $html.'<tr><td width="'.$espacio.'"  ></td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Tipo de plan:</b></td><td colspan="6" style="border: 1px solid black;text-align: center;"> '.$tp.'</td></tr>';
 
-$html = $html.'<tr>
-<td style="border: 1px solid black;text-align: center;"><b>Total de semanas:</b> </td>
-<td style="border: 1px solid black;text-align: center;">'.$nombre['cant_semanas'].' </td>
-<td style="border: 1px solid black;text-align: center;"> <b>Cantidad de dias:</b> </td>
-<td style="border: 1px solid black;text-align: center;">'.$nombre['cant_dias'].' </td>
-<td style="border: 1px solid black;text-align: center;"><b>Frecuencia:</b> </td>
-<td style="border: 1px solid black;text-align: center;">'.$nombre['frecuencia'].' </td>
-<td style="border: 1px solid black;text-align: center;"> <b>Transito:</b></td>
+$html = $html.'<tr><td width="'.$espacio.'"></td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Equipo:</b></td><td colspan="2" style="border: 1px solid black;text-align: center;"> '.$gru['nombre_gru'].'</td><td colspan="2" style="border: 1px solid black;text-align: center;"><b>Categoria:</b></td><td colspan="2" style="border: 1px solid black;text-align: center;"> '.$_POST['id_categ'].'</td></tr>';
+
+$html = $html.'<tr><td width="'.$espacio.'"  ></td>
+<td style="border: 1px solid black;"><b>Total de semanas</b></td>
+<td style="border: 1px solid black;text-align: center;">'.$nombre['cant_semanas'].'</td>
+<td style="border: 1px solid black;"><b>Cant. de dias:</b></td>
+<td style="border: 1px solid black;text-align: center;">'.$nombre['cant_dias'].'</td>
+<td style="border: 1px solid black;"><b>Frecuen</b></td>
+<td style="border: 1px solid black;text-align: center;">'.$nombre['frecuencia'].'</td>
+<td style="border: 1px solid black;"><b>Transito</b></td>
 <td style="border: 1px solid black;text-align: center;"> '.$nombre['transito'].'</td></tr>';
-/*$html = $html.'<b>Equipo:</b> '.$gru['nombre_gru'];
-$html = $html.'<b>Equipo:</b> '.$gru['nombre_gru'];*/
-
 $html = $html.'</table> </center>';
 
 
