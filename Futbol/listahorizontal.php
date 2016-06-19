@@ -3,17 +3,17 @@
     <!--  OPCION EQUIPOS -->
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+        <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
       </button> 
       <ul class="dropdown-menu">
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Programacion/gruposfutbol.php">
-            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+            <span><i class="fa fa-users" aria-hidden="true"></i></span>
           </a>
         </li>
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Programacion/planfutbol.php">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <span><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
           </a>
         </li>
       </ul>
@@ -22,29 +22,29 @@
     <div class="btn-group" role="group">
       <a class="collapsed" role="button" href="/Desarrollo_SSPED/Futbol/Dosificacion/dosificacion2.php">
         <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+          <span><i class="fa fa-fire" aria-hidden="true"></i></span>
         </button>
       </a>
     </div>
     <!--  OPCION JUGADORES -->
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        <span><i class="fa fa-user" aria-hidden="true"></i></span>
       </button>
       <ul class="dropdown-menu">
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Jugadores/jugadoresfutbol.php">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <span><i class="fa fa-user" aria-hidden="true"></i></span>
           </a>
         </li>
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Jugadores/asistenciafutbol.php">
-            <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            <span><i class="fa fa-list-alt" aria-hidden="true"></i></span>
           </a>
         </li>
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Jugadores/evaluacionjugadores.php">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
           </a>
         </li>
       </ul>
@@ -52,31 +52,31 @@
     <!--  OPCION GALERIA -->
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+        <span><i class="fa fa-picture-o" aria-hidden="true"></i></span>
       </button>
       <ul class="dropdown-menu">
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Galeria/galeriafutbol.php">
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+            <span><i class="fa fa-eye" aria-hidden="true"></i></span>
           </a>
         </li>
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Galeria/abmejercicios.php">
-            <span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
+            <span><i class="fa fa-cubes" aria-hidden="true"></i></span>
           </a>
         </li>
         <li>
           <a href="/Desarrollo_SSPED/Futbol/Galeria/creaejercicio.php">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            <span><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
           </a>
         </li>
       </ul>
     </div>  
-    <!--  OPCION DOSIFICACION -->
+    <!--  OPCION TEORIA -->
     <div class="btn-group" role="group">
       <a class="collapsed" role="button" href="/Desarrollo_SSPED/Futbol/Teoria/teoriafutbol.php">
         <button type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          <span><i class="fa fa-book" aria-hidden="true"></i></span>
         </button>
       </a>
     </div>

@@ -9,7 +9,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/Desarrollo_SSPED/index.php"> Home</a>
+      <a class="navbar-brand" href="/Desarrollo_SSPED/index.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,12 +19,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Perfil <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Perfil <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/Desarrollo_SSPED/Futbol/perfilcouch.php">Ver Perfil</a></li>
-            <li><a href="/Desarrollo_SSPED/Futbol/cambiopass.php">Cambiar Password</a></li>
+            <li><a href="/Desarrollo_SSPED/Futbol/perfilcouch.php"><i class="fa fa-eye" aria-hidden="true"></i> Ver Perfil</a></li>
+            <li><a href="/Desarrollo_SSPED/Futbol/cambiopass.php"><i class="fa fa-key" aria-hidden="true"></i> Cambiar Password</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="" class="modal1" data-toggle="modal" data-target="#modalcierresesion">Cerrar Sesion</a></li>
+            <li><a href="" class="modal1" data-toggle="modal" data-target="#modalcierresesion"><i class="fa fa-sign-out" aria-hidden="true"></i>
+ Cerrar Sesion</a></li>
           </ul>
         </li>
       </ul>
@@ -49,10 +50,8 @@
           </div>
 
           <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-7">
-              <a href="/Desarrollo_SSPED/index.php">
-                <button id="cierre_sesion" type="button" class="btn btn-success btn-sm">Aceptar</button>
-              </a>
+            <div class="col-xs-offset-2 col-xs-7">              
+              <button id="cierre_sesion" type="button" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Aceptar</button>              
             </div>
           </div>
 
@@ -60,7 +59,7 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <?php
+@session_start();
 	$opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 	include("/Teoria/databaseA.php");
 	switch ($opcion) {
@@ -67,6 +68,63 @@
 			echo json_encode($resultados);
 			flush();
 		break;
+
+		case "equipo":	
+			$iden = $_SESSION['id_en'];		
+			$result = execSqlA("SELECT idGrupo, nombre_gru FROM grupo WHERE idEntrenador = $iden and estado_gru = 1");			
+			if (mysqli_num_rows($result)  > 0) 
+			{
+				$c=0;
+				while($data = mysqli_fetch_array($result))
+				{
+				$multidimensional[$c] = array('idgru' => $data[0] ,'equipo' => $data[1],'res'=> 1);
+					$c++;
+				}	
+			}
+			else 
+			{
+				$multidimensional=array('res'=> 0);
+			}
+				echo json_encode($multidimensional);
+				flush();
+			
+		break;
+
+		case "planes":	
+			$iden = $_SESSION['id_en'];		
+			$result = execSqlA("SELECT idGrupo, nombre_gru FROM grupo WHERE idEntrenador = $iden and estado_gru = 1");
+			$resultados=array();
+			if (mysqli_num_rows($result)  > 0) 
+			{				
+				while($data = mysqli_fetch_array($result))
+				{
+					$idequipo = $data[0]; 
+					$sql = execSqlA("SELECT idPlanificacion, nombre FROM planificacion WHERE idGrupo = $idequipo and estado = 1");
+					$resultados1=array();
+					if (mysqli_num_rows($sql)  > 0) 
+					{
+						$c=0;
+						while($datos = mysqli_fetch_array($sql))
+						{
+							$multidimensional[$c] = array('idplan' => $datos[0] ,'nombre_plan' => $datos[1],'res'=> 1);	
+							$c++;
+						}
+					}
+					else
+					{
+						$multidimensional=array('res'=> 0);
+					}
+				}													
+			}
+			else 
+			{
+				$multidimensional=array('res'=> 0);
+			}
+				echo json_encode($multidimensional);
+				flush();
+			
+		break;
+
 
 	}
 ?>

@@ -9,6 +9,7 @@
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
     <script src="/Desarrollo_SSPED/jsPDF-1.2.60/jspdf.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -572,7 +573,7 @@
 <body>
 <!--  llamada a la cabecera -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -592,7 +593,7 @@
 	<div class="col-xs-12 col-sm-8 ">
 		<div class="panel panel-default">
       <div class="panel-heading">
-        Planificacion
+        <i class="fa fa-calendar" aria-hidden="true"></i>  Planificacion
       </div>
       <div class="panel-body">  
         <div class="">
@@ -719,7 +720,7 @@
                   <div class="col-sm-offset-1 col-sm-2 col-xs-12">
                   <br>
                     <button type="button" class="form-control btn btn-primary" id="btncalcular" name="btncalcular">
-                      <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                      <span><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                       <span class="hidden-xs">
                         Calcular
                       </span>
@@ -778,7 +779,7 @@
                   <div class="col-sm-offset-9 col-sm-3 col-xs-12">
                   <br>
                     <button type="button" class="form-control btn btn-success" id="plansiguiente">
-                      <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                      <span><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                       <span class="hidden-xs">
                         Siguiente
                       </span>
@@ -894,7 +895,7 @@
             <!-- CONTENEDOR DEL ENTRENAMIENTO COMPETITIVO -->
             <div class="col-md-3 col-xs-offset-10 row">
             <br>
-              <button type="button" class="btn btn-success" data-dixsiss="modal" id="btnCotinnuar">Continuar</button>
+              <button type="button" class="btn btn-success" data-dixsiss="modal" id="btnCotinnuar"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Continuar</button>
             </div>
           </div>
           <!-- TERCER PANEL -->
@@ -978,7 +979,7 @@
               </div>
               <div class="row">
                 <div class="col-md-3 col-xs-offset-10 row">
-                  <button type="button" class="btn btn-success" data-dixsiss="modal" id="btnCotinnuar2">Continuar</button>
+                  <button type="button" class="btn btn-success" data-dixsiss="modal" id="btnCotinnuar2"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Continuar</button>
                 </div>
               </div>
             </form>
@@ -1087,7 +1088,7 @@
               <div class="col-xs-offset-6 col-xs-6">
               <br><br>          
               <form method="POST" action="/Desarrollo_SSPED/Futbol/Programacion/tablas_pdf.php" target="_blank">
-                <div id="boton_guardar">               
+                <div id="boton_guardar">                    
                   <input type="button" class="col-xs-6 btn btn-success"  value="Guardar" id="Guardar" method="post" disabled="">
                 </div>
                 <input type="hidden" value="" id="planifi" name="planifi">

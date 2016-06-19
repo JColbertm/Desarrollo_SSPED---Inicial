@@ -1,6 +1,7 @@
 <?php
 		$opcion = filter_var($_POST['opcion'],FILTER_SANITIZE_STRING);
 		include("databaseA.php");
+		@session_start();
 	switch ($opcion) {
 		case "registrar_coach":
 			$fecha_actual=date("d/m/Y");
@@ -38,8 +39,7 @@
 		break;
  
 		case "inicio_sesion":
-
-			session_start();
+			
 			$fecha_actual=date("d/m/y");
 			$a = filter_var($_POST['inputCi'],FILTER_SANITIZE_NUMBER_INT);
 			$b = filter_var($_POST['inputPassword'],FILTER_SANITIZE_STRING);
@@ -51,9 +51,11 @@
 			$data = mysqli_fetch_array($result);
 	        if($data > 0)
 	        {
-				$resultados = array('iden' => $data[0] ,'nom' => $data[1], 'app' => $data[2], 'apm' => $data[3],'res'=> 1);  
-				$_SESSION['session'] = $data[1];
+				$resultados = array('iden' => $data[0] ,'nom' => $data[1], 'app' => $data[2], 'apm' => $data[3],'res'=> 1);  				
 				$_SESSION['id_en'] = $data[0];
+				$_SESSION['nombre'] = $data[1];
+				$_SESSION['apellido'] = $data[2];
+
 	        }
 	        
 	        else
@@ -64,6 +66,12 @@
 			echo json_encode($resultados);
 			flush();
 		break;
+
+		case 'cierra_sesion':  			
+			session_destroy();
+			$resultados = array('res'=> 1);  
+			echo json_encode($resultados);
+  		break;
 	}
 	
 ?> 

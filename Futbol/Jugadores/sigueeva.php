@@ -36,7 +36,7 @@
   <div class="row">
     <div class="col-sm-offset-9 col-sm-3 col-xs-6">
       <button type="button" class="btn btn-primary" id="generarsegui_eva" disabled>
-        Generar
+        <i class="fa fa-download" aria-hidden="true"></i> Generar
       </button>
     </div>  
   </div> 
@@ -99,7 +99,7 @@
   <div class="col-sm-offset-7 col-sm-2 col-xs-6">
     <br>
     <button  type="button" class="btn btn-primary" id="btnguarda_segui" disabled>
-      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+      <span><i class="fa fa-upload" aria-hidden="true"></i></span>
       <span class="hidden-xs">
         Guardar
       </span>
@@ -108,7 +108,7 @@
   <div class="col-sm-2 col-xs-6">
     <br>
     <button  type="button" class="btn btn-success" id="exportar" data-toggle="modal" data-target="#myModal" disabled>
-      <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+      <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
       <span class="hidden-xs">
         Exportar
       </span>

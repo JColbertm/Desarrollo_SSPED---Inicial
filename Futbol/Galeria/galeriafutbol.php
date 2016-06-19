@@ -5,8 +5,14 @@
 	<link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
     $(document).ready(function() {
+
+    	$('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
 
     		$(function () {
 				$('[data-toggle="tooltip"]').tooltip()
@@ -17,6 +23,29 @@
 	$('#resultado').html(html1);
 
     	})
+    function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+        
      function verdatos(){
  		
 			o = "&opcion=" + encodeURIComponent('tabla_llena');
@@ -108,7 +137,7 @@
 ?>
 <!--  llamada a la cabecera -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
  	<?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -127,7 +156,7 @@
 <div class="col-xs-12 col-sm-8">
 	<div class="col">
 		<div class="panel panel-default">
-    		<div class="panel-heading">Galeria</div>
+    		<div class="panel-heading"><i class="fa fa-picture-o" aria-hidden="true"></i> Galeria</div>
   				<div class="panel-body">
 	        		<!--  Formulario de Busqueda -->
 	      			<form action="" class="form-horizontal" name="form-ver" id="form-ver" method="POST">
@@ -165,23 +194,23 @@
 				  					<div class="col-sm-5">
 				    					<div id="MainMenu">
 						  					<div class="list-group panel">
-						    					<a href="#tecnico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico</a>
+						    					<a href="#tecnico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tecnico.png" alt=""> Ejercicio Tecnico</a>
 						    					<div class="collapse" id="tecnico">
 													<?php echo $ejercicio_tecnico; ?>
 						    					</div>
-						    					<a href="#tactico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tecnico Tactico</a>
+						    					<a href="#tactico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/Prefisica.png" alt=""> Ejercicio Tecnico Tactico</a>
 						    					<div class="collapse" id="tactico">
 						      						<?php echo $Ejercicio_Tecnico_tactico; ?>
 						    					</div>
-						    					<a href="#fisico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Ejercicio Tactico fisico</a>
+						    					<a href="#fisico" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/tactico.png" alt=""> Ejercicio Tactico fisico</a>
 						    					<div class="collapse" id="fisico">
 						      						<?php echo $Ejercicio_Tactico_fisico; ?>
 						    					</div>
-						    					<a href="#acciones" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Acciones Psicologicas</a>
+						    					<a href="#acciones" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pensar.png" alt=""> Acciones Psicologicas</a>
 						    					<div class="collapse" id="acciones">
 						      						<?php echo $Acciones_Psicologicas; ?>    	
 						    					</div>
-						    					<a href="#competencia" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu">Competencia</a>
+						    					<a href="#competencia" class="list-group-item list-group-item-default" data-toggle="collapse" data-parent="#MainMenu"><img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/competencia.png" alt=""> Competencia</a>
 						    					<div class="collapse" id="competencia">
 						      						<?php echo $Competencia; ?>    	
 						    					</div>
@@ -195,8 +224,8 @@
 				 								</div>	
 											</div> 
 										</div>
-										<div class="col-sm-offset-2 col-sm-2">
-      										<button type="submit" class="btn btn-success" >Buscar</button>
+										<div class="col-sm-offset-8 col-sm-2">
+      										<button type="submit" class="btn btn-primary" ><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
     									</div>
 									</div>						
 											

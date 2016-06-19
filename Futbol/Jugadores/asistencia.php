@@ -41,7 +41,7 @@
         <div class="row">
           <div class="col-sm-offset-9 col-sm-3 col-xs-6">
             <button type="button" class="btn btn-primary" id="generarasi" disabled >
-              Generar
+              <i class="fa fa-download" aria-hidden="true"></i> Generar
             </button>
           </div>  
         </div>    
@@ -58,13 +58,13 @@
       <div align="right">
         <form id="formguarda_asi" name="formguarda_asi">
           <button type="button" class="btn btn-primary" id="btnguardaasis" disabled>
-            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+            <span><i class="fa fa-upload" aria-hidden="true"></i></span>
             <span class="hidden-xs">
               Guardar
             </span>
           </button>
           <button type="button" class="btn btn-success" id="exportar_asi" data-toggle="modal" data-target="#myModal" disabled>
-            <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+            <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
             <span class="hidden-xs">
               Exportar
             </span>

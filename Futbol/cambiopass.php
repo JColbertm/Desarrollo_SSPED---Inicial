@@ -12,10 +12,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title></title> 
     <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
       $(document).ready(function(){
         var idcouch= <?php echo $_SESSION['id_en'];?>;
@@ -23,8 +24,34 @@
         {
           verfifica_pass($('#passact').val(), $('#nuevopass').val(), $('#confpass').val());
         });
+        $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
       });
 
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
       function verfifica_pass(pass, nuevo, conf){
         setTimeout("$('.ocultar').hide();", 3000);
          var id = "datos=" +encodeURIComponent(pass) ;
@@ -100,7 +127,7 @@
 <body>
   <!--  LLAMADO A LA CABECERA -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
   <!--  LLAMADO A LA BARRA DE MENU -->
   <?php 
@@ -115,7 +142,7 @@
  	<div class="col-sm-7 col-xs-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Cambio de Password
+        <i class="fa fa-key" aria-hidden="true"></i> Cambio de Password
       </div>
       <div class="panel-body">
         <h4>Password</h4>
@@ -149,7 +176,8 @@
           </div>
         <div class="form-group">
           <div class="col-sm-offset-9 col-sm-2">
-            <button id="btncambio" type="button" class="btn btn-success">Cambiar</button>
+            <button id="btncambio" type="button" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i>
+ Cambiar</button>
           </div>
         </div>
         </form>

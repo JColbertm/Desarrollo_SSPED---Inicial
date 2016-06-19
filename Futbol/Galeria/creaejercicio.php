@@ -11,6 +11,7 @@
   	<script src="/Desarrollo_SSPED/Futbol/Galeria/promise.min.js"></script>
   	<script src="/Desarrollo_SSPED/Futbol/Galeria/interact.min.js"></script>
   	<script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery4.js"></script>
+  	<link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet"> 	
     <script type="text/javascript">
 
     	$(document).ready(function() {
@@ -18,6 +19,10 @@
 	        $(function () {
 		        $('[data-toggle="tooltip"]').tooltip()
       		})	
+      		$('#cierre_sesion').on('click', function()
+		      {
+		        cerrar_sesion();            
+		      });
 
 			$(".radio input[name='optionsRadios']").on('click',  select_img)
 
@@ -45,6 +50,32 @@
 
 
     	})
+
+
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
+
     	function select_img() 
     	{
     		if($('input:radio[id=optionsRadios1]:checked').val() == 1)
@@ -82,7 +113,7 @@
 <body>
 <!--  llamada a la cabecera -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
  	<?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -103,14 +134,14 @@
 <div class="col-xs-12 col-sm-8">
 	<div class="panel panel-default ui-widget-content" >
   		<div class="panel-heading">
-  			Creacion de Ejercicio
+  			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Creacion de Ejercicio
   		</div>
   		<div class="panel-body">
     		<div class="col-xs-12" id="componentes">
     			<a class="test"></a>
     			<div class="col-xs-8">
     				<a href="javascript:genScreenshot()" class="btn btn-info">
-    				<span class="glyphicon glyphicon-import" aria-hidden="true"></span> 
+    				<span><i class="fa fa-camera-retro" aria-hidden="true"></i></span> 
     				<span class="hidden-xs">
     					Capturar
     				</span>
@@ -125,9 +156,12 @@
     					
     				</div>
     			</div>
+				
+
+
 				<div class="panel panel-default col-xs-4 ui-widget-content movimiento"  id="material">
 			  		<div class="panel-heading">
-			  				Componentes
+			  				<i class="fa fa-cogs" aria-hidden="true"></i> Componentes
 			  			</div>
 			  			<div class="panel-body">
 
@@ -150,126 +184,7 @@
 						  </label>
 						</div>
 						<hr>
-						
-						<h4><b>Conos</b></h4>	
-						<div class="row" id="conos">
-							<div class="col-xs-6"> 
-								<button class="btn" id="btn_cono" name="btn_cono" type="button">
-					    		<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono.png" class="img-rounded img" width="15px" name="cono1" id="cono1">
-					    		</button> 			
-		    				</div>	
-		    				<div class="col-xs-6">  			
-		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/cono1.png" class="img-rounded img"  width="15px">
-		    				</div>
-						</div>
-						<h4><b>Escaleras</b></h4>
-						<div class="row">
-				  			<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/escalera.jpg" class="img-rounded img" width="65%">
-				    		</div>	
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/escalerahor.jpg" class="img-rounded img" width="60%">
-				    		</div>	
-				  		</div>    
-						<hr>
-						<h4><b>Banderines</b></h4>
-						<div class="row">
-				  			<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/banderin.png" class="img-rounded img" width="30%">
-							</div>	
-		    				<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/banderin.png" class="img-rounded img" width="30%">
-				   			</div>	
-						</div>
-						<hr>
-						<h4><b>Equipos</b></h4>
-						<div class="row">
-				    		<div class="col-xs-6">  			
-				   				<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/polera1.png" class="img-rounded img" width="35%">
-			 				</div>		
-			    			<div class="col-xs-6">  			
-			    				<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/polera1.png" class="img-rounded img" width="35%">
-		    				</div>
-		    			</div>
-		    			<br>	
-		    			<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/punto2.png" class="img-rounded img" width="30%">
-				    		</div>		
-				    		<div class="col-xs-6">  			
-				  				<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/punto2.png" class="img-rounded img" width="30%">
-				   			</div>	
-				   		</div>
-		    			<hr>
-		    			<h4><b>Vallas</b></h4>
-		    			<div class="row">
-		    				<div class="col-xs-6">  			
-		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/valla1.png" class="img-rounded img" width="40%">
-		    				</div>	
-		    				<div class="col-xs-6">  			
-		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/valla2.jpg" class="img-rounded img" width="40%">
-		    				</div>	
-		    			</div>
-		    			<hr>
-		    			<h4><b>Porterias</b></h4>
-		    			<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/arco1.png" class="img-rounded img" width="50%">
-				    		</div>		
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/arco2.png" class="img-rounded img" width="50%">
-				    		</div>
-				    	</div>
-				    	<br>
-				    	<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/arco3.png" class="img-rounded img" width="50%">
-				    		</div>		
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/arco4.png" class="img-rounded img" width="50%">
-				    		</div>
-				    	</div>
-				    	<hr>
-				    	<h4><b>Balones</b></h4>
-				    	<div class="row">
-				    		<div class="col-xs-6">  			
-				   				<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/balon.png" class="img-rounded img" width="20%">
-			 				</div>		
-		    				<div class="col-xs-6">  			
-		    					<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/balon.png" class="img-rounded img" width="20%">
-		    				</div>		
-		    			</div>
-		    			<br>
-		    			<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pelota4.png" class="img-rounded img" width="25%">
-				    		</div>	
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pelota5.png" class="img-rounded img" width="30%">
-				    		</div>	
-				    	</div>
-		    			<hr>
-		    			<h4><b>Trazos</b></h4>
-						<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/flecha.png" class="img-rounded img" width="30%">
-				    		</div>	
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/pelota5.png" class="img-rounded img" width="30%">
-				    		</div>	
-				    	</div>
-				    	<br>
-				    	<div class="row">
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/balon.png" class="img-rounded img" width="30%">
-				    		</div>	
-				    		<div class="col-xs-6">  			
-				    			<img src="/Desarrollo_SSPED/Imagenes/ImaFutbol/balon.png" class="img-rounded img" width="30%">
-				    		</div>	
-				    	</div>		    
-			  		</div>
-	 		
-			 	</div>
+
     		</div>
   		</div>
 	</div>

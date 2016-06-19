@@ -17,12 +17,40 @@
     <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
       
       $(document).ready(function(){
         var idcouch= <?php echo $_SESSION['id_en'];?>;
         llenar_datos(idcouch);
+        $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
       });
+
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
 
       function llenar_datos(idcouch){
         var id = "ide=" +encodeURIComponent(idcouch) ;
@@ -62,7 +90,7 @@
 <body>
   <!--  LLAMADO A LA CABECERA -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
   <!--  LLAMADO A LA BARRA DE MENU -->
   <?php 
@@ -77,7 +105,7 @@
  	<div class="col-xs-7">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Perfil del Entrenador
+        <i class="fa fa-user-secret" aria-hidden="true"></i> Perfil del Entrenador
       </div>
       <div class="panel-body">
         <h4>Datos del Entrenador</h4>

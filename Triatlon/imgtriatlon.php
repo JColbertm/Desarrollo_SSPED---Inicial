@@ -10,11 +10,15 @@
     		</div>
     		
     		<div class="item">
+        <a href="/Desarrollo_SSPED/Triatlon/triatlonindex.php">
       			<img class="img-rounded media-object" src="/Desarrollo_SSPED/Imagenes/ImaTriatlon/tria2.jpg" alt="Imagen Futbol">
+        </a>
     		</div>
     		
     		<div class="item">
+        <a href="/Desarrollo_SSPED/Triatlon/triatlonindex.php">
       			<img class="img-rounded media-object" src="/Desarrollo_SSPED/Imagenes/ImaTriatlon/triatlon1.jpg" alt="Imagen Futbol">
+        </a>
     		</div>
 
   		</div>

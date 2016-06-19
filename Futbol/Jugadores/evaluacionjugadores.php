@@ -8,9 +8,14 @@
     <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
     $(document).ready(function() 
     {
+      $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
       $('#generareva').on('click', function()
       {
         $('#equipo-cre').prop('disabled',true);
@@ -34,6 +39,7 @@
             llenar_tabla($('#equipo-cre').val())            
           }
         })
+
       });
 
       $('#generarsegui_eva').on('click', function()
@@ -1423,12 +1429,35 @@ var arr2= [];
     }
 
 
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
     </script>
 </head>
 <body>
 <!--  llamada a la cabecera -->
     <?php 
-        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
     ?>
     <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -1448,7 +1477,7 @@ var arr2= [];
 <div class="col-xs-12 col-sm-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Evaluaci&oacute;n
+      <i class="fa fa-pencil" aria-hidden="true"></i> Evaluaci&oacute;n
     </div> 
     <div class="panel-body" >
       <div>

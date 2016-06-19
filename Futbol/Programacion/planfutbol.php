@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -17,8 +18,35 @@
 
         listar();
         $('#eliminaPlani').on('click',eliminar)
+        $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
       })
 
+
+        function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
       //listar planificaciones
 
       function listar()
@@ -199,7 +227,7 @@
               $('#plani').html('<div class="col-sm-2">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Anual&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
-                      '   Anual'+
+                      '<i class="fa fa-calendar" aria-hidden="true"></i> Anual'+
                      '  </span>'+
                     ' </button>'+
                      ' </a>  '+
@@ -208,7 +236,7 @@
                    '<div class="col-sm-3">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Trimestral&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
-                      '   Trimestral'+
+                      '<i class="fa fa-calendar" aria-hidden="true"></i> Trimestral'+
                      '  </span>'+
                     ' </button>'+
                      ' </a>  '+
@@ -218,7 +246,7 @@
               '<div class="col-sm-3">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Semestral&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
-                      '   Semestral'+
+                      '<i class="fa fa-calendar" aria-hidden="true"></i> Semestral'+
                      '  </span>'+
                     ' </button>'+
                      ' </a>  '+
@@ -227,7 +255,7 @@
                    '<div class="col-sm-4">'+
                   ' <a href="/Desarrollo_SSPED/Futbol/Programacion/tiempo_plan.php?plan=Competencia&id='+idg2+'&idc='+row3+'">'+
                     ' <button type="button" class="form-control">'+
-                      '   Competencia'+
+                      '<i class="fa fa-calendar" aria-hidden="true"></i> Competencia'+
                      '  </span>'+
                     ' </button>'+
                      ' </a>  '+
@@ -382,7 +410,7 @@
 <body>
 <!--  llamada a la cabecera -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -401,7 +429,7 @@
 <!--  Contenedor de planificacion -->
 <div class="col-xs-12 col-sm-8  ">
   <div class="panel panel-default">
-		<div class="panel-heading">Planificacion</div>
+		<div class="panel-heading"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Planificacion</div>
 			<div class="panel-body">
         <ul class="nav nav-tabs">
           <li role="presentation" class="active"><a href="#primera" aria-controls="" role="tab" data-toggle="tab">
@@ -427,7 +455,7 @@
                 </div>
                 <div class="col-sm-3">
                   <button  type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span><i class="fa fa-search" aria-hidden="true"></i></span>
                     <span class="hidden-xs">
                       Buscar
                     </span>
@@ -461,7 +489,7 @@
                 <h4>Planificacion</h4>
                 <div id="mensaje">
                   <div  class="alert alert-info" role="alert">
-                    Para iniciar la planificacion, primero seleccione un equipo.
+                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Para iniciar la planificacion, primero seleccione un equipo.
                   </div>
                 </div>
                 <br>

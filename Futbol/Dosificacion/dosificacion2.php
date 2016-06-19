@@ -5,9 +5,14 @@
     <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <script type="text/javascript">
 
     $(document).ready(function() {
+        $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
         $(function () {
         $('[data-toggle="tooltip"]').tooltip()
       })
@@ -1589,6 +1594,31 @@ if(b==5){
     limites=limit;
     console.log(limites);
 }    
+
+
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
     </script>
 </head>
 <body>
@@ -1598,7 +1628,7 @@ if(b==5){
 ?>
 <!--  llamada a la cabecera -->
     <?php 
-        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
     ?>
     <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -1618,7 +1648,7 @@ if(b==5){
 <div class="col-xs-12 col-sm-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><strong>Programacion de microciclos</strong></h3>
+      <i class="fa fa-calendar" aria-hidden="true"></i> Programacion de microciclos
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs" role="tablist">
@@ -1629,7 +1659,7 @@ if(b==5){
      <div class="tab-content">
         <!-- Contenido Pestaña creacion -->
         <div class="tab-pane fade in active" id="creacion">
-          <div align="center"><h3><strong>Creacion Semana</strong></h3><br></div> 
+          <div align="center"><h3>Creacion Semana</h3><br></div> 
             <form class="form-horizontal" id="formCreacion" name="formCreacion" method="POST" enctype="multipart/form-data">
               <div class="row">
                 <label class="col-sm-offset-2 col-sm-1 control-label">Equipo:</label>
@@ -1685,7 +1715,7 @@ if(b==5){
             <br>
             <div class="row">
               <div class="col-sm-offset-9 col-sm-2">
-                <button type="button" class="btn btn-primary" id="btnCargar" disabled>Cargar Tabla</button>
+                <button type="button" class="btn btn-primary" id="btnCargar" disabled><i class="fa fa-download" aria-hidden="true"></i> Cargar Tabla</button>
               </div>
             </div>
             <div id="resultado2"></div>
@@ -1750,14 +1780,14 @@ if(b==5){
                   </div>
                   <div class="col-sm-offset-8 col-sm-2 col-xs-6">
                   <br>              
-                    <button type="button" id="mandar" class="btn btn-primary" >Guardar</button>
+                    <button type="button" id="mandar" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Guardar</button>
                   </div>
                 </form>
                 <form method="POST" action="/Desarrollo_SSPED/Futbol/Dosificacion/tcpdf/too/Plan_Clase.php" target="_blank" id="formPdf">
                   <div class=" col-sm-2 col-xs-6">
                   <br>
                     <input type="hidden" value="" id="dosifi" name="dosifi">
-                    <button type="submit" class="btn btn-success" id="mostrar_pdf">Exportar</button>
+                    <button type="submit" class="btn btn-success" id="mostrar_pdf"><i class="fa fa-external-link" aria-hidden="true"></i> Exportar</button>
                   </div>
                 </form>
               </div>
@@ -1812,7 +1842,7 @@ if(b==5){
               <br>
                 <input type="hidden" value="" id="idpro" name="idpro">
                 <button type="submit" class="btn btn-success" id="mostrar_pdf">
-                  <span class="glyphicon glyphicon-export"></span>
+                  <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
                   <span class="hidden-xs">
                     Exportar
                   </span> 
@@ -1900,7 +1930,8 @@ if(b==5){
                 <br>
                 <div class="row">
                   <div align="center">
-                    <button type="button" id="modal-tecnico-selec-ejer"class="btn btn-primary">Seleccionar</button>
+                    <button type="button" id="modal-tecnico-selec-ejer" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i>
+ Seleccionar</button>
                   </div>
                 </div>
               </div> 
@@ -1936,7 +1967,7 @@ if(b==5){
                     </div>
                     <br>
                     <div align="right">
-                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar1" >Limpiar</button>
+                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar1" ><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                     </div>
                   </div>
                 </div>
@@ -1958,7 +1989,7 @@ if(b==5){
                     </div>
                     <br>   
                     <div align="right">
-                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar2" >Limpiar</button>
+                      <button type="button" class="btn btn-normal" id="modal-tecnico-limpiar2" ><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                     </div>
                   </div>
                 </div>
@@ -1966,7 +1997,7 @@ if(b==5){
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Finalizar</button>
           </div>
         </form>
       </div>
@@ -2033,7 +2064,7 @@ if(b==5){
                   <br>
                   <div class="row">
                     <div align="center">
-                      <button type="button" class="btn btn-primary" id="modal-fisico-selec-ejer">Seleccionar</button>
+                      <button type="button" class="btn btn-primary" id="modal-fisico-selec-ejer"><i class="fa fa-check" aria-hidden="true"></i> Seleccionar</button>
                     </div>
                   </div>
                 </div> 
@@ -2067,7 +2098,7 @@ if(b==5){
                         </div>
                         <br>
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar1">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar1"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2089,7 +2120,7 @@ if(b==5){
                         </div>
                         <br>   
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar2">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-fisico-limpiar2"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2097,7 +2128,7 @@ if(b==5){
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Finalizar</button>
               </div>
             </form>
           </div>
@@ -2164,7 +2195,7 @@ if(b==5){
                   <br>
                   <div class="row">
                     <div align="center">
-                      <button type="button" class="btn btn-primary" id="modal-tactico-selec-ejer">Seleccionar</button>
+                      <button type="button" class="btn btn-primary" id="modal-tactico-selec-ejer"><i class="fa fa-check" aria-hidden="true"></i> Seleccionar</button>
                     </div>
                   </div>
                 </div> 
@@ -2198,7 +2229,7 @@ if(b==5){
                         </div>
                         <br>
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar1">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar1"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>            
@@ -2220,7 +2251,7 @@ if(b==5){
                         </div>
                         <br>   
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar2">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-tactico-limpiar2"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2230,7 +2261,7 @@ if(b==5){
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Finalizar</button>
           </div>
         </div>
       </div>
@@ -2293,7 +2324,7 @@ if(b==5){
                   <br>
                   <div class="row">
                     <div align="center">
-                      <button type="button" class="btn btn-primary" id="modal-psi-selec-ejer">Seleccionar</button>
+                      <button type="button" class="btn btn-primary" id="modal-psi-selec-ejer"><i class="fa fa-check" aria-hidden="true"></i> Seleccionar</button>
                     </div>
                   </div>
                 </div> 
@@ -2327,7 +2358,7 @@ if(b==5){
                         </div>
                         <br>
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar1">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar1"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2349,7 +2380,7 @@ if(b==5){
                         </div>
                         <br>   
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar2">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-psi-limpiar2"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2359,7 +2390,7 @@ if(b==5){
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Finalizar</button>
           </div>
         </div>
       </div>
@@ -2424,7 +2455,7 @@ if(b==5){
                   <br>
                   <div class="row">
                     <div align="center">
-                      <button type="button" class="btn btn-primary" id="modal-comp-selec-ejer">Seleccionar</button>
+                      <button type="button" class="btn btn-primary" id="modal-comp-selec-ejer"><i class="fa fa-check" aria-hidden="true"></i> Seleccionar</button>
                     </div>
                   </div>
                 </div> 
@@ -2458,7 +2489,7 @@ if(b==5){
                         </div>
                         <br>
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar1">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar1"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>            
@@ -2480,7 +2511,7 @@ if(b==5){
                         </div>
                         <br>   
                         <div align="right">
-                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar2">Limpiar</button>
+                          <button type="button" class="btn btn-normal" id="modal-comp-limpiar2"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                         </div>
                       </div>
                     </div>
@@ -2490,7 +2521,7 @@ if(b==5){
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Finalizar</button>
+          <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Finalizar</button>
         </div>
       </div>
     </div>

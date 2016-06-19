@@ -9,7 +9,7 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="/Desarrollo_SSPED/index.php"> Home</a>
+      			<a class="navbar-brand" href="/Desarrollo_SSPED/index.php"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
     		</div>
 
     		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,8 +19,8 @@
             <li><a href="/Desarrollo_SSPED/Triatlon/triatlonindex.php">Triatlon<span class="sr-only"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href=""class="modal1" data-toggle="modal" data-target="#registromodal">Registrarse</a></li>
-            <li><a href="" class="modal1" data-toggle="modal" data-target="#modalingreso">Ingresar</a></li>
+            <li><a href=""class="modal1" data-toggle="modal" data-target="#registromodal"><i class="fa fa-file-text-o" aria-hidden="true"></i> Registrarse</a></li>
+            <li><a href="" class="modal1" data-toggle="modal" data-target="#modalingreso"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
@@ -33,7 +33,7 @@
   	<div class="modal-content">
      	<div class="modal-header">
        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    		<h4 class="modal-title" id="myModalLabel">Ingreso</h4>
+    		<h4 class="modal-title" id="myModalLabel"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingreso</h4>
    		</div>
            
     	<div class="modal-body">
@@ -41,7 +41,7 @@
 	 			  <div class="form-group">
             <label class="col-sm-2 col-sm-offset-1 control-label">CI:</label>
   					<div class="col-sm-7">
-    					<input type="text" class="form-control" id="inputCi"  name="inputCi" placeholder="Carnet de identidad" required>
+    					<input type="text" class="form-control" id="inputCi"  name="inputCi" placeholder="Carnet de identidad" required onkeypress="return soloNumeros(event)" maxlength="8">
    					</div>
  			 		</div>
 
@@ -58,14 +58,14 @@
 
  			 		<div class="form-group">
 			    	<div class="col-sm-offset-3 col-sm-7">
-			      	<button type="submit" class="btn btn-success" id="btningresar">Ingresar</button>
+			      	<button type="submit" class="btn btn-success" id="btningresar"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresar</button>
 			    	</div>
 			    </div>
         </form>
       </div>
 
       <div class="modal-footer">
-      	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      	<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
       </div>
     </div>
 	</div>
@@ -79,7 +79,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Formulario de Registro</h4>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-text-o" aria-hidden="true"></i> Formulario de Registro</h4>
       </div>
       <div class="modal-body">
         <!-- Formulario de registro -->
@@ -153,15 +153,16 @@
         
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-success" id="btn-regisentrenador">Registrar</button>
+              <button type="submit" class="btn btn-success" id="btn-regisentrenador"><i class="fa fa-upload" aria-hidden="true"></i>
+ Registrar</button>
             </div>
           </div>
         </form>
       </div>
       
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="btn-limpiar-en">Limpiar Campos</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="btn-limpiar-en"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
       </div>
     </div>
   </div>

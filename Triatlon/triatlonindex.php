@@ -15,18 +15,31 @@
     	})
      
     </script>
-</head>
+</head> 
 <body>
 <!--  llamada a la cabecera -->
 	<?php 
 		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera2.php";
  	?>
  	<?php 
-    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenuregtriatlon.php";
-  ?>
+        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenuregtriatlon.php";
+    ?>
+<!--  llamada a lo menu desplegables -->
+    <?php 
+        require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Triatlon/opctriatlon.php";
+    ?>
 
+    
+<!--  bienvenida al usuario nueva entrada -->
+    <div class="col-sm-8 col-xs-12">
+        <div class="jumbotron">
+            <h2>Bienvenido</h2>
+            <p><h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem fugit, saepe, impedit exercitationem ipsum aliquid est numquam, fuga illum quia ipsa! Molestiae officiis dolore aspernatur laborum. Repellendus sit, magnam beatae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod a, beatae eaque alias. Sunt autem beatae rem repellat est, laborum neque corrupti. Illum modi iure ipsam mollitia asperiores quas magnam?<br>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita illum esse nostrum vel accusantium, reiciendis aliquid tempore in quaerat doloremque. Explicabo eligendi ducimus ullam corrupti neque cupiditate quaerat quibusdam ex!</h5></p>
+        </div>  
+    </div>
  
-
 <!--  llamada al pie de pagina -->
  	<?php 
 		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/pie1.php";

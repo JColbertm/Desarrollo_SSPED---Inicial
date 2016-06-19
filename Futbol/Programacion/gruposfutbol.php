@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- permitir solo numeros en un input -->
     <script type="text/javascript">
       $(document).ready(function() {
@@ -32,8 +33,36 @@
           $('#limpiarMo').on('click', limpiarM)
           listar();
           listar2();
+          $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
           
       });
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
+
       function registro_grupos()
       {
           setTimeout("$('.ocultar').hide();", 5000);
@@ -354,7 +383,7 @@
 <body>
 <!--  llamada a la cabecera -->
   <?php 
-    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
   ?>
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -373,7 +402,7 @@
 <!-- Contenedor Pestaña ABM GRUPOS -->
   <div class="col-xs-12 col-sm-8">
     <div class="panel panel-default">
-      <div class="panel-heading">Administracion de equipos</div>
+      <div class="panel-heading"><i class="fa fa-users" aria-hidden="true"></i> Administracion de equipos</div>
         <div class="panel-body">
 
           <!-- Pestaña ABM GRUPOS -->
@@ -418,13 +447,13 @@
               
               <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-10 col-xs-3">
-                  <button type="button" id="limpiarRe" class="btn btn-primary">Limpiar</button>
+                  <button type="button" id="limpiarRe" class="btn btn-primary"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
                 </div>
               </div>
 
               <div class="form-group">
                 <div class="col-sm-offset-9 col-sm-2 col-xs-3">
-                  <button type="submit" class="btn btn-success">Registrar</button>
+                  <button type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Registrar</button>
                 </div>
               </div>
 
@@ -450,7 +479,7 @@
               <div class="col-xs-6 col-sm-3 hidden-xs">
                   <label class="col-sm-offset-1  control-label">
                        Buscar
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span><i class="fa fa-search" aria-hidden="true"></i></span>
                   </label>
                  
               </div>
@@ -504,13 +533,13 @@
             
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-10 col-xs-3">
-                <button type="button" class="btn btn-primary" id="limpiarMo">Limpiar</button>
+                <button type="button" class="btn btn-primary" id="limpiarMo"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-sm-offset-9 col-sm-2 col-xs-3">
-                <button type="submit" class="btn btn-success">Modificar</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Modificar</button>
               </div>
             </div>
           </form>
@@ -533,7 +562,7 @@
             <div class="col-xs-6 col-sm-3 hidden-xs">
                   <label class="col-sm-offset-1  control-label">
                        Buscar
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    <span><i class="fa fa-search" aria-hidden="true"></i></span>
                   </label>
                  
               </div>
@@ -568,7 +597,7 @@
         <div class="form-group">
           <div class="col-sm-offset-9 col-sm-2">
             <button type="button" class="eliminar btn btn-danger " data-toggle="modal"  data-target="#myModalEliminarGrupo">
-            Eliminar
+            <i class="fa fa-eraser" aria-hidden="true"></i>  Eliminar
             </button>
           </div>
         </div>
@@ -594,14 +623,14 @@
               
                   <div class="form-group">
                     <div class="col-xs-offset-1 col-xs-7">
-                      <button type="button" id="modificacion" class="btn btn-success btn-sm">Eliminar</button>
+                      <button type="button" id="modificacion" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Eliminar</button>
                     </div>
                   </div>
                 </form>
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
               </div>
             </div>
         </div>

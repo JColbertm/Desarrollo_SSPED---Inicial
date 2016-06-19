@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- permitir solo numeros en un input -->
     <script type="text/javascript">
       $(document).ready(function() {
@@ -36,7 +37,35 @@
               limpiarRJ();
 
           });
+         $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
       })
+
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
       //funcion registrar jugadores
       function registro_jugadores()
       {
@@ -437,7 +466,7 @@
 <body>
 <!--  llamada a la cabecera -->
   <?php 
-    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+    require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
   ?>
   <?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -456,7 +485,7 @@
 <!-- Contenedor Pestaña ABM Equipo -->
   <div class="col-xs-12 col-sm-8">
    <div class="panel panel-default">
-     <div class="panel-heading">Administrar Jugadores</div>
+     <div class="panel-heading"><i class="fa fa-user" aria-hidden="true"></i> Administrar Jugadores</div>
         <div class="panel-body">
 
 
@@ -552,10 +581,10 @@
 
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-2">
-                <button type="button" class="btn btn-primary">Limpiar</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
               </div>
               <div class="col-sm-offset-2 col-sm-2">
-                <button type="submit" class="btn btn-success">Registrar</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Registrar</button>
               </div>
             </div>
 
@@ -677,10 +706,10 @@
 
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-2">
-                <button type="button" class="btn btn-primary">Limpiar</button>
+                <button type="button" class="btn btn-primary"><i class="fa fa-eraser" aria-hidden="true"></i> Limpiar</button>
               </div>
               <div class="col-sm-offset-2 col-sm-2">
-                <button type="submit" class="btn btn-success">Modificar</button>
+                <button type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Modificar</button>
               </div>
             </div>
 
@@ -791,7 +820,7 @@
           <div class="form-group">
               <div class="col-sm-offset-7 col-sm-2">
             <button type="button" class="eliminar btn btn-danger " data-toggle="modal" data-target="#myModalEliminarJugador">
-            Eliminar
+            <i class="fa fa-eraser" aria-hidden="true"></i> Eliminar
             </button>
             </div>
           </div>
@@ -815,8 +844,8 @@
                 
                       <div class="form-group">
                         <div class="col-xs-offset-1 col-xs-7">
-                          <button type="button" id="eliminacion" class="btn btn-success" data-dismiss="modal">Eliminar</button>
-                          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                          <button type="button" id="eliminacion" class="btn btn-success" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Eliminar</button>
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-check" aria-hidden="true"></i> Cancelar</button>
                         </div>
                      </div>
                      <div id="resultado6"></div>

@@ -5,6 +5,7 @@
 	<link rel="stylesheet" href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/jquery.js"></script>
     <script src="/Desarrollo_SSPED/bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+    <link href="/Desarrollo_SSPED/bootstrap-3.3.6-dist/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
     <script type="text/javascript"> 
 		$(document).ready(function() {
@@ -32,8 +33,36 @@
 
 			mostrar_video();
 
-
+      $('#cierre_sesion').on('click', function()
+          {
+            cerrar_sesion();            
+          });
 		})
+
+
+      function cerrar_sesion()
+        {          
+          var id = "opcion=" + encodeURIComponent('cierra_sesion');
+          console.log(id);
+          $.ajax({
+            url: '/Desarrollo_SSPED/entrenador.php',
+            type: 'POST',
+            data: id
+          })
+          .done(function(data) {
+            console.log(data);
+            var resp = $.parseJSON(data);
+            if(resp.res==1)
+            {
+              window.location="/Desarrollo_SSPED/index.php"; 
+            }
+          })
+          .fail(function() {
+            console.log("error");
+          })
+          event.preventDefault();          
+        }
+
 
 		function mostrar()
 		{
@@ -269,7 +298,7 @@
 <body>
 <!--  llamada a la cabecera -->
 	<?php 
-		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/cabecera1.php";
+		require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/Futbol/cabecera1.php";
  	?>
  	<?php 
     require_once $_SERVER["DOCUMENT_ROOT"]."/Desarrollo_SSPED/barramenureg.php";
@@ -292,7 +321,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h4>Libros / Paginas / Videos</h4>
+			<h4><i class="fa fa-book" aria-hidden="true"></i> Libros / Paginas / Videos</h4>
 		</div>
   		<div class="panel-body">
     		<div class="panel-group col-xs-12" id="accordion" role="tablist" aria-multiselectable="true">
@@ -300,7 +329,7 @@
 	    			<div class="panel-heading" role="tab" id="headingOne">
 	      				<h4 class="panel-title">
 	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-	          					Libros
+	          					<i class="fa fa-book" aria-hidden="true"></i> Libros
 	        				</a>
 	      				</h4>
 	    			</div>
@@ -354,7 +383,7 @@
 				    <div class="panel-heading" role="tab" id="headingTwo">
 				      <h4 class="panel-title">
 				        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#pagina" aria-expanded="false" aria-controls="pagina">
-				          Paginas Externas
+				          <i class="fa fa-link" aria-hidden="true"></i> Paginas Externas
 				        </a>
 				      </h4>
 				    </div>
@@ -368,7 +397,7 @@
 				       		<div class="col-sm-offset-9 col-sm-3">
 				       		<br>
 				       			<button type="button" class="modal1 btn btn-primary" data-toggle="modal" data-target="#modalregistrolink" data-toggle="tooltip" data-placement="bottom" title="Añadir"> 
-				       				Agregar 
+				       				<i class="fa fa-plus" aria-hidden="true"></i> Agregar 
 				       			</button>	
 				       		</div>
 				      	</div>
@@ -379,7 +408,7 @@
 				    <div class="panel-heading" role="tab" id="headingThree">
 				      <h4 class="panel-title">
 				        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#video" aria-expanded="false" aria-controls="collapseTwo">
-				        	Videos 
+				        	<i class="fa fa-video-camera" aria-hidden="true"></i> Videos 
 				        </a>
 				      </h4>
 				    </div>
@@ -396,7 +425,7 @@
 				       		<div class="col-sm-offset-9 col-sm-3">
 				       		<br>
 				       			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalregistrovideo" data-toggle="tooltip" data-placement="bottom" title="Añadir"> 
-				   					Agregar 
+				   					<i class="fa fa-plus" aria-hidden="true"></i> Agregar 
 			    				</button>	
 			       			</div>
 				      	</div>	
@@ -417,7 +446,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Registro de pagina</h4>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-link" aria-hidden="true"></i> Registro de pagina</h4>
       </div>
     
     <div class="modal-body">
@@ -445,7 +474,7 @@
 			  
 			  	<div class="form-group">
 			  		<div class="col-sm-offset-2 col-sm-10">
-			      		<button id="btnregistropagina" type="submit" class="btn btn-success">Registrar</button>
+			      		<button id="btnregistropagina" type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Registrar</button>
 			    	</div>			  	
 			  	</div>
 			  	<div class="form-group" id="resultado2">
@@ -456,7 +485,7 @@
 			
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
     </div>
     </div>
   </div>
@@ -469,7 +498,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Registro de Video</h4>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-video-camera" aria-hidden="true"></i> Registro de Video</h4>
       </div>
     
     <div class="modal-body">
@@ -501,7 +530,7 @@
 			  
 			  	<div class="form-group">
 			  		<div class="col-sm-offset-2 col-sm-10">
-			      		<button id="btnregistrovideo" type="submit" class="btn btn-success">Registrar</button>
+			      		<button id="btnregistrovideo" type="submit" class="btn btn-success"><i class="fa fa-upload" aria-hidden="true"></i> Registrar</button>
 			    	</div>			  	
 			  	</div>
 			   
@@ -509,7 +538,7 @@
 			
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
     </div>
     </div>
   </div>
