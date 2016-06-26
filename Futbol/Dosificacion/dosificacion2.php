@@ -9,6 +9,7 @@
     <script type="text/javascript">
 
     $(document).ready(function() {
+        $('#mostrar_pdf_ver').prop('disabled', true);
         $('#cierre_sesion').on('click', function()
           {
             cerrar_sesion();            
@@ -72,6 +73,28 @@
                         console.log(data2);
                         console.log(resp);
                        guardarDia(n1,resp,diases);
+                        // EJERCICIO TECNICO <--- SE RESETEA CADA VEZ QUE EXISTA UN CAMBIO
+                        $("#form_ejer_tec")[0].reset();
+                        $('#resultado-modal-1').hide();
+                        $('#modal-tecnico-ima').hide();
+                        //EJERCICIO FISICO
+                        $("#form_ejer_fis")[0].reset();
+                        $('#resultado-modal-2').hide();
+                        $('#modal-fisico-ima').hide();
+                        //EJERCICIO SIS JUEGO
+                        $("#form_ejer_sis")[0].reset();
+                        $('#resultado-modal-3').hide();
+                        $('#modal-tactico-ima').hide();
+                        //EJERCICIO ACC-PSI
+                        $("#form_ejer_psi")[0].reset();
+                        $('#resultado-modal-4').hide();
+                        $('#modal-psi-ima').hide();
+                        //EJERCICIO COMP
+                        $("#form_ejer_comp")[0].reset();
+                        $('#resultado-modal-5').hide();
+                        $('#modal-comp-ima').hide();
+
+
                        $('#modal-tecnico-id1').val(" ");
                        $('#modal-tecnico-id2').val(" ");
                        $('#modal-fisico-id1').val(" ");
@@ -241,9 +264,18 @@
               $('#etapas-ver').val(0);
               $('#meso-ver').val(0);
               $('#micro-ver').val(0);
-              //document.formCreacion.btnCargar.disabled=true;
+              $('#dias-ver').val(0);
+        $('#mostrar_pdf_ver').prop('disabled', true);
             }
           })
+        });
+        $("#plan-ver").change(function(){          
+              $('#etapas-ver').val(0);
+              $('#meso-ver').val(0);
+              $('#micro-ver').val(0);
+              $('#dias-ver').val(0);
+        $('#mostrar_pdf_ver').prop('disabled', true);
+            
         });
         //Llenar mesociclos ver
      $("#etapas-ver").change(function(){
@@ -261,7 +293,8 @@
               console.log(meso);
               $("#meso-ver").html(meso);
               $('#micro-ver').val(0);
-            //document.formCreacion.btnCargar.disabled=true;
+              $('#dias-ver').val(0);
+        $('#mostrar_pdf_ver').prop('disabled', true);
             }
           })
         });
@@ -278,8 +311,9 @@
             success: function(micro){
               console.log(micro);
               $("#micro-ver").html(micro);
-              //document.formCreacion.btnCargar.disabled=true;
-            }
+        $('#dias-ver').val(0);
+        $('#mostrar_pdf_ver').prop('disabled', true);            
+      }
           })
         });
        //Llenar dias ver
@@ -294,7 +328,7 @@
             success: function(dia){
               console.log(dia);
               $("#dias-ver").html(dia);
-              //document.formCreacion.btnCargar.disabled=true;
+        $('#mostrar_pdf_ver').prop('disabled', true);            
             }
           })
         });
@@ -302,8 +336,8 @@
        $("#dias-ver").change(function(){
             var idpro=$("#dias-ver").val();
             document.getElementById('idpro').value=idpro ; 
-              console.log(idpro);
-              //document.formCreacion.btnCargar.disabled=true;
+
+              $('#mostrar_pdf_ver').prop('disabled', false);
         });
     //////////////////MODALS////////////////
     //PRIMER MODAL TECNICO//
@@ -1384,6 +1418,7 @@ console.log(o);
                 console.log(data2);
                 console.log(resp);
                 $("#dosifi").val(resp);
+
         $("#modal-tecnico-nom1").val("");
         $("#modal-tecnico-desc1").val("");
         $("#modal-tecnico-nom2").val("");
@@ -1429,6 +1464,7 @@ console.log(o);
                 console.log(data2);
                 console.log(resp);
 if(b==1){
+                          $('#resultado-modal-1').show();
                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Nombre</th><th style="display:none"></th><th>Categoria</th><th>Elemento Tecnico</th></tr></thead><tbody>';
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_tecnico(this)"><td>'+resp[i].nombre+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].idTipo_ejercicio+'</td><td style="display:none">'+resp[i].ejercicio+'</td><td style="display:none">'+resp[i].idEjer_tecnico+'</td><td>'+resp[i].elemento_tecnico+'</td><td style="display:none">'+resp[i].metodo+'</td><td style="display:none">'+resp[i].tarea+'</td><td style="display:none">'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].imagen_ejercicio+'</td><td style="display:none">'+resp[i].idEjercicio+'</td></tr>';
@@ -1441,6 +1477,8 @@ if(b==1){
                 
 }
 if(b==3){
+                            $('#resultado-modal-2').show();
+
                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Nombre</th><th style="display:none"></th><th>Categoria</th><th>Elemento Tecnico</th></tr></thead><tbody>';
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_tactico(this)"><td>'+resp[i].nombre+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].idTipo_ejercicio+'</td><td style="display:none">'+resp[i].ejercicio+'</td><td style="display:none">'+resp[i].idEjer_tecnico+'</td><td>'+resp[i].elemento_tecnico+'</td><td style="display:none">'+resp[i].metodo+'</td><td style="display:none">'+resp[i].tarea+'</td><td style="display:none">'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].imagen_ejercicio+'</td><td style="display:none">'+resp[i].idEjercicio+'</td></tr>';
@@ -1451,7 +1489,8 @@ if(b==3){
                 $('#resultado-modal-2').html(html);
                 
 }
-if(b==2){
+if(b==2){                          $('#resultado-modal-3').show();
+
                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Nombre</th><th style="display:none"></th><th>Categoria</th><th>Elemento Tecnico</th></tr></thead><tbody>';
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_fisico(this)"><td>'+resp[i].nombre+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].idTipo_ejercicio+'</td><td style="display:none">'+resp[i].ejercicio+'</td><td style="display:none">'+resp[i].idEjer_tecnico+'</td><td>'+resp[i].elemento_tecnico+'</td><td style="display:none">'+resp[i].metodo+'</td><td style="display:none">'+resp[i].tarea+'</td><td style="display:none">'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].imagen_ejercicio+'</td><td style="display:none">'+resp[i].idEjercicio+'</td></tr>';
@@ -1462,7 +1501,8 @@ if(b==2){
                 $('#resultado-modal-3').html(html);
                 
 }
-if(b==4){
+if(b==4){                          $('#resultado-modal-4').show();
+
                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Nombre</th><th style="display:none"></th><th>Categoria</th><th>Elemento Tecnico</th></tr></thead><tbody>';
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_psi(this)"><td>'+resp[i].nombre+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].idTipo_ejercicio+'</td><td style="display:none">'+resp[i].ejercicio+'</td><td style="display:none">'+resp[i].idEjer_tecnico+'</td><td>'+resp[i].elemento_tecnico+'</td><td style="display:none">'+resp[i].metodo+'</td><td style="display:none">'+resp[i].tarea+'</td><td style="display:none">'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].imagen_ejercicio+'</td><td style="display:none">'+resp[i].idEjercicio+'</td></tr>';
@@ -1473,7 +1513,8 @@ if(b==4){
                 $('#resultado-modal-4').html(html);
                 
 }
-if(b==5){
+if(b==5){                          $('#resultado-modal-5').show();
+
                 var html = '<div class="table-responsive col-sm-12" style="height: 200px; overflow-y:scroll;" class="table table-hover"><table class="table table-hover"><thead><tr><th>Nombre</th><th style="display:none"></th><th>Categoria</th><th>Elemento Tecnico</th></tr></thead><tbody>';
                   for(i in resp){ 
                     html+='<tr onclick="mostrar_datos_comp(this)"><td>'+resp[i].nombre+'</td><td style="display:none">'+resp[i].idCategoria+'</td><td>'+resp[i].categoria_sub+'</td><td style="display:none">'+resp[i].idTipo_ejercicio+'</td><td style="display:none">'+resp[i].ejercicio+'</td><td style="display:none">'+resp[i].idEjer_tecnico+'</td><td>'+resp[i].elemento_tecnico+'</td><td style="display:none">'+resp[i].metodo+'</td><td style="display:none">'+resp[i].tarea+'</td><td style="display:none">'+resp[i].descripcion+'</td><td style="display:none">'+resp[i].imagen_ejercicio+'</td><td style="display:none">'+resp[i].idEjercicio+'</td></tr>';
@@ -1507,6 +1548,7 @@ if(b==5){
               $('#modal-tecnico-desc').val(desc_mod);
               var html4='<center><img src="/Desarrollo_SSPED/Futbol/Galeria/acciones_abm_ejer/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200"></center>'
               $('#modal-tecnico-ima').html(html4);
+              $('#modal-tecnico-ima').show();
               console.log(nom_mod+' '+cate_mod);
               
           }
@@ -1523,6 +1565,7 @@ if(b==5){
               $('#modal-fisico-desc').val(desc_mod);
               var html4='<center><img src="/Desarrollo_SSPED/Futbol/Galeria/acciones_abm_ejer/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200"></center>'
               $('#modal-fisico-ima').html(html4);
+              $('#modal-fisico-ima').show();
               console.log(nom_mod+' '+cate_mod);
               
           }
@@ -1539,6 +1582,7 @@ if(b==5){
               $('#modal-tactico-desc').val(desc_mod);
               var html4='<center><img src="/Desarrollo_SSPED/Futbol/Galeria/acciones_abm_ejer/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200"></center>'
               $('#modal-tactico-ima').html(html4);
+              $('#modal-tactico-ima').hide();
               console.log(nom_mod+' '+cate_mod);
               
           }
@@ -1555,6 +1599,7 @@ if(b==5){
               $('#modal-psi-desc').val(desc_mod);
               var html4='<center><img src="/Desarrollo_SSPED/Futbol/Galeria/acciones_abm_ejer/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200"></center>'
               $('#modal-psi-ima').html(html4);
+              $('#modal-psi-ima').hide();
               console.log(nom_mod+' '+cate_mod);
               
           }
@@ -1571,6 +1616,7 @@ if(b==5){
               $('#modal-comp-desc').val(desc_mod);
               var html4='<center><img src="/Desarrollo_SSPED/Futbol/Galeria/acciones_abm_ejer/'+foto_mod+'"  alt="..." class="img-rounded" width="200" heigth="200"></center>'
               $('#modal-comp-ima').html(html4);
+              $('#modal-comp-ima').hide();
               console.log(nom_mod+' '+cate_mod);
               
           }
@@ -1846,7 +1892,7 @@ if(b==5){
               <div class=" col-sm-2 col-xs-12">
               <br>
                 <input type="hidden" value="" id="idpro" name="idpro">
-                <button type="submit" class="btn btn-success" id="mostrar_pdf">
+                <button type="submit" class="btn btn-success" id="mostrar_pdf_ver">
                   <span><i class="fa fa-external-link" aria-hidden="true"></i></span>
                   <span class="hidden-xs">
                     Exportar
@@ -1877,7 +1923,7 @@ if(b==5){
         </div>
         <div class="modal-body">
         <!-- Galeria de Ejercicios -->
-          <form class="form-horizontal">
+          <form class="form-horizontal" id="form_ejer_tec">          
             <div class="row">
               <label class="col-sm-2 control-label">Preparacion:</label>
               <div class="col-sm-3">
@@ -2021,7 +2067,7 @@ if(b==5){
         </div>
         <div class="modal-body">
           <!-- Galeria de Ejercicios -->
-          <form class="form-horizontal">
+          <form class="form-horizontal" id="form_ejer_fis">
             <div class="row">
               <label class="col-sm-2 control-label">Preparacion:</label>
                 <div class="col-sm-3">
@@ -2152,7 +2198,7 @@ if(b==5){
           </div>
           <div class="modal-body">
             <!-- Galeria de Ejercicios -->
-            <form class="form-horizontal">
+            <form class="form-horizontal" id="form_ejer_sis">
               <div class="row">
                 <label class="col-sm-2 control-label">Preparacion:</label>
                 <div class="col-sm-3">
@@ -2281,7 +2327,7 @@ if(b==5){
           </div>
           <div class="modal-body">
             <!-- Galeria de Ejercicios -->
-            <form class="form-horizontal">            
+            <form class="form-horizontal" id="form_ejer_psi">            
               <div class="row">            
                 <label class="col-sm-2 control-label">Preparacion:</label>
                 <div class="col-sm-3">
@@ -2412,7 +2458,7 @@ if(b==5){
           </div>
           <div class="modal-body">
             <!-- Galeria de Ejercicios -->            
-            <form class="form-horizontal">              
+            <form class="form-horizontal" id="form_ejer_comp">              
               <div class="row">            
                 <label class="col-sm-2 control-label">Preparacion:</label>
                 <div class="col-sm-3">
